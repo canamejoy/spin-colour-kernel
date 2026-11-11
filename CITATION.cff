@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "spin-colour-kernel: exact replica-batched multi-colour Metropolis kernels for classical spin lattices on GPUs"
+version: 1.0.0
+license: MIT
+repository-code: "https://github.com/canamejoy/spin-colour-kernel"
+authors:
+  - family-names: "Canamejoy-Alegría"
+    given-names: "Carlos Andrés"
+    affiliation: "AI-Lab, Signal Processing and Recognition Group, Universidad Nacional de Colombia, Sede Manizales"
+  - family-names: "Méndez-Rondón"
+    given-names: "Juan Sebastián"
+    orcid: "https://orcid.org/0009-0001-6951-0266"
+    affiliation: "AI-Lab, Signal Processing and Recognition Group, Universidad Nacional de Colombia, Sede Manizales"
+  - family-names: "Álvarez-Meza"
+    given-names: "Andrés Marino"
+    orcid: "https://orcid.org/0000-0003-0308-9576"
+    affiliation: "AI-Lab, Signal Processing and Recognition Group, Universidad Nacional de Colombia, Sede Manizales"
+  - family-names: "Montes-Monsalve"
+    given-names: "Jorge Iván"
+    orcid: "https://orcid.org/0000-0003-0569-0605"
+    affiliation: "AI-Lab, Signal Processing and Recognition Group, Universidad Nacional de Colombia, Sede Manizales"
+  - family-names: "Agudelo-Giraldo"
+    given-names: "José Darío"
+    orcid: "https://orcid.org/0000-0003-2413-3943"
+    affiliation: "Departamento de Física y Matemáticas, Universidad Autónoma de Manizales"
+keywords: ["Monte Carlo", "Metropolis", "GPU", "Ising", "Heisenberg", "graph colouring", "Triton"]

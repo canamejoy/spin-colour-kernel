@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "measurements": [
+    {
+      "measuredAt": "2026-11-06T05:03:31",
+      "host": "kaggle:T4-1",
+      "device": "cuda:Tesla T4",
+      "arm": "E1+E3",
+      "unit": "epoch",
+      "secondsPerUnit": 464.6,
+      "unitsMeasured": 1,
+      "setupSeconds": 1.1
+    },
+    {
+      "measuredAt": "2026-11-06T05:10:27",
+      "host": "kaggle:T4-3",
+      "device": "cuda:Tesla T4",
+      "arm": "E6+E7",
+      "unit": "epoch",
+      "secondsPerUnit": 143.2,
+      "unitsMeasured": 1,
+      "setupSeconds": 0.9
+    },
+    {
+      "measuredAt": "2026-11-06T14:34:11",
+      "host": "kaggle:T4-2",
+      "device": "cuda:Tesla T4",
+      "arm": "E5",
+      "unit": "epoch",
+      "secondsPerUnit": 789.6,
+      "unitsMeasured": 1,
+      "setupSeconds": 0.9
+    },
+    {
+      "measuredAt": "2026-11-06T05:09:18",
+      "host": "kaggle:T4-a",
+      "device": "cuda:Tesla T4",
+      "arm": "E8",
+      "unit": "epoch",
+      "secondsPerUnit": 69.0,
+      "unitsMeasured": 1,
+      "setupSeconds": 0.6
+    },
+    {
+      "measuredAt": "2026-11-06T05:09:17",
+      "host": "kaggle:T4-b",
+      "device": "cuda:Tesla T4",
+      "arm": "E2",
+      "unit": "epoch",
+      "secondsPerUnit": 68.0,
+      "unitsMeasured": 1,
+      "setupSeconds": 0.8
+    },
+    {
+      "measuredAt": "2026-11-06T05:21:50",
+      "host": "kaggle:T4-b",
+      "device": "cuda:Tesla T4",
+      "arm": "E2b",
+      "unit": "epoch",
+      "secondsPerUnit": 84.6,
+      "unitsMeasured": 1,
+      "setupSeconds": 1.1
+    },
+    {
+      "measuredAt": "2026-11-06T13:43:10",
+      "host": "kaggle:T4-2",
+      "device": "cuda:Tesla T4",
+      "arm": "E5sass",
+      "unit": "epoch",
+      "secondsPerUnit": 340.9,
+      "unitsMeasured": 1,
+      "setupSeconds": 0.9
+    },
+    {
+      "measuredAt": "2026-11-06T13:45:28",
+      "host": "kaggle:T4-1",
+      "device": "cuda:Tesla T4",
+      "arm": "E5old",
+      "unit": "epoch",
+      "secondsPerUnit": 479.8,
+      "unitsMeasured": 1,
+      "setupSeconds": 1.0
+    }
+  ],
+  "scales": {
+    "poc": {
+      "arms": 8,
+      "folds": 1,
+      "seeds": 1,
+      "epochs": 1
+    },
+    "full": {
+      "arms": 8,
+      "folds": 1,
+      "seeds": 1,
+      "epochs": 1
+    }
+  }
+}

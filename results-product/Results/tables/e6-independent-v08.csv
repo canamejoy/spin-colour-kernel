@@ -1,0 +1,10 @@
+Stage,Device,Ours flips/ns,ising-gpu spins/ns,Log ratio,Low,High,Run
+"v08 first version (10 rounds, 64-bit levels)",H100,352.9,503.4,-0.355,-0.377,-0.337,results/h100/20261110-100024
+v08 first version,A100,170.1,256.6,-0.411,-0.416,-0.409,results/a100/20261110-100024
+v08 first version,T4 (Kaggle),96.0,206.4,-0.765,-0.784,-0.742,results/kaggle/ind/results
+static entries + 32-bit levels,H100,504.2,549.9,-0.087,-0.105,-0.071,results/h100/20261110-101929
+static entries + 32-bit levels,A100,241.7,258.6,-0.068,-0.075,-0.061,results/a100/20261110-101929
+static entries + 32-bit levels,T4 (Kaggle),132.7,206.0,-0.439,-0.453,-0.423,results/kaggle/opt/results
+7-round Philox,H100,570.1,509.8,0.112,0.092,0.14,results/h100/20261110-103419
+7-round Philox,A100,274.9,256.9,0.068,0.064,0.072,results/a100/20261110-103419
+7-round Philox,T4 (Modal),144.2,210.6,-0.384,-0.464,-0.331,results/t4/20261110-104427

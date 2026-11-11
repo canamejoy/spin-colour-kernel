@@ -1,0 +1,9 @@
+Run,Lattice,Rule,Acceptance,Seeds,Seeds rejected (Holm),Median chi-square,Median Cohen's w,Pooled TV distance
+E2,Ising square,coloured,metropolis,10,4,12.222,0.01102,0.0011
+E2,Ising square,all sites,metropolis,10,10,217318144.409,46.61739,0.9995
+E2,Ising triangular,coloured,metropolis,10,10,26571.979,0.51548,0.097
+E2,Ising triangular,all sites,metropolis,10,10,146185714.286,38.23424,0.9993
+E2b,Ising square,coloured,barker,10,0,8.604,0.00926,0.0013
+E2b,Ising square,all sites,barker,10,10,51189692.334,22.62514,0.5135
+E2b,Ising triangular,coloured,barker,10,0,5.246,0.00724,0.0007
+E2b,Ising triangular,all sites,barker,10,10,29436.202,0.54254,0.091

@@ -1,0 +1,3 @@
+Ising square             colours 2  parallel == sequential after 3 sweeps: True  energy/site after 20 sweeps: -2.000000 -2.000000
+XY sc                    colours 2  parallel == sequential after 3 sweeps: True  energy/site after 20 sweeps: -1.812110 -2.105182
+Heisenberg triangular    colours 3  parallel == sequential after 3 sweeps: True  energy/site after 20 sweeps: -1.086448 -1.125840

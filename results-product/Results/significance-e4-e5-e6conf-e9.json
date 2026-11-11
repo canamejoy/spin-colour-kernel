@@ -1,0 +1,1448 @@
+{
+  "tests": [
+    {
+      "comparison": "E4 Tc Ising square (H100)",
+      "test": "reference inside the bootstrap interval of Tc",
+      "statistic": 2.26956,
+      "p_value": 0.168,
+      "p_adjusted": 1.0,
+      "correction": "Holm over 8 systems",
+      "effect_size": 0.024,
+      "effect_size_name": "interval half width / Tc (%)",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        2.26904,
+        2.27014
+      ],
+      "note": "reference 2.26919; supported; source table e4-critical-points-h100.csv"
+    },
+    {
+      "comparison": "E4 Tc Ising triangular (H100)",
+      "test": "reference inside the bootstrap interval of Tc",
+      "statistic": 3.64092,
+      "p_value": 0.962,
+      "p_adjusted": 1.0,
+      "correction": "Holm over 8 systems",
+      "effect_size": 0.045,
+      "effect_size_name": "interval half width / Tc (%)",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        3.63937,
+        3.64261
+      ],
+      "note": "reference 3.64096; supported; source table e4-critical-points-h100.csv"
+    },
+    {
+      "comparison": "E4 Tc Ising sc (H100)",
+      "test": "reference inside the bootstrap interval of Tc",
+      "statistic": 4.51156,
+      "p_value": 0.934,
+      "p_adjusted": 1.0,
+      "correction": "Holm over 8 systems",
+      "effect_size": 0.02,
+      "effect_size_name": "interval half width / Tc (%)",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        4.51066,
+        4.51243
+      ],
+      "note": "reference 4.51152; supported; source table e4-critical-points-h100.csv"
+    },
+    {
+      "comparison": "E4 Tc Ising bcc (H100)",
+      "test": "reference inside the bootstrap interval of Tc",
+      "statistic": 6.35471,
+      "p_value": 0.557,
+      "p_adjusted": 1.0,
+      "correction": "Holm over 8 systems",
+      "effect_size": 0.014,
+      "effect_size_name": "interval half width / Tc (%)",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        6.35377,
+        6.35558
+      ],
+      "note": "reference 6.355; supported; source table e4-critical-points-h100.csv"
+    },
+    {
+      "comparison": "E4 Tc Ising fcc (H100)",
+      "test": "reference inside the bootstrap interval of Tc",
+      "statistic": 9.79723,
+      "p_value": 0.813,
+      "p_adjusted": 1.0,
+      "correction": "Holm over 8 systems",
+      "effect_size": 0.008,
+      "effect_size_name": "interval half width / Tc (%)",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        9.79648,
+        9.79802
+      ],
+      "note": "reference 9.79713; supported; source table e4-critical-points-h100.csv"
+    },
+    {
+      "comparison": "E4 Tc XY sc (H100)",
+      "test": "reference inside the bootstrap interval of Tc",
+      "statistic": 2.20239,
+      "p_value": 0.161,
+      "p_adjusted": 1.0,
+      "correction": "Holm over 8 systems",
+      "effect_size": 0.035,
+      "effect_size_name": "interval half width / Tc (%)",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        2.20162,
+        2.20317
+      ],
+      "note": "reference 2.20184; supported; source table e4-critical-points-h100.csv"
+    },
+    {
+      "comparison": "E4 Tc Heisenberg sc (H100)",
+      "test": "reference inside the bootstrap interval of Tc",
+      "statistic": 1.44257,
+      "p_value": 0.107,
+      "p_adjusted": 0.856,
+      "correction": "Holm over 8 systems",
+      "effect_size": 0.035,
+      "effect_size_name": "interval half width / Tc (%)",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        1.44209,
+        1.44309
+      ],
+      "note": "reference 1.443; supported; source table e4-critical-points-h100.csv"
+    },
+    {
+      "comparison": "E4 Tc Heisenberg bcc (H100)",
+      "test": "reference inside the bootstrap interval of Tc",
+      "statistic": 2.05422,
+      "p_value": 0.986,
+      "p_adjusted": 1.0,
+      "correction": "Holm over 8 systems",
+      "effect_size": 0.035,
+      "effect_size_name": "interval half width / Tc (%)",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        2.05353,
+        2.05495
+      ],
+      "note": "reference 2.0542; supported; source table e4-critical-points-h100.csv"
+    },
+    {
+      "comparison": "E4tri v07 T=0.2 L 96->192",
+      "test": "bootstrap of the log ratio of K-point structure factors",
+      "statistic": 1.276,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.276,
+      "effect_size_name": "log ratio",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        1.272,
+        1.28
+      ],
+      "note": "K-point structure factor; source table e4-triangular-kpoint-v07.csv"
+    },
+    {
+      "comparison": "E4tri v07 T=0.2 L 192->384",
+      "test": "bootstrap of the log ratio of K-point structure factors",
+      "statistic": 1.275,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.275,
+      "effect_size_name": "log ratio",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        1.264,
+        1.285
+      ],
+      "note": "K-point structure factor; source table e4-triangular-kpoint-v07.csv"
+    },
+    {
+      "comparison": "E4tri v07 T=0.25 L 96->192",
+      "test": "bootstrap of the log ratio of K-point structure factors",
+      "statistic": 1.219,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.219,
+      "effect_size_name": "log ratio",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        1.212,
+        1.225
+      ],
+      "note": "K-point structure factor; source table e4-triangular-kpoint-v07.csv"
+    },
+    {
+      "comparison": "E4tri v07 T=0.25 L 192->384",
+      "test": "bootstrap of the log ratio of K-point structure factors",
+      "statistic": 1.197,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.197,
+      "effect_size_name": "log ratio",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        1.18,
+        1.214
+      ],
+      "note": "K-point structure factor; source table e4-triangular-kpoint-v07.csv"
+    },
+    {
+      "comparison": "E4tri v07 T=0.28 L 96->192",
+      "test": "bootstrap of the log ratio of K-point structure factors",
+      "statistic": 1.153,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.153,
+      "effect_size_name": "log ratio",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        1.144,
+        1.163
+      ],
+      "note": "K-point structure factor; source table e4-triangular-kpoint-v07.csv"
+    },
+    {
+      "comparison": "E4tri v07 T=0.28 L 192->384",
+      "test": "bootstrap of the log ratio of K-point structure factors",
+      "statistic": 1.164,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.164,
+      "effect_size_name": "log ratio",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        1.148,
+        1.178
+      ],
+      "note": "K-point structure factor; source table e4-triangular-kpoint-v07.csv"
+    },
+    {
+      "comparison": "E4tri v07 T=0.3 L 96->192",
+      "test": "bootstrap of the log ratio of K-point structure factors",
+      "statistic": 0.987,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 0.987,
+      "effect_size_name": "log ratio",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        0.954,
+        1.016
+      ],
+      "note": "K-point structure factor; source table e4-triangular-kpoint-v07.csv"
+    },
+    {
+      "comparison": "E4tri v07 T=0.3 L 192->384",
+      "test": "bootstrap of the log ratio of K-point structure factors",
+      "statistic": 0.753,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 0.753,
+      "effect_size_name": "log ratio",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        0.616,
+        0.873
+      ],
+      "note": "K-point structure factor; source table e4-triangular-kpoint-v07.csv"
+    },
+    {
+      "comparison": "E4tri v07 T=0.32 L 96->192",
+      "test": "bootstrap of the log ratio of K-point structure factors",
+      "statistic": -0.002,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.002,
+      "effect_size_name": "log ratio",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        -0.048,
+        0.04
+      ],
+      "note": "K-point structure factor; source table e4-triangular-kpoint-v07.csv"
+    },
+    {
+      "comparison": "E4tri v07 T=0.32 L 192->384",
+      "test": "bootstrap of the log ratio of K-point structure factors",
+      "statistic": 0.03,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 0.03,
+      "effect_size_name": "log ratio",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        -0.033,
+        0.095
+      ],
+      "note": "K-point structure factor; source table e4-triangular-kpoint-v07.csv"
+    },
+    {
+      "comparison": "E4tri v07 T=0.4 L 96->192",
+      "test": "bootstrap of the log ratio of K-point structure factors",
+      "statistic": 0.006,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 0.006,
+      "effect_size_name": "log ratio",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        -0.001,
+        0.013
+      ],
+      "note": "K-point structure factor; source table e4-triangular-kpoint-v07.csv"
+    },
+    {
+      "comparison": "E4tri v07 T=0.4 L 192->384",
+      "test": "bootstrap of the log ratio of K-point structure factors",
+      "statistic": -0.003,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.003,
+      "effect_size_name": "log ratio",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H3",
+      "experiment": "E4",
+      "interval": [
+        -0.011,
+        0.006
+      ],
+      "note": "K-point structure factor; source table e4-triangular-kpoint-v07.csv"
+    },
+    {
+      "comparison": "E5conf T4 pooled u=4 vs odd neighbours",
+      "test": "paired bootstrap of the pooled log time ratio",
+      "statistic": -0.317,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.317,
+      "effect_size_name": "log speed ratio",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        -0.322,
+        -0.311
+      ],
+      "note": "(a) 12/12; |pooled| >= log 1.3: True; source table e5-conf-unroll-cost.csv"
+    },
+    {
+      "comparison": "E5conf A100 pooled u=4 vs odd neighbours",
+      "test": "paired bootstrap of the pooled log time ratio",
+      "statistic": -0.287,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.287,
+      "effect_size_name": "log speed ratio",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        -0.288,
+        -0.286
+      ],
+      "note": "(a) 12/12; |pooled| >= log 1.3: True; source table e5-conf-unroll-cost.csv"
+    },
+    {
+      "comparison": "E5conf H100 pooled u=4 vs odd neighbours",
+      "test": "paired bootstrap of the pooled log time ratio",
+      "statistic": -0.249,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.249,
+      "effect_size_name": "log speed ratio",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        -0.249,
+        -0.248
+      ],
+      "note": "(a) 12/12; |pooled| >= log 1.3: False; source table e5-conf-unroll-cost.csv"
+    },
+    {
+      "comparison": "E6conf batch slope T4 Ising square",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0033,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0033,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.0055,
+        0.0
+      ],
+      "note": "below log 1.05: True; role reported; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope T4 Ising triangular",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0682,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0682,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.0702,
+        -0.0656
+      ],
+      "note": "below log 1.05: True; role reported; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope T4 Ising sc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0989,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0989,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.1005,
+        -0.0971
+      ],
+      "note": "below log 1.05: True; role reported; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope T4 Ising bcc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0725,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0725,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.0742,
+        -0.0702
+      ],
+      "note": "below log 1.05: True; role reported; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope T4 Ising fcc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0311,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0311,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.034,
+        -0.0279
+      ],
+      "note": "below log 1.05: True; role reported; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope T4 XY square",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": 0.0652,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": 0.0652,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        0.0585,
+        0.0716
+      ],
+      "note": "below log 1.05: False; role reported; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope T4 XY sc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": 0.1177,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": 0.1177,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        0.112,
+        0.1231
+      ],
+      "note": "below log 1.05: False; role reported; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope T4 Heisenberg sc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": 0.2424,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": 0.2424,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        0.2352,
+        0.2497
+      ],
+      "note": "below log 1.05: False; role reported; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope T4 Heisenberg bcc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": 0.2056,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": 0.2056,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        0.1794,
+        0.2261
+      ],
+      "note": "below log 1.05: False; role reported; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope T4 Heisenberg fcc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0105,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0105,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.0195,
+        0.0063
+      ],
+      "note": "below log 1.05: True; role reported; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope T4 Heisenberg triangular AFM",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": 0.0691,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": 0.0691,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        0.0643,
+        0.074
+      ],
+      "note": "below log 1.05: False; role reported; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope T4 Heisenberg kagome AFM",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0045,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0045,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.0218,
+        0.0261
+      ],
+      "note": "below log 1.05: True; role reported; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope T4 Heisenberg nanodot (section0)",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": 0.1427,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": 0.1427,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        0.1365,
+        0.1483
+      ],
+      "note": "below log 1.05: False; role reported; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope A100 Ising square",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0896,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0896,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.0998,
+        -0.0835
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope A100 Ising triangular",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.1511,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.1511,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.1598,
+        -0.1466
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope A100 Ising sc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.2558,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.2558,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.265,
+        -0.2508
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope A100 Ising bcc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.2226,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.2226,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.23,
+        -0.2186
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope A100 Ising fcc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.1324,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.1324,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.1421,
+        -0.1269
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope A100 XY square",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0653,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0653,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.0744,
+        -0.0603
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope A100 XY sc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0944,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0944,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.1034,
+        -0.0894
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope A100 Heisenberg sc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0928,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0928,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.102,
+        -0.0873
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope A100 Heisenberg bcc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0713,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0713,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.079,
+        -0.0669
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope A100 Heisenberg fcc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": 0.0313,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": 0.0313,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        0.0216,
+        0.0373
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope A100 Heisenberg triangular AFM",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0737,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0737,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.0828,
+        -0.0687
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope A100 Heisenberg kagome AFM",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0068,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0068,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.0153,
+        -0.0023
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope A100 Heisenberg nanodot (section0)",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.2178,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.2178,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.2272,
+        -0.2125
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope H100 Ising square",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.1016,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.1016,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.102,
+        -0.1011
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope H100 Ising triangular",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.1672,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.1672,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.1673,
+        -0.1671
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope H100 Ising sc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.3159,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.3159,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.3159,
+        -0.3158
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope H100 Ising bcc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.2909,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.2909,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.291,
+        -0.2909
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope H100 Ising fcc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.2146,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.2146,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.2147,
+        -0.2145
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope H100 XY square",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0738,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0738,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.0741,
+        -0.0734
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope H100 XY sc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.075,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.075,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.0751,
+        -0.075
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope H100 Heisenberg sc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0759,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0759,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.076,
+        -0.0758
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope H100 Heisenberg bcc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.074,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.074,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.0743,
+        -0.0737
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope H100 Heisenberg fcc",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0109,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0109,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.0112,
+        -0.0106
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope H100 Heisenberg triangular AFM",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.0731,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.0731,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.0734,
+        -0.0729
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope H100 Heisenberg kagome AFM",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.019,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.019,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.0193,
+        -0.0188
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E6conf batch slope H100 Heisenberg nanodot (section0)",
+      "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
+      "statistic": -0.2359,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval against the log 1.05 margin)",
+      "effect_size": -0.2359,
+      "effect_size_name": "log-cost slope per doubling",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.2368,
+        -0.2348
+      ],
+      "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
+    },
+    {
+      "comparison": "E9 Q shells (1, 2, 4) H=0.8",
+      "test": "bootstrap half-width of Q against the 0.1 precision bound",
+      "statistic": 0.068,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (bound check)",
+      "effect_size": 0.005,
+      "effect_size_name": "max bootstrap half-width of Q over T",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H6",
+      "experiment": "E9",
+      "interval": [
+        0.068,
+        0.068
+      ],
+      "note": "within 0.1: True; source table e9-nanodisk-q.csv"
+    },
+    {
+      "comparison": "E9 Q shells (1, 2, 4) H=1.0",
+      "test": "bootstrap half-width of Q against the 0.1 precision bound",
+      "statistic": 0.056,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (bound check)",
+      "effect_size": 0.004,
+      "effect_size_name": "max bootstrap half-width of Q over T",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H6",
+      "experiment": "E9",
+      "interval": [
+        0.055,
+        0.056
+      ],
+      "note": "within 0.1: True; source table e9-nanodisk-q.csv"
+    },
+    {
+      "comparison": "E9 Q shells (1, 2, 4) H=1.2",
+      "test": "bootstrap half-width of Q against the 0.1 precision bound",
+      "statistic": 0.047,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (bound check)",
+      "effect_size": 0.004,
+      "effect_size_name": "max bootstrap half-width of Q over T",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H6",
+      "experiment": "E9",
+      "interval": [
+        0.047,
+        0.047
+      ],
+      "note": "within 0.1: True; source table e9-nanodisk-q.csv"
+    },
+    {
+      "comparison": "E9 Q shells (1) H=0.0",
+      "test": "bootstrap half-width of Q against the 0.1 precision bound",
+      "statistic": 0.004,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (bound check)",
+      "effect_size": 0.058,
+      "effect_size_name": "max bootstrap half-width of Q over T",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H6",
+      "experiment": "E9",
+      "interval": [
+        -0.005,
+        0.015
+      ],
+      "note": "within 0.1: True; source table e9-nanodisk-q.csv"
+    },
+    {
+      "comparison": "E9 Q shells (1) H=0.2",
+      "test": "bootstrap half-width of Q against the 0.1 precision bound",
+      "statistic": -8.146,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (bound check)",
+      "effect_size": 0.092,
+      "effect_size_name": "max bootstrap half-width of Q over T",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H6",
+      "experiment": "E9",
+      "interval": [
+        -8.223,
+        -8.06
+      ],
+      "note": "within 0.1: True; source table e9-nanodisk-q.csv"
+    },
+    {
+      "comparison": "E9 Q shells (1) H=0.4",
+      "test": "bootstrap half-width of Q against the 0.1 precision bound",
+      "statistic": -7.528,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (bound check)",
+      "effect_size": 0.102,
+      "effect_size_name": "max bootstrap half-width of Q over T",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H6",
+      "experiment": "E9",
+      "interval": [
+        -7.614,
+        -7.449
+      ],
+      "note": "within 0.1: False; source table e9-nanodisk-q.csv"
+    },
+    {
+      "comparison": "E9 Q shells (1) H=0.6",
+      "test": "bootstrap half-width of Q against the 0.1 precision bound",
+      "statistic": 0.143,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (bound check)",
+      "effect_size": 0.028,
+      "effect_size_name": "max bootstrap half-width of Q over T",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H6",
+      "experiment": "E9",
+      "interval": [
+        0.143,
+        0.143
+      ],
+      "note": "within 0.1: True; source table e9-nanodisk-q.csv"
+    },
+    {
+      "comparison": "E9 Q shells (1) H=0.8",
+      "test": "bootstrap half-width of Q against the 0.1 precision bound",
+      "statistic": 0.11,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (bound check)",
+      "effect_size": 0.023,
+      "effect_size_name": "max bootstrap half-width of Q over T",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H6",
+      "experiment": "E9",
+      "interval": [
+        0.11,
+        0.11
+      ],
+      "note": "within 0.1: True; source table e9-nanodisk-q.csv"
+    },
+    {
+      "comparison": "E9 Q shells (1) H=1.0",
+      "test": "bootstrap half-width of Q against the 0.1 precision bound",
+      "statistic": 0.09,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (bound check)",
+      "effect_size": 0.021,
+      "effect_size_name": "max bootstrap half-width of Q over T",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H6",
+      "experiment": "E9",
+      "interval": [
+        0.09,
+        0.09
+      ],
+      "note": "within 0.1: True; source table e9-nanodisk-q.csv"
+    },
+    {
+      "comparison": "E9 Q shells (1) H=1.2",
+      "test": "bootstrap half-width of Q against the 0.1 precision bound",
+      "statistic": 0.077,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (bound check)",
+      "effect_size": 0.016,
+      "effect_size_name": "max bootstrap half-width of Q over T",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H6",
+      "experiment": "E9",
+      "interval": [
+        0.076,
+        0.077
+      ],
+      "note": "within 0.1: True; source table e9-nanodisk-q.csv"
+    },
+    {
+      "comparison": "E9 Q shells (1, 2, 4) H=0.0",
+      "test": "bootstrap half-width of Q against the 0.1 precision bound",
+      "statistic": 0.015,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (bound check)",
+      "effect_size": 0.087,
+      "effect_size_name": "max bootstrap half-width of Q over T",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H6",
+      "experiment": "E9",
+      "interval": [
+        -0.018,
+        0.052
+      ],
+      "note": "within 0.1: True; source table e9-nanodisk-q.csv"
+    },
+    {
+      "comparison": "E9 Q shells (1, 2, 4) H=0.2",
+      "test": "bootstrap half-width of Q against the 0.1 precision bound",
+      "statistic": -2.786,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (bound check)",
+      "effect_size": 0.061,
+      "effect_size_name": "max bootstrap half-width of Q over T",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H6",
+      "experiment": "E9",
+      "interval": [
+        -2.818,
+        -2.762
+      ],
+      "note": "within 0.1: True; source table e9-nanodisk-q.csv"
+    },
+    {
+      "comparison": "E9 Q shells (1, 2, 4) H=0.4",
+      "test": "bootstrap half-width of Q against the 0.1 precision bound",
+      "statistic": 0.13,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (bound check)",
+      "effect_size": 0.008,
+      "effect_size_name": "max bootstrap half-width of Q over T",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H6",
+      "experiment": "E9",
+      "interval": [
+        0.129,
+        0.13
+      ],
+      "note": "within 0.1: True; source table e9-nanodisk-q.csv"
+    },
+    {
+      "comparison": "E9 Q shells (1, 2, 4) H=0.6",
+      "test": "bootstrap half-width of Q against the 0.1 precision bound",
+      "statistic": 0.088,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (bound check)",
+      "effect_size": 0.006,
+      "effect_size_name": "max bootstrap half-width of Q over T",
+      "n": null,
+      "alpha": 0.05,
+      "hypothesis": "H6",
+      "experiment": "E9",
+      "interval": [
+        0.088,
+        0.088
+      ],
+      "note": "within 0.1: True; source table e9-nanodisk-q.csv"
+    }
+  ]
+}

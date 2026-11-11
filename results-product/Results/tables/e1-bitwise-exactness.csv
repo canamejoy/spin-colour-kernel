@@ -1,0 +1,10 @@
+Mode,Device,Runs,Runs with a differing spin,Systems,Acceptance,Words per program,Sweeps,Run
+shared,H100,108,0,"square 8x8, triangular 6x6, sc 4^3, fcc 4^3, masked square with h, open masked sc",Metropolis and Barker,"1, 4, 8",50,results/h100/20261109-211259/E1bit.json
+shared,A100,108,0,"square 8x8, triangular 6x6, sc 4^3, fcc 4^3, masked square with h, open masked sc",Metropolis and Barker,"1, 4, 8",50,results/a100/20261109-211456/E1bit.json
+shared,T4,108,0,"square 8x8, triangular 6x6, sc 4^3, fcc 4^3, masked square with h, open masked sc",Metropolis and Barker,"1, 4, 8",50,results/kaggle/bit/results/E1bit.json
+independent,H100,108,0,"square 8x8, triangular 6x6, sc 4^3, fcc 4^3, masked square with h, open masked sc",Metropolis and Barker,"1, 4, 8",50,results/h100/20261110-103419/E1bitind.json
+independent,A100,108,0,"square 8x8, triangular 6x6, sc 4^3, fcc 4^3, masked square with h, open masked sc",Metropolis and Barker,"1, 4, 8",50,results/a100/20261110-103419/E1bitind.json
+independent,T4 (Modal),108,0,"square 8x8, triangular 6x6, sc 4^3, fcc 4^3, masked square with h, open masked sc",Metropolis and Barker,"1, 4, 8",50,results/t4/20261110-104427/E1bitind.json
+"independent, 10 rounds (v13)",H100,108,0,"square 8x8, triangular 6x6, sc 4^3, fcc 4^3, masked square with h, open masked sc",Metropolis and Barker,"1, 4, 8",50,results/h100/20261110-164945/E1bitind.json
+"independent, 10 rounds (v13)",A100-80GB,108,0,"square 8x8, triangular 6x6, sc 4^3, fcc 4^3, masked square with h, open masked sc",Metropolis and Barker,"1, 4, 8",50,results/a100/20261110-164945/E1bitind.json
+"independent, 10 rounds (v13)",T4 (Modal),108,0,"square 8x8, triangular 6x6, sc 4^3, fcc 4^3, masked square with h, open masked sc",Metropolis and Barker,"1, 4, 8",50,results/t4/20261110-164945/E1bitind.json

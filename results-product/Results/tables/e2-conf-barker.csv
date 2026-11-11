@@ -1,0 +1,9 @@
+Lattice,Rule,Acceptance,Seeds,"Rejected seeds (Holm, alpha 0.01)",Median chi-square,Median Cohen's w,Pooled TV distance,Role
+Ising square,coloured,barker,10,0,9.552,0.00977,0.0005,test
+Ising square,all sites,barker,10,10,50583264.416,22.49072,0.5114,test
+Ising triangular,coloured,barker,10,0,7.301,0.00854,0.0012,test
+Ising triangular,all sites,barker,10,10,29522.546,0.54334,0.0909,test
+Ising square,coloured,metropolis,10,3,9.609,0.0098,0.0013,reported
+Ising square,all sites,metropolis,10,10,217318144.409,46.61739,0.9995,reported
+Ising triangular,coloured,metropolis,10,10,25010.527,0.50003,0.0968,reported
+Ising triangular,all sites,metropolis,10,10,146185714.286,38.23424,0.9993,reported

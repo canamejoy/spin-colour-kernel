@@ -1,0 +1,16 @@
+Compiler and reading,Factor varied,Grids,Agreeing grids,Disagreeing grids,Unreadable
+"JAX 0.11.1, LLVM IR of the MLIR emitters",Batch size,12,4,8,0
+"JAX 0.11.1, LLVM IR of the MLIR emitters",Spin components,6,4,2,0
+"JAX 0.11.1, LLVM IR of the MLIR emitters",Basis size,12,4,8,0
+"JAX 0.11.1, LLVM IR of the MLIR emitters",Box extents,12,4,8,0
+"JAX 0.11.1, LLVM IR of the MLIR emitters",All grids,162,4,158,0
+"JAX 0.4.35, PTX dump",Batch size,12,4,8,0
+"JAX 0.4.35, PTX dump",Spin components,6,4,2,0
+"JAX 0.4.35, PTX dump",Basis size,12,4,8,0
+"JAX 0.4.35, PTX dump",Box extents,12,4,8,0
+"JAX 0.4.35, PTX dump",All grids,162,4,158,0
+"JAX 0.11.1, SASS from the compilation cache",Batch size,12,0,0,12
+"JAX 0.11.1, SASS from the compilation cache",Spin components,6,0,0,6
+"JAX 0.11.1, SASS from the compilation cache",Basis size,12,0,0,12
+"JAX 0.11.1, SASS from the compilation cache",Box extents,12,0,0,12
+"JAX 0.11.1, SASS from the compilation cache",All grids,162,0,0,162

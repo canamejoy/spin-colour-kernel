@@ -1,0 +1,580 @@
+{
+  "tests": [
+    {
+      "comparison": "E1chunk H100 Heisenberg triangular 2048x2048",
+      "test": "spin-by-spin comparison, chunked against one-program-per-row kernel",
+      "statistic": 0,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (deterministic)",
+      "effect_size": 0,
+      "effect_size_name": "differing sites after the sweeps",
+      "n": 4194304,
+      "alpha": null,
+      "hypothesis": "H1",
+      "experiment": "E1",
+      "note": "2 chunks, 4 sweeps (v17)"
+    },
+    {
+      "comparison": "E1chunk H100 Heisenberg triangular 4096x4096",
+      "test": "spin-by-spin comparison, chunked against one-program-per-row kernel",
+      "statistic": 0,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (deterministic)",
+      "effect_size": 0,
+      "effect_size_name": "differing sites after the sweeps",
+      "n": 16777216,
+      "alpha": null,
+      "hypothesis": "H1",
+      "experiment": "E1",
+      "note": "4 chunks, 4 sweeps (v17)"
+    },
+    {
+      "comparison": "E1chunk H100 XY square 2048x2048",
+      "test": "spin-by-spin comparison, chunked against one-program-per-row kernel",
+      "statistic": 0,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (deterministic)",
+      "effect_size": 0,
+      "effect_size_name": "differing sites after the sweeps",
+      "n": 4194304,
+      "alpha": null,
+      "hypothesis": "H1",
+      "experiment": "E1",
+      "note": "2 chunks, 4 sweeps (v17)"
+    },
+    {
+      "comparison": "E1chunk H100 Heisenberg sc long rows 1152x8x8",
+      "test": "spin-by-spin comparison, chunked against one-program-per-row kernel",
+      "statistic": 0,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (deterministic)",
+      "effect_size": 0,
+      "effect_size_name": "differing sites after the sweeps",
+      "n": 73728,
+      "alpha": null,
+      "hypothesis": "H1",
+      "experiment": "E1",
+      "note": "2 chunks, 4 sweeps (v17)"
+    },
+    {
+      "comparison": "E6metro v17 H100 triangular L=1024 P=4224 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.650683559865216,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.650683559865216,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.619726844487389,
+        4.68290086386565
+      ],
+      "note": "v17 chunked kernel; P choice ceiling"
+    },
+    {
+      "comparison": "E6metro v17 H100 triangular L=1024 P=4224 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.9530309912624086,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.9530309912624086,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        2.9220489317837623,
+        2.9853727056325297
+      ],
+      "note": "v17 chunked kernel; P choice ceiling"
+    },
+    {
+      "comparison": "E6metro v17 H100 triangular L=1024 P=16384 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.6650818747004634,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.6650818747004634,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.6633435345199583,
+        3.666378809764386
+      ],
+      "note": "v17 chunked kernel; P choice fastest"
+    },
+    {
+      "comparison": "E6metro v17 H100 triangular L=1024 P=16384 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.967429306097656,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.967429306097656,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        1.9656699991106454,
+        1.9687856728426891
+      ],
+      "note": "v17 chunked kernel; P choice fastest"
+    },
+    {
+      "comparison": "E6metro v17 H100 triangular L=2048 P=4224 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.731697182056799,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.731697182056799,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.675745220456204,
+        4.817298117821241
+      ],
+      "note": "v17 chunked kernel; P choice ceiling"
+    },
+    {
+      "comparison": "E6metro v17 H100 triangular L=2048 P=4224 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.0556176098439254,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.0556176098439254,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        2.9997082636752164,
+        3.141066826803406
+      ],
+      "note": "v17 chunked kernel; P choice ceiling"
+    },
+    {
+      "comparison": "E6metro v17 H100 triangular L=2048 P=16384 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.7360896810253807,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.7360896810253807,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.7344005057650245,
+        3.7377955672679963
+      ],
+      "note": "v17 chunked kernel; P choice fastest"
+    },
+    {
+      "comparison": "E6metro v17 H100 triangular L=2048 P=16384 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.0600101088125085,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.0600101088125085,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        2.0583574288393507,
+        2.0616816503296187
+      ],
+      "note": "v17 chunked kernel; P choice fastest"
+    },
+    {
+      "comparison": "E6metro v17 H100 triangular L=4096 P=4224 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.702200528097114,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.702200528097114,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.676062914461662,
+        4.7280754754378655
+      ],
+      "note": "v17 chunked kernel; P choice ceiling"
+    },
+    {
+      "comparison": "E6metro v17 H100 triangular L=4096 P=4224 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.0013253033584317,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.0013253033584317,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        2.974978451624557,
+        3.0272908812464507
+      ],
+      "note": "v17 chunked kernel; P choice ceiling"
+    },
+    {
+      "comparison": "E6metro v17 H100 triangular L=4096 P=16384 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.799246946075928,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.799246946075928,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.7981001781703894,
+        3.800509035818502
+      ],
+      "note": "v17 chunked kernel; P choice fastest"
+    },
+    {
+      "comparison": "E6metro v17 H100 triangular L=4096 P=16384 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.0983717213372457,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.0983717213372457,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        2.097074447241063,
+        2.0997906718918014
+      ],
+      "note": "v17 chunked kernel; P choice fastest"
+    },
+    {
+      "comparison": "E1chunk A100-80GB Heisenberg triangular 2048x2048",
+      "test": "spin-by-spin comparison, chunked against one-program-per-row kernel",
+      "statistic": 0,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (deterministic)",
+      "effect_size": 0,
+      "effect_size_name": "differing sites after the sweeps",
+      "n": 4194304,
+      "alpha": null,
+      "hypothesis": "H1",
+      "experiment": "E1",
+      "note": "2 chunks, 4 sweeps (v17)"
+    },
+    {
+      "comparison": "E1chunk A100-80GB Heisenberg triangular 4096x4096",
+      "test": "spin-by-spin comparison, chunked against one-program-per-row kernel",
+      "statistic": 0,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (deterministic)",
+      "effect_size": 0,
+      "effect_size_name": "differing sites after the sweeps",
+      "n": 16777216,
+      "alpha": null,
+      "hypothesis": "H1",
+      "experiment": "E1",
+      "note": "4 chunks, 4 sweeps (v17)"
+    },
+    {
+      "comparison": "E1chunk A100-80GB XY square 2048x2048",
+      "test": "spin-by-spin comparison, chunked against one-program-per-row kernel",
+      "statistic": 0,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (deterministic)",
+      "effect_size": 0,
+      "effect_size_name": "differing sites after the sweeps",
+      "n": 4194304,
+      "alpha": null,
+      "hypothesis": "H1",
+      "experiment": "E1",
+      "note": "2 chunks, 4 sweeps (v17)"
+    },
+    {
+      "comparison": "E1chunk A100-80GB Heisenberg sc long rows 1152x8x8",
+      "test": "spin-by-spin comparison, chunked against one-program-per-row kernel",
+      "statistic": 0,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (deterministic)",
+      "effect_size": 0,
+      "effect_size_name": "differing sites after the sweeps",
+      "n": 73728,
+      "alpha": null,
+      "hypothesis": "H1",
+      "experiment": "E1",
+      "note": "2 chunks, 4 sweeps (v17)"
+    },
+    {
+      "comparison": "E6metro v17 A100-80GB triangular L=1024 P=3456 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.747850050075229,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.747850050075229,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.737687524263501,
+        4.75696897578205
+      ],
+      "note": "v17 chunked kernel; P choice ceiling"
+    },
+    {
+      "comparison": "E6metro v17 A100-80GB triangular L=1024 P=3456 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.1189319559875743,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.1189319559875743,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.1086009559634538,
+        3.128507808289959
+      ],
+      "note": "v17 chunked kernel; P choice ceiling"
+    },
+    {
+      "comparison": "E6metro v17 A100-80GB triangular L=1024 P=16384 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.573327133298748,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.573327133298748,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.5718227872838826,
+        3.574482530156613
+      ],
+      "note": "v17 chunked kernel; P choice fastest"
+    },
+    {
+      "comparison": "E6metro v17 A100-80GB triangular L=1024 P=16384 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.944409039211094,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.944409039211094,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        1.943468240086901,
+        1.9452991400073272
+      ],
+      "note": "v17 chunked kernel; P choice fastest"
+    },
+    {
+      "comparison": "E6metro v17 A100-80GB triangular L=2048 P=3456 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.75633885449352,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.75633885449352,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.743967388975979,
+        4.770050861677977
+      ],
+      "note": "v17 chunked kernel; P choice ceiling"
+    },
+    {
+      "comparison": "E6metro v17 A100-80GB triangular L=2048 P=3456 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.2016136253904053,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.2016136253904053,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.189223989470335,
+        3.215403343855041
+      ],
+      "note": "v17 chunked kernel; P choice ceiling"
+    },
+    {
+      "comparison": "E6metro v17 A100-80GB triangular L=2048 P=16384 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.670317436297716,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.670317436297716,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.669521260688736,
+        3.6711431675157633
+      ],
+      "note": "v17 chunked kernel; P choice fastest"
+    },
+    {
+      "comparison": "E6metro v17 A100-80GB triangular L=2048 P=16384 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.1155922071945996,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.1155922071945996,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        2.1146397530860996,
+        2.1165493748966298
+      ],
+      "note": "v17 chunked kernel; P choice fastest"
+    },
+    {
+      "comparison": "E6metro v17 A100-80GB triangular L=4096 P=3456 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.672105214312987,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.672105214312987,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.6248389810116795,
+        4.720529222696367
+      ],
+      "note": "v17 chunked kernel; P choice ceiling"
+    },
+    {
+      "comparison": "E6metro v17 A100-80GB triangular L=4096 P=3456 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.1898887530519806,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.1898887530519806,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.170294238249722,
+        3.208539269406986
+      ],
+      "note": "v17 chunked kernel; P choice ceiling"
+    },
+    {
+      "comparison": "E6metro v17 A100-80GB triangular L=4096 P=16384 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.7453835457292906,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.7453835457292906,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.6908218913518174,
+        3.805939880906232
+      ],
+      "note": "v17 chunked kernel; P choice fastest"
+    },
+    {
+      "comparison": "E6metro v17 A100-80GB triangular L=4096 P=16384 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.263167084468283,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.263167084468283,
+      "effect_size_name": "log speed ratio (generated / competitor)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        2.2379312845115478,
+        2.2905318602987985
+      ],
+      "note": "v17 chunked kernel; P choice fastest"
+    }
+  ]
+}

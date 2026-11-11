@@ -1,0 +1,9 @@
+System,Tc,Interval low,Interval high,Reference,Half width / Tc (%),p,p (Holm),Verdict
+Ising square,2.26956,2.26904,2.27014,2.26919,0.024,0.168,1.0,supported
+Ising triangular,3.64092,3.63937,3.64261,3.64096,0.045,0.962,1.0,supported
+Ising sc,4.51156,4.51066,4.51243,4.51152,0.02,0.934,1.0,supported
+Ising bcc,6.35471,6.35377,6.35558,6.355,0.014,0.557,1.0,supported
+Ising fcc,9.79723,9.79648,9.79802,9.79713,0.008,0.813,1.0,supported
+XY sc,2.20239,2.20162,2.20317,2.20184,0.035,0.161,1.0,supported
+Heisenberg sc,1.44257,1.44209,1.44309,1.443,0.035,0.107,0.856,supported
+Heisenberg bcc,2.05422,2.05353,2.05495,2.0542,0.035,0.986,1.0,supported

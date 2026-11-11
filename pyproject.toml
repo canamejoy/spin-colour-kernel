@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spin-colour-kernel"
+version = "1.0.0"
+description = "Exact replica-batched multi-colour Metropolis kernels for classical O(n) spin models on crystals with a basis, generated for GPUs"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+  {name = "Carlos Andrés Canamejoy-Alegría"},
+  {name = "Juan Sebastián Méndez-Rondón"},
+  {name = "Andrés Marino Álvarez-Meza"},
+  {name = "Jorge Iván Montes-Monsalve"},
+  {name = "José Darío Agudelo-Giraldo"},
+]
+# GPU runs of the paper: Python 3.11, torch 2.5.1 (CUDA 12.4), triton 3.1.0 on T4, A100 and H100.
+# CPU test suite: also passes with torch 2.15 (CPU) and triton 3.9 through the Triton interpreter.
+dependencies = ["numpy>=1.24", "scipy>=1.10", "torch>=2.5", "triton>=3.1"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Physics",
+  "Environment :: GPU :: NVIDIA CUDA",
+]
+
+[project.optional-dependencies]
+baseline = ["jax[cuda12]==0.4.35"]      # the XLA baseline of experiment E5
+dev = ["pytest"]
+
+[project.urls]
+Repository = "https://github.com/canamejoy/spin-colour-kernel"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

@@ -1,0 +1,3 @@
+Configuration and device,Generated flips/ns,ising-gpu spins/ns,Log ratio,Interval low,Interval high
+"2D Ising 4096^2 at Tc, T4",12.596,129.043,-2.3337,-2.3893,-2.3004
+"2D Ising 16 x 1024^2 against 4096^2 at Tc, H100",76.993,552.379,-1.9704,-1.9796,-1.96

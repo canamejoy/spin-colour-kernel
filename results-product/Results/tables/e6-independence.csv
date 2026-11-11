@@ -1,0 +1,13 @@
+Device,Mode,Mean |corr| within word,Mean |corr| across words,Max |corr| within,Criterion met (independent),Run
+H100,shared,0.571,0.084,0.806,,results/h100/20261110-103419
+H100,independent,0.096,0.093,0.377,True,results/h100/20261110-103419
+A100,shared,0.571,0.084,0.806,,results/a100/20261110-103419
+A100,independent,0.096,0.093,0.377,True,results/a100/20261110-103419
+T4 (Modal),shared,0.571,0.084,0.806,,results/t4/20261110-104427
+T4 (Modal),independent,0.096,0.093,0.377,True,results/t4/20261110-104427
+H100,shared (v13),0.571,0.084,0.806,,results/h100/20261110-164945
+H100,"independent (10 rounds, v13)",0.092,0.094,0.339,True,results/h100/20261110-164945
+A100-80GB,shared (v13),0.571,0.084,0.806,,results/a100/20261110-164945
+A100-80GB,"independent (10 rounds, v13)",0.092,0.094,0.339,True,results/a100/20261110-164945
+T4 (Modal),shared (v13),0.571,0.084,0.806,,results/t4/20261110-164945
+T4 (Modal),"independent (10 rounds, v13)",0.092,0.094,0.339,True,results/t4/20261110-164945

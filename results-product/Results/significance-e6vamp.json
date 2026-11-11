@@ -1,0 +1,1942 @@
+{
+  "tests": [
+    {
+      "comparison": "E6vamp v10 H100 Heisenberg sc B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.2588492470197665,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.2588492470197665,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.244909746107742,
+        3.275906888859219
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v10 H100 Heisenberg sc B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.544491147151583,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.544491147151583,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.531257558589956,
+        4.560828013175332
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v10 H100 Heisenberg bcc B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.805133486891566,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.805133486891566,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.7982748587241204,
+        3.8126345143906604
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v10 H100 Heisenberg bcc B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 5.081787370383897,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 5.081787370383897,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        5.07513216137864,
+        5.088925384604129
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v10 H100 Heisenberg fcc B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.9503416617998424,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.9503416617998424,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.9306220862232997,
+        3.9659228737183767
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v10 H100 Heisenberg fcc B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 5.025988434199261,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 5.025988434199261,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        5.009679907322139,
+        5.041137398473838
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v10 A100-40GB Heisenberg sc B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.1253987519065904,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.1253987519065904,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.0236722253961887,
+        3.1992157148955984
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v10 A100-40GB Heisenberg sc B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.60953621748079,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.60953621748079,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.582727593878192,
+        4.646643694461376
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v10 A100-40GB Heisenberg bcc B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.718343155241122,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.718343155241122,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.544511620773227,
+        3.8920196376176834
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v10 A100-40GB Heisenberg bcc B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.981283794023919,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.981283794023919,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.835149794020795,
+        5.127426989419235
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v10 A100-40GB Heisenberg fcc B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.879804955894282,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.879804955894282,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.8355774843990624,
+        3.9142816995561467
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v10 A100-40GB Heisenberg fcc B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.697376116576494,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.697376116576494,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.617811819472586,
+        4.8045293036579695
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 H100 Heisenberg sc B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.874910360975863,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.874910360975863,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.8686930860937045,
+        3.879679441298415
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 H100 Heisenberg sc B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.7586381321032847,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.7586381321032847,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.7518322992381754,
+        3.7647946959914633
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 H100 Heisenberg sc B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 5.15372794523808,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 5.15372794523808,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        5.149310921140262,
+        5.157352897154936
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 H100 Heisenberg bcc B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.401695681664945,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.401695681664945,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.399881497326088,
+        4.403394426613586
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 H100 Heisenberg bcc B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.299644476191153,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.299644476191153,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.296384297274253,
+        4.302374910601805
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 H100 Heisenberg bcc B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 5.676677567790406,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 5.676677567790406,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        5.674460981055892,
+        5.679223073487756
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 H100 Heisenberg fcc B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.503169739815053,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.503169739815053,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.499483849710925,
+        4.507003781085349
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 H100 Heisenberg fcc B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.298370889057092,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.298370889057092,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.294569997150409,
+        4.302524890375511
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 H100 Heisenberg fcc B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 5.573506381995871,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 5.573506381995871,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        5.570349656347139,
+        5.578178134238265
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 A100-80GB Heisenberg sc B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.1738432256348,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.1738432256348,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.052086390520737,
+        3.297976088924316
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 A100-80GB Heisenberg sc B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.1351568355478303,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.1351568355478303,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.0855224684655407,
+        3.2253927459468827
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 A100-80GB Heisenberg sc B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.670673725187219,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.670673725187219,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.622000760167639,
+        4.760904935830857
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 A100-80GB Heisenberg bcc B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.5695600992855843,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.5695600992855843,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.4795883623550083,
+        3.632546401265095
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 A100-80GB Heisenberg bcc B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.4859164860738927,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.4859164860738927,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.4245222653763125,
+        3.5310431375851348
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 A100-80GB Heisenberg bcc B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.960822045254395,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.960822045254395,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.947058731457336,
+        4.98092438149561
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 A100-80GB Heisenberg fcc B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.00806952881924,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.00806952881924,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.790991523819078,
+        4.252541429761552
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 A100-80GB Heisenberg fcc B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.8018236642177357,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.8018236642177357,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.5858398502166056,
+        4.044097506044904
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v11 A100-80GB Heisenberg fcc B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 5.0095685903948795,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 5.0095685903948795,
+      "effect_size_name": "log speed ratio",
+      "n": 5,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.754746741370792,
+        5.264390439418968
+      ],
+      "note": "VAMPIRE double precision, host copy per step"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg sc 32^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.2338343471781874,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.2338343471781874,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.2126315440004407,
+        3.255037150355935
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg sc 32^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.124100973006173,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.124100973006173,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.107509302500395,
+        3.143184456314267
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg sc 32^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.517776477646139,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.517776477646139,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.49743285155108,
+        4.5382454509335455
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg bcc 32^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.744414497306148,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.744414497306148,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.7238009961444942,
+        3.7660758102029464
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg bcc 32^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.6345633222618705,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.6345633222618705,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.613748624588559,
+        3.655378019935182
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg bcc 32^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 5.015923034996506,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 5.015923034996506,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.995569113869607,
+        5.037194800205755
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg fcc 32^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.9203669281396794,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.9203669281396794,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.908117849135291,
+        3.9326160071440674
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg fcc 32^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.7160652498796796,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.7160652498796796,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.7043070608276136,
+        3.727302037993968
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg fcc 32^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 5.007213882321448,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 5.007213882321448,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.994764016525579,
+        5.019663748117317
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg sc 48^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.6938450717792612,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.6938450717792612,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.663052075033063,
+        3.725895719441184
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg sc 48^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.479873635008672,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.479873635008672,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.4498810973390484,
+        3.5112252268530306
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg sc 48^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.407373314820483,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.407373314820483,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.377962683375546,
+        4.437970493831802
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg bcc 48^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.260946563802154,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.260946563802154,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.216377792220955,
+        4.323110813901732
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg bcc 48^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.889931071078914,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.889931071078914,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.842727040208639,
+        3.9575971981340663
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg bcc 48^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.9005669735455335,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.9005669735455335,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.85574867432076,
+        4.967205189831176
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg fcc 48^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.176157316174447,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.176157316174447,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.138677701044763,
+        4.213636931304132
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg fcc 48^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.628913653804238,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.628913653804238,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.591692537021716,
+        3.6661347705867593
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg fcc 48^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.59778974244194,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.59778974244194,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.560999108665348,
+        4.634580376218532
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg sc 64^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.086101165649844,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.086101165649844,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.0706324618176755,
+        4.099582897817477
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg sc 64^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.879857409283233,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.879857409283233,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.8681054810551503,
+        3.891609337511315
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg sc 64^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.518512869950928,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.518512869950928,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.501094224698668,
+        4.535931515203187
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg bcc 64^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.75531860212862,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.75531860212862,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.6809917062616595,
+        4.807264690512326
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg bcc 64^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.393174432877546,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.393174432877546,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.314834910594784,
+        4.444638883723087
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg bcc 64^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 5.0593334295312955,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 5.0593334295312955,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.980089798047736,
+        5.11098323996732
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg fcc 64^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.680017565477571,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.680017565477571,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.621786585735649,
+        4.738248545219493
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg fcc 64^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.041957146726487,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.041957146726487,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.9830278297362667,
+        4.100886463716709
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 H100 Heisenberg fcc 64^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.614600597495269,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.614600597495269,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.555924903184479,
+        4.673276291806057
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg sc 32^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.9933864585608685,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.9933864585608685,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        2.968925695480093,
+        3.0178472216416443
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg sc 32^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.9312287097958105,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.9312287097958105,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        2.9267856783745434,
+        2.9355507817743716
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg sc 32^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.368528602309322,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.368528602309322,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.355909212714934,
+        4.389901071444189
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg bcc 32^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.597314184319336,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.597314184319336,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.496282323386948,
+        3.698346045251724
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg bcc 32^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.5223052839695788,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.5223052839695788,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.4177821454740567,
+        3.6268284224651
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg bcc 32^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.884149044272464,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.884149044272464,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.775254195911634,
+        4.993043892633292
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg fcc 32^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.8176292617702137,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.8176292617702137,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.723591419645726,
+        3.911667103894702
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg fcc 32^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.6280066612780226,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.6280066612780226,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.5634753308298013,
+        3.6925379917262435
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg fcc 32^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.741330795416211,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.741330795416211,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.68095453101446,
+        4.8017070598179625
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg sc 48^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.392988897702316,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.392988897702316,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.362878290314532,
+        3.4084279760395386
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg sc 48^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.2703296798046173,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.2703296798046173,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.2544966196732728,
+        3.297412369261568
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg sc 48^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.9989680150284928,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.9989680150284928,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.9794444933273674,
+        4.026596790385314
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg bcc 48^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.997090795351041,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.997090795351041,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.8969120392520034,
+        4.13296222980728
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg bcc 48^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.805749906586847,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.805749906586847,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.730082904380222,
+        3.910926229211587
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg bcc 48^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.527867808856557,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.527867808856557,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.452292513081835,
+        4.6308928105492395
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg fcc 48^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.892160070773331,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.892160070773331,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.715336211783973,
+        5.078182937926577
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg fcc 48^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.497734385762076,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.497734385762076,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.32428905704431,
+        4.671179714479841
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg fcc 48^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 5.098872650751737,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 5.098872650751737,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.924077919631799,
+        5.273667381871675
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg sc 64^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.003986962301819,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.003986962301819,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.9475484935388545,
+        4.060425431064783
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg sc 64^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.8722398182339934,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.8722398182339934,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.847320323318628,
+        3.8939063328749706
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg sc 64^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.342256875380026,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.342256875380026,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.324432248313212,
+        4.36008150244684
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg bcc 64^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.571194171942489,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.571194171942489,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.308326399242133,
+        4.908708741369136
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg bcc 64^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.322689160711301,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.322689160711301,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.060177215428478,
+        4.6962095130266075
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg bcc 64^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.796035658013353,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.796035658013353,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.533757330749227,
+        5.172531708813278
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg fcc 64^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 5.27373506385781,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 5.27373506385781,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        5.022713631215773,
+        5.524756496499846
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg fcc 64^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.683446193206146,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.683446193206146,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.435176558552694,
+        4.9317158278595965
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v12 A100-80GB Heisenberg fcc 64^3 B=128",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 5.029245129693757,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 5.029245129693757,
+      "effect_size_name": "log speed ratio",
+      "n": 4,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.780825380959893,
+        5.277664878427622
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg sc 64^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.3168142131103515,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.3168142131103515,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.2817866227462655,
+        4.3513419807903775
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg sc 64^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.1009915544498785,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.1009915544498785,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.066091426408854,
+        4.135937016747262
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg bcc 64^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.81431934537172,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.81431934537172,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.78597605256461,
+        4.844033125012444
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg bcc 64^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.440252021633143,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.440252021633143,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.411794975951121,
+        4.469789726267659
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg fcc 64^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.799047396493874,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.799047396493874,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.727280793612932,
+        4.885833246335034
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg fcc 64^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.174616071162334,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.174616071162334,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.1032134769130115,
+        4.261615653985897
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg sc 80^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.032436296254793,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.032436296254793,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.00706168003112,
+        4.05909298673011
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg sc 80^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.8414799477928243,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.8414799477928243,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.815543846024977,
+        3.8682068412913013
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg bcc 80^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.615683333313313,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.615683333313313,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.548479699599455,
+        4.706381110526025
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg bcc 80^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.248879518843812,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.248879518843812,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.180843993647863,
+        4.340297414812473
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg fcc 80^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.526054914105496,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.526054914105496,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.480763879219284,
+        4.572534292424297
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg fcc 80^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.723185191063744,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.723185191063744,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.679153085837229,
+        3.7687928256834597
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg sc 96^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.241165413498409,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.241165413498409,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.1778243278046325,
+        4.321040434983137
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg sc 96^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.017970309655959,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.017970309655959,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.9548700627182787,
+        4.096539390982545
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg bcc 96^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.79670397950149,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.79670397950149,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.734670044538549,
+        4.865935284771371
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg bcc 96^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.27120755973038,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.27120755973038,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.209786609793454,
+        4.340394397450129
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg fcc 96^3 B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 4.663035102528719,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 4.663035102528719,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        4.582913296397218,
+        4.7616195814812965
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    },
+    {
+      "comparison": "E6vamp v13 H100 Heisenberg fcc 96^3 B=1d",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.9181121316260983,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.9181121316260983,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        3.8382285064330364,
+        4.016790694464538
+      ],
+      "note": "VAMPIRE double precision; B=1d is ours in float64; 1 warm-up round discarded"
+    }
+  ]
+}

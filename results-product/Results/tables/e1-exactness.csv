@@ -1,0 +1,14 @@
+System,Colours,Active sites,Seeds run,Sweeps compared,Differing spins,First failing sweep
+Ising square,2,64,3,9000,0,none
+Ising triangular,3,36,3,9000,0,none
+Ising sc,2,64,3,9000,0,none
+Ising bcc,2,128,3,9000,0,none
+Ising fcc,4,256,3,9000,0,none
+XY square,2,64,3,9000,0,none
+XY sc,2,64,3,9000,0,none
+Heisenberg sc,2,64,3,9000,0,none
+Heisenberg bcc,2,128,3,9000,0,none
+Heisenberg fcc,4,256,3,9000,0,none
+Heisenberg triangular AFM,3,36,3,9000,0,none
+Heisenberg kagome AFM,3,108,3,9000,0,none
+Heisenberg nanodot (section0),2,87,3,9000,0,none

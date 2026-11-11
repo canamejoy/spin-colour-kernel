@@ -1,0 +1,7 @@
+Device,Configuration,Side,Philox rounds,Kernel commit,Run,Specialist,Ours flips/ns,Specialist spins/ns,Log ratio,Low,High
+H100,"Ising 2D, independent bitwise",4096,7 (ablation; default is 10),2859251,results/h100/20261110-111725,ising-gpu,651.1,509.5,0.245,0.234,0.259
+H100,"Ising 2D, independent bitwise",4096,7 (ablation; default is 10),2859251,results/h100/20261110-111725,cuIsing-2025,651.1,516.1,0.232,0.228,0.236
+A100-40GB,"Ising 2D, independent bitwise",4096,7 (ablation; default is 10),2859251,results/a100/20261110-111730,ising-gpu,310.1,200.4,0.461,0.338,0.609
+A100-40GB,"Ising 2D, independent bitwise",4096,7 (ablation; default is 10),2859251,results/a100/20261110-111730,cuIsing-2025,310.1,172.5,0.625,0.46,0.8
+T4,"Ising 2D, independent bitwise",4096,7 (ablation; default is 10),2859251,results/t4/20261110-111726,ising-gpu,101.4,120.1,-0.174,-0.236,-0.116
+T4,"Ising 2D, independent bitwise",4096,7 (ablation; default is 10),2859251,results/t4/20261110-111726,cuIsing-2025,101.4,118.2,-0.158,-0.27,-0.039

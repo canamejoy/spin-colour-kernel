@@ -1,0 +1,1060 @@
+{
+  "tests": [
+    {
+      "comparison": "E5genB A100-80GB B-heis B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.308871356198582,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.308871356198582,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        3.2588357996379704,
+        3.3445601880298184
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=2",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.0177900016309125,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.0177900016309125,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.9685297284860908,
+        3.05182724774029
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=3",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.9151934013105354,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.9151934013105354,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.8949084820996425,
+        2.941006284832266
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=4",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.8205049033762073,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.8205049033762073,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.7930885995315573,
+        2.847588752252537
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=5",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.69774458973797,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.69774458973797,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.6707516676408045,
+        2.7262302600296096
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=6",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.6193428328859065,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.6193428328859065,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.5834340228698602,
+        2.652578065774353
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=7",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.5142668619848147,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.5142668619848147,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.464119409310093,
+        2.557566117714242
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=8",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.445676929704745,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.445676929704745,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.394968992531498,
+        2.4883561459067836
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=9",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.3360757819014792,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.3360757819014792,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.292863418202003,
+        2.3640581117345825
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=10",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.2422135691633356,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.2422135691633356,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.210293012904677,
+        2.273834449458508
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=11",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.198728155767586,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.198728155767586,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.1572275271527426,
+        2.2418396030329615
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=12",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.1001300558902143,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.1001300558902143,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.068465024942555,
+        2.128656768578318
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=13",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.0439152962186253,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.0439152962186253,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.0171165224654963,
+        2.0665121188677644
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=14",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.9986240670346855,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.9986240670346855,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.9570846371957802,
+        2.0421455163382203
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=15",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.9231644936552694,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.9231644936552694,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.8746588960585993,
+        1.975188529419873
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=16",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.8938934996799823,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.8938934996799823,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.8552391258884804,
+        1.9304345425265446
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=20",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.6782360535864935,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.6782360535864935,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.6375065246806975,
+        1.7134857081370307
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=24",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.5776252886443565,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.5776252886443565,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.5458260825367935,
+        1.60764640669481
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=28",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.477815848973517,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.477815848973517,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.4471414046690683,
+        1.5086802036973537
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=31",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.4201388856211472,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.4201388856211472,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.3963299825168598,
+        1.446987521862862
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=32",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.4027975770138816,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.4027975770138816,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.3696499842807548,
+        1.436759486027862
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=33",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.6847067852754911,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.6847067852754911,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.6818502107717206,
+        1.688033614408813
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=40",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.1984466890417393,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.1984466890417393,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.1904328453199418,
+        1.206271753867282
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=48",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.1851102314995667,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.1851102314995667,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.1814751001462178,
+        1.1887732817409504
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=56",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.1246631335157278,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.1246631335157278,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.1233002343604188,
+        1.1260493002542107
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=63",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.329235200550627,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.329235200550627,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.327225173810514,
+        1.3312925790599932
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis B=64",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.261627442422851,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.261627442422851,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.2590977628727886,
+        1.2637321703570985
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-heis upward jumps",
+      "test": "count of B -> next B rises above 5%",
+      "statistic": 2,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (descriptive)",
+      "effect_size": 0,
+      "effect_size_name": "generated upward jumps (statistic: XLA upward jumps)",
+      "n": 27,
+      "alpha": null,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "note": "max jump XLA 1.335x, generated 0.998x"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=1",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 3.25809310393272,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 3.25809310393272,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        3.2307184813665315,
+        3.280588151086597
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=2",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.95632112353797,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.95632112353797,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.9223969410486896,
+        2.9855342590098464
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=3",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.883828246366152,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.883828246366152,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.866062095575564,
+        2.9004592489391463
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=4",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.7218304157241087,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.7218304157241087,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.6870002289210984,
+        2.7543338572622846
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=5",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.66985048717604,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.66985048717604,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.631700874436856,
+        2.7085546608595172
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=6",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.4960525505929447,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.4960525505929447,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.4643539076472463,
+        2.5210303739898987
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=7",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.4315836119542635,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.4315836119542635,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.399173351076093,
+        2.4572472730315797
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=8",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.344513111232042,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.344513111232042,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.323428165396767,
+        2.3658265618770775
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=9",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.273944079681986,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.273944079681986,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.2546257569566834,
+        2.293961293467461
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=10",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.2119234687858187,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.2119234687858187,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.1947509132934435,
+        2.227746818495653
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=11",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.1431883016418216,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.1431883016418216,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.114054419279118,
+        2.1700672209916827
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=12",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.0980223541094203,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.0980223541094203,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        2.078540488988605,
+        2.1150172889326684
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=13",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 2.0215437764099042,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 2.0215437764099042,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.9958103955589495,
+        2.0446136737277136
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=14",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.960606485921497,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.960606485921497,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.9388661809906604,
+        1.9800121098120538
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=15",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.9217705165521057,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.9217705165521057,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.895433635177029,
+        1.9487960888828857
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=16",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.8622127329960858,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.8622127329960858,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.8442748388398114,
+        1.8816177260980518
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=20",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.7049610246570286,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.7049610246570286,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.680786445905855,
+        1.725864468852076
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=24",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.5682661598864172,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.5682661598864172,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.5445044696541732,
+        1.5860850904211161
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=28",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.4342881303812511,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.4342881303812511,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.4155582700545037,
+        1.4509022781057077
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=31",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.3831329708681417,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.3831329708681417,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.3612697069194788,
+        1.4026148832187555
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=32",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.7972374237657553,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.7972374237657553,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.777471642596927,
+        1.8156889514668921
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=33",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.2625808563094025,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.2625808563094025,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.2479323202047043,
+        1.2745592515480044
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=40",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.2401385779346228,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.2401385779346228,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.2263425550935454,
+        1.2550844058139004
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=48",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.2771167088779452,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.2771167088779452,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.257143108997164,
+        1.2964703741929073
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=56",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.2580583352295283,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.2580583352295283,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.2356586268424645,
+        1.281963289651083
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=63",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.259743053012913,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.259743053012913,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.2443076119762784,
+        1.2750445661647165
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising B=64",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 1.296838334642024,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 1.296838334642024,
+      "effect_size_name": "log speed-up (XLA time / generated time)",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "interval": [
+        1.2770622504912432,
+        1.3180002769004535
+      ],
+      "note": "sc 27^3, generated against XLA, interleaved rounds"
+    },
+    {
+      "comparison": "E5genB A100-80GB B-ising upward jumps",
+      "test": "count of B -> next B rises above 5%",
+      "statistic": 0,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (descriptive)",
+      "effect_size": 1,
+      "effect_size_name": "generated upward jumps (statistic: XLA upward jumps)",
+      "n": 27,
+      "alpha": null,
+      "hypothesis": "H4",
+      "experiment": "E5",
+      "note": "max jump XLA 1.025x, generated 1.735x"
+    }
+  ]
+}

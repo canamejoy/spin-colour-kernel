@@ -1,0 +1,1353 @@
+{
+  "tests": [
+    {
+      "comparison": "E6scan H100 4096^2 r7_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 0.24081642952198906,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 0.24081642952198906,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        0.23022053355984284,
+        0.24757394713673841
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan H100 4096^2 r10_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 0.08061498567473697,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 0.08061498567473697,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        0.07441950748241805,
+        0.08712540412769292
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan H100 4096^2 r7_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 0.23821650213136075,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 0.23821650213136075,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        0.22642513698708733,
+        0.24644691341730665
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan H100 4096^2 r10_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 0.07801505828410867,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 0.07801505828410867,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        0.07157556472991618,
+        0.08356873014300512
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan H100 8192^2 r7_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.17409013323620962,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.17409013323620962,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.17921021322572808,
+        -0.1693136220209762
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan H100 8192^2 r10_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.34496255824406696,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.34496255824406696,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.3530885746725354,
+        -0.33775626319550445
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan H100 8192^2 r7_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.1717954354787538,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.1717954354787538,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.1778974624835371,
+        -0.1647001580309724
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan H100 8192^2 r10_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.34266786048661124,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.34266786048661124,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.351800922394711,
+        -0.33324174390382405
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan H100 16384^2 r7_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.35734756658501554,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.35734756658501554,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.35897025338902155,
+        -0.3560622350881917
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan H100 16384^2 r10_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.5283879092822328,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.5283879092822328,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.5335417864011361,
+        -0.5238486563228902
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan H100 16384^2 r7_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.35685632653783944,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.35685632653783944,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.35925252686900433,
+        -0.35353061156792936
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan H100 16384^2 r10_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.5278966692350566,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.5278966692350566,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.5343016700335588,
+        -0.5218514760676
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan H100 32768^2 r7_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.434610686381043,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.434610686381043,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.4367585834545783,
+        -0.4331252052484154
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan H100 32768^2 r10_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.6056454360088861,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.6056454360088861,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.6119813361611662,
+        -0.6012503705748313
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan H100 32768^2 r7_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.4239472708640878,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.4239472708640878,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.43618792477115054,
+        -0.4021642366374026
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan H100 32768^2 r10_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.5949820204919307,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.5949820204919307,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.6108782327284965,
+        -0.5706486901092065
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan H100 H5(b) verdict (cuIsing-2025 at 32768^2)",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.434610686381043,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.434610686381043,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.4367585834545783,
+        -0.4331252052484154
+      ],
+      "note": "non-inferior=False margin -0.0488; 7 Philox rounds, ablation (the registered verdict uses 10 rounds)"
+    },
+    {
+      "comparison": "E6scan A100-80GB 4096^2 r7_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 0.17697093091502464,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 0.17697093091502464,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        0.17199365519252968,
+        0.1820359987893929
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan A100-80GB 4096^2 r10_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 0.020303578584586545,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 0.020303578584586545,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        0.015000660049127344,
+        0.025983866181936197
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan A100-80GB 4096^2 r7_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 0.1788944942470217,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 0.1788944942470217,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        0.1747820165046818,
+        0.18289018294691523
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan A100-80GB 4096^2 r10_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 0.022227141916583718,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 0.022227141916583718,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        0.018834846911974415,
+        0.02586944969136749
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan A100-80GB 8192^2 r7_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.1772334275840141,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.1772334275840141,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.19142890588837383,
+        -0.16647656493649676
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan A100-80GB 8192^2 r10_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.3385703861365009,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.3385703861365009,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.3500674151357598,
+        -0.330180825541057
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan A100-80GB 8192^2 r7_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.17861823298713547,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.17861823298713547,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.1948849993223897,
+        -0.1664433409475335
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan A100-80GB 8192^2 r10_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.3399551915396223,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.3399551915396223,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.35320963795864757,
+        -0.33026539267579774
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan A100-80GB 16384^2 r7_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.3026262487887465,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.3026262487887465,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.36375621985116613,
+        -0.24085343817431054
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan A100-80GB 16384^2 r10_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.4702648005859566,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.4702648005859566,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.5303017302861449,
+        -0.40876948871722313
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan A100-80GB 16384^2 r7_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.3228626094185766,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.3228626094185766,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.3637072710427084,
+        -0.30129189283132013
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan A100-80GB 16384^2 r10_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.49050116121578674,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.49050116121578674,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.5306380985578834,
+        -0.46860226931342586
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan A100-80GB 32768^2 r7_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.3379561375631117,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.3379561375631117,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.39100835455875627,
+        -0.29597774315137626
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan A100-80GB 32768^2 r10_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.5087060143656383,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.5087060143656383,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.5617274927487858,
+        -0.4679714602917352
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan A100-80GB 32768^2 r7_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.33537589435117676,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.33537589435117676,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.39582106832433517,
+        -0.277020710908379
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan A100-80GB 32768^2 r10_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.5061257711537034,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.5061257711537034,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.5655865294543829,
+        -0.4476714616706173
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan A100-80GB H5(b) verdict (cuIsing-2025 at 32768^2)",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.3379561375631117,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.3379561375631117,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.39100835455875627,
+        -0.29597774315137626
+      ],
+      "note": "non-inferior=False margin -0.0488; 7 Philox rounds, ablation (the registered verdict uses 10 rounds)"
+    },
+    {
+      "comparison": "E6scan T4 4096^2 r7_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.10642750962324159,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.10642750962324159,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.24519076842617687,
+        -0.018827777777008246
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan T4 4096^2 r10_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.3669951755183735,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.3669951755183735,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.5009704019686225,
+        -0.2632082949027032
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan T4 4096^2 r7_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.07835170430807373,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.07835170430807373,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.18518398207724637,
+        -0.011215006748964114
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan T4 4096^2 r10_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.33891937020320567,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.33891937020320567,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.4494882596079834,
+        -0.24751252222287337
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan T4 8192^2 r7_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.09465626988847245,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.09465626988847245,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.252949135009772,
+        0.01814645105052301
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan T4 8192^2 r10_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.4003282816509891,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.4003282816509891,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.5642652121952263,
+        -0.2533710874267098
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan T4 8192^2 r7_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.0970148529524986,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.0970148529524986,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.231075594442639,
+        -0.005808822353314694
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan T4 8192^2 r10_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.40268686471501514,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.40268686471501514,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.5417453069881045,
+        -0.26844030961283455
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan T4 16384^2 r7_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.057462180874055434,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.057462180874055434,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.2640935318124948,
+        0.0723686902204472
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan T4 16384^2 r10_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.37364382186812334,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.37364382186812334,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.5761850370064111,
+        -0.20879524895016077
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan T4 16384^2 r7_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.06457003032387476,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.06457003032387476,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.2718959880213244,
+        0.06310677461980391
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan T4 16384^2 r10_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.38075167131794274,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.38075167131794274,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.5820266715588338,
+        -0.21771658506655456
+      ],
+      "note": "v11 size scan"
+    },
+    {
+      "comparison": "E6scan T4 H5(b) verdict (ising-gpu at 16384^2)",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.06457003032387476,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.06457003032387476,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.2718959880213244,
+        0.06310677461980391
+      ],
+      "note": "non-inferior=False margin -0.0488; 7 Philox rounds, ablation (the registered verdict uses 10 rounds)"
+    },
+    {
+      "comparison": "E6bitind v08 first version (10 rounds, 64-bit levels) H100",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.3551294450633929,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.3551294450633929,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.3770622410122555,
+        -0.33684064525311325
+      ],
+      "note": ""
+    },
+    {
+      "comparison": "E6bitind v08 first version A100",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.41148299388342124,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.41148299388342124,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.41598714632808087,
+        -0.408503397467298
+      ],
+      "note": ""
+    },
+    {
+      "comparison": "E6bitind v08 first version T4 (Kaggle)",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.7650446626309445,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.7650446626309445,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.7844233700586085,
+        -0.7421591647459737
+      ],
+      "note": ""
+    },
+    {
+      "comparison": "E6bitind static entries + 32-bit levels H100",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.08683358584715249,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.08683358584715249,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.10463403916749207,
+        -0.0714468079965944
+      ],
+      "note": ""
+    },
+    {
+      "comparison": "E6bitind static entries + 32-bit levels A100",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.06757437075138988,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.06757437075138988,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.07508131901053418,
+        -0.060501600098003004
+      ],
+      "note": ""
+    },
+    {
+      "comparison": "E6bitind static entries + 32-bit levels T4 (Kaggle)",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.43927373316816165,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.43927373316816165,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.4529301546948224,
+        -0.42337127464210333
+      ],
+      "note": ""
+    },
+    {
+      "comparison": "E6bitind 7-round Philox H100",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 0.11230371553293206,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 0.11230371553293206,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        0.09189957970252621,
+        0.14026261535497753
+      ],
+      "note": ""
+    },
+    {
+      "comparison": "E6bitind 7-round Philox A100",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 0.06796895108983587,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 0.06796895108983587,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        0.06429609759094985,
+        0.07157004254416985
+      ],
+      "note": ""
+    },
+    {
+      "comparison": "E6bitind 7-round Philox T4 (Modal)",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.38381032435027274,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.38381032435027274,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.4637509264050995,
+        -0.3311393126201662
+      ],
+      "note": ""
+    },
+    {
+      "comparison": "H5(b) verdict H100 (cuIsing-2025 at 32768^2, 10 rounds)",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.6056454360088861,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.6056454360088861,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.6119813361611662,
+        -0.6012503705748313
+      ],
+      "note": "v11 run, verdict at the v12 default; non-inferior=False margin -0.0488"
+    },
+    {
+      "comparison": "H5(b) verdict A100-80GB (cuIsing-2025 at 32768^2, 10 rounds)",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.5087060143656383,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.5087060143656383,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.5617274927487858,
+        -0.4679714602917352
+      ],
+      "note": "v11 run, verdict at the v12 default; non-inferior=False margin -0.0488"
+    },
+    {
+      "comparison": "E6scan v12 T4 4096^2 r7_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.039133899066869385,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.039133899066869385,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.06953675995934158,
+        -0.013095760927309108
+      ],
+      "note": "v12 rerun, 2 warm-up rounds discarded"
+    },
+    {
+      "comparison": "E6scan v12 T4 4096^2 r10_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.29641781435924164,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.29641781435924164,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.34636365604394675,
+        -0.2480940090842589
+      ],
+      "note": "v12 rerun, 2 warm-up rounds discarded"
+    },
+    {
+      "comparison": "E6scan v12 T4 4096^2 r7_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.04072237868823249,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.04072237868823249,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.07185902173356881,
+        -0.014345710603988676
+      ],
+      "note": "v12 rerun, 2 warm-up rounds discarded"
+    },
+    {
+      "comparison": "E6scan v12 T4 4096^2 r10_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.2980062939806047,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.2980062939806047,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.3527786322767173,
+        -0.24598427080103338
+      ],
+      "note": "v12 rerun, 2 warm-up rounds discarded"
+    },
+    {
+      "comparison": "E6scan v12 T4 8192^2 r7_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.061890619844843855,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.061890619844843855,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.12022787279045664,
+        -0.0074003890352191005
+      ],
+      "note": "v12 rerun, 2 warm-up rounds discarded"
+    },
+    {
+      "comparison": "E6scan v12 T4 8192^2 r10_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.34240428891854563,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.34240428891854563,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.42546497363184027,
+        -0.2640031545437098
+      ],
+      "note": "v12 rerun, 2 warm-up rounds discarded"
+    },
+    {
+      "comparison": "E6scan v12 T4 8192^2 r7_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.06648110608569002,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.06648110608569002,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.12486536488439709,
+        -0.012620285411167506
+      ],
+      "note": "v12 rerun, 2 warm-up rounds discarded"
+    },
+    {
+      "comparison": "E6scan v12 T4 8192^2 r10_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.34699477515939176,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.34699477515939176,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.42998791013066884,
+        -0.270519442238899
+      ],
+      "note": "v12 rerun, 2 warm-up rounds discarded"
+    },
+    {
+      "comparison": "E6scan v12 T4 16384^2 r7_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 0.015337512428215284,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 0.015337512428215284,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.019862639433233943,
+        0.0404763750327295
+      ],
+      "note": "v12 rerun, 2 warm-up rounds discarded"
+    },
+    {
+      "comparison": "E6scan v12 T4 16384^2 r10_vs_ising-gpu",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.2980376244414848,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.2980376244414848,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.3777511439755378,
+        -0.2265188723319063
+      ],
+      "note": "v12 rerun, 2 warm-up rounds discarded"
+    },
+    {
+      "comparison": "E6scan v12 T4 16384^2 r7_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": 0.017776074522059468,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": 0.017776074522059468,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.016200678428206855,
+        0.041964262634350644
+      ],
+      "note": "v12 rerun, 2 warm-up rounds discarded"
+    },
+    {
+      "comparison": "E6scan v12 T4 16384^2 r10_vs_cuIsing-2025",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.29559906234764066,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.29559906234764066,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.371610794784657,
+        -0.2263428124475077
+      ],
+      "note": "v12 rerun, 2 warm-up rounds discarded"
+    },
+    {
+      "comparison": "H5(b) verdict T4 (cuIsing-2025 at 8192^2, 10 rounds)",
+      "test": "paired bootstrap of the log speed ratio, 95% percentile interval",
+      "statistic": -0.34699477515939176,
+      "p_value": null,
+      "p_adjusted": null,
+      "correction": "none (interval reported)",
+      "effect_size": -0.34699477515939176,
+      "effect_size_name": "log speed ratio",
+      "n": 10,
+      "alpha": 0.05,
+      "hypothesis": "H5",
+      "experiment": "E6",
+      "interval": [
+        -0.42998791013066884,
+        -0.270519442238899
+      ],
+      "note": "v12; non-inferior=False margin -0.0488"
+    }
+  ]
+}
