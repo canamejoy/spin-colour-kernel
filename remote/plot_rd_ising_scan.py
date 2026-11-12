@@ -3,6 +3,7 @@ import csv
 import sys
 
 import matplotlib
+import matplotlib.ticker
 
 matplotlib.use("pdf")
 import matplotlib.pyplot as plt
@@ -28,8 +29,9 @@ for ax, (key, title) in zip(axes, panels):
     ax.set_xscale("log", base=2)
     ax.set_xticks(x)
     ax.set_xticklabels([f"{v // 1024}k" for v in x])
+    ax.xaxis.set_minor_locator(matplotlib.ticker.NullLocator())
     ax.set_title(title, pad=2)
-    ax.set_xlabel("side $L$ (spins $L^2$)")
+    ax.set_xlabel("lattice side")
     ax.tick_params(length=2, pad=1.5)
 axes[0].set_ylabel("spin updates per ns")
 handles, labels = axes[0].get_legend_handles_labels()
