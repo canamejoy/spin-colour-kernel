@@ -1,6 +1,7 @@
 """Leave-one-seed-out jackknife of the E4 critical-temperature estimate, from the saved raw series.
 
 usage: e4_jackknife.py <run-dir> [<run-dir> ...]
+--drop-smallest refits without the smallest lattice, a check on corrections to scaling.
 Each run directory holds the <tag>-<system>-L<L>.npz series E4 saved (E, m2, m4 of shape (T, seed, t)) and
 its <tag>-<system>.json row. The estimate is recomputed with the same multi-histogram Binder curves, crossing
 grids and size extrapolation E4 uses (exp_perf._binder_curve, _crossing), once with every seed and once with
@@ -20,7 +21,7 @@ from Spin_Colour_Kernel import exp_perf as P  # noqa: E402
 T975 = {9: 2.262157}   # Student t quantile, 9 degrees of freedom
 
 
-def jackknife(run: Path) -> dict:
+def jackknife(run: Path, drop_smallest: bool = False) -> dict:
     row = json.loads(next(run.glob("E4*.json")).read_text())["rows"][0]
     name, x, Tc = row["system"], row["correction_exponent"], row["T_ref"]
     data = {}
@@ -28,6 +29,8 @@ def jackknife(run: Path) -> dict:
         z = np.load(f)
         data[int(f.stem.rsplit("-L", 1)[1])] = {k: z[k] for k in ("E", "m2", "m4", "temps")}
     Ls = sorted(data)
+    if drop_smallest:
+        Ls = Ls[1:]
     pairs = list(zip(Ls[:-1], Ls[1:]))
     grids = {(a, b): np.linspace(max(data[a]["temps"][0], data[b]["temps"][0]),
                                  min(data[a]["temps"][-1], data[b]["temps"][-1]), 241) for a, b in pairs}
@@ -60,7 +63,7 @@ def jackknife(run: Path) -> dict:
     loo = np.array(loo)
     se = math.sqrt((seeds - 1) / seeds * np.sum((loo - loo.mean()) ** 2))
     t = T975[seeds - 1]
-    return {"system": name, "estimate": full, "bootstrap_estimate": row["estimate"], "reference": Tc,
+    return {"system": name, "sizes": Ls, "estimate": full, "bootstrap_estimate": row["estimate"], "reference": Tc,
             "jackknife_se": se, "t_low": full - t * se, "t_high": full + t * se,
             "t_contains_reference": bool(full - t * se <= Tc <= full + t * se),
             "bootstrap_low": row["low"], "bootstrap_high": row["high"],
@@ -69,5 +72,6 @@ def jackknife(run: Path) -> dict:
 
 
 if __name__ == "__main__":
-    out = [jackknife(Path(d)) for d in sys.argv[1:]]
+    drop = "--drop-smallest" in sys.argv
+    out = [jackknife(Path(d), drop) for d in sys.argv[1:] if d != "--drop-smallest"]
     print(json.dumps(out, indent=1))
