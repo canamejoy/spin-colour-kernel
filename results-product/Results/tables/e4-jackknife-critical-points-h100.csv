@@ -1,0 +1,7 @@
+System,Acceptance,Tc,Jackknife SE,t interval low,t interval high,Reference,t half width / Tc (%),Bootstrap half width / Tc (%),t interval contains reference
+Ising bcc,metropolis,6.35471,0.000499,6.35358,6.35584,6.35435,0.0178,0.0143,True
+Ising bcc,barker,6.35493,0.000204,6.35447,6.35539,6.35435,0.0072,0.0059,False
+Ising square,barker,2.2695,0.000823,2.26764,2.27136,2.269185,0.0821,0.0663,True
+Ising triangular,barker,3.6408,0.000777,3.63904,3.64255,3.640957,0.0483,0.0387,True
+Ising sc,barker,4.51046,0.000663,4.50896,4.51196,4.511523,0.0332,0.0274,True
+Ising fcc,barker,9.79712,0.000817,9.79527,9.79897,9.797131,0.0189,0.0147,True
