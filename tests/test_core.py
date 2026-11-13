@@ -587,3 +587,10 @@ def test_periodic_pair_grids_are_even_and_admit_a_periodic_colouring():
     for factor, B, n, b, box in {(x[0], x[1], x[2], x[3], x[4]) for x in g if x[0] in ("below", "above")}:
         s = sy.System("pp", n, cr.make(crystal_for_b[b]), box, (True,) * 3, {1: 1.0})
         assert s.colouring.n_colours <= 4
+
+
+def test_e4_builds_its_systems_under_the_requested_acceptance_rule():
+    from Spin_Colour_Kernel.exp_perf import e4_systems, _e4_system
+    maker, args, kw, _, _ = e4_systems()[0]
+    assert _e4_system(maker, args, 8, kw, "barker").acceptance == "barker"
+    assert _e4_system(maker, args, 8, kw, "metropolis").acceptance == "metropolis"

@@ -835,9 +835,17 @@ def _probe_tau(s, Lb, Tc, seeds, device, start=2000, cap=100_000, ratio=50):
         P = min(cap, 4 * P)
 
 
+def _e4_system(maker, args, L, kw, acceptance: str = "metropolis") -> sy.System:
+    """One E4 system at side L under the given single-site acceptance rule (Metropolis or Barker)."""
+    s = maker(*args, L, **kw)
+    if acceptance != s.acceptance:
+        s = sy.System(s.name, s.n, s.crystal, s.box, s.periodic, s.J, T_ref=s.T_ref, acceptance=acceptance)
+    return s
+
+
 def e4(out: Path, device="cuda", sizes2d=(32, 64, 128, 256), sizes3d=(16, 24, 32, 48), seeds: int = 10,
        window: float = 0.03, ntemps: int = 9, meas: int = 20000, boots: int = 2000, only=None, tag="E4",
-       probe_cap: int = 100_000):
+       probe_cap: int = 100_000, acceptance: str = "metropolis"):
     """Binder-cumulant crossings with bootstrap over seeds and size extrapolation (H3).
 
     Per size: tau from an adaptive probe at Tc; ntemps temperatures one energy width apart (capped at
@@ -847,7 +855,7 @@ def e4(out: Path, device="cuda", sizes2d=(32, 64, 128, 256), sizes3d=(16, 24, 32
     rows = []
     adev = device if str(device).startswith("cuda") and torch.cuda.is_available() else "cpu"
     for maker, args, kw, dim, x in e4_systems():
-        probe = maker(*args, 6 if args[0] in ("triangular",) else 4, **kw)
+        probe = _e4_system(maker, args, 6 if args[0] in ("triangular",) else 4, kw, acceptance)
         if only and probe.name not in only:
             continue
         Tc = kw["T_ref"]
@@ -856,7 +864,7 @@ def e4(out: Path, device="cuda", sizes2d=(32, 64, 128, 256), sizes3d=(16, 24, 32
         t_start = time.time()
         for L in sizes:
             Lb = L if probe.crystal.name != "triangular" else 3 * int(round(L / 3))
-            s = maker(*args, Lb, **kw)
+            s = _e4_system(maker, args, Lb, kw, acceptance)
             tau, P, resolved, sigma_E = _probe_tau(s, Lb, Tc, seeds, device, cap=probe_cap)
             temps = e4_temperatures(Tc, sigma_E, ntemps, window)
             therm = int(max(1000, 20 * tau))

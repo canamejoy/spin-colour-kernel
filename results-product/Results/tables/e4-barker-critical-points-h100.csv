@@ -1,0 +1,6 @@
+System,Acceptance,Tc,Interval low,Interval high,Reference,Half width / Tc (%),p,p (Holm),Interval contains reference,Verdict,Run
+Ising square,barker,2.2695,2.26794,2.27095,2.269185,0.0663,0.685,1,True,supported,h100/20261113-121727-Ising_square-meas400000
+Ising triangular,barker,3.6408,3.63934,3.64216,3.640957,0.0387,0.823,1,True,supported,h100/20261113-121727-Ising_triangular-meas400000
+Ising sc,barker,4.51046,4.50924,4.51171,4.511523,0.0274,0.095,0.38,True,supported,h100/20261113-121731-Ising_sc-meas400000
+Ising bcc,barker,6.35493,6.35457,6.35532,6.35435,0.0059,0.003,0.015,False,not supported,h100/20261113-121727-Ising_bcc-meas400000
+Ising fcc,barker,9.79712,9.79576,9.79864,9.797131,0.0147,0.949,1,True,supported,h100/20261113-121727-Ising_fcc-meas400000

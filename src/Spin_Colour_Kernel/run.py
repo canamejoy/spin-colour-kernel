@@ -46,6 +46,9 @@ def main(argv=None):
         "E3": lambda: C.e3(out),
         "E4": lambda: P.e4(out, device=a.device, only=only, meas=a.meas,
                            tag="E4" if not only else "E4-" + "-".join(n.replace(" ", "_") for n in only)),
+        # experiments v19: the Ising critical points again under the Barker rule, whose fixed scan is ergodic
+        "E4barker": lambda: P.e4(out, device=a.device, only=only, meas=a.meas, acceptance="barker",
+                                 tag="E4barker" if not only else "E4barker-" + "-".join(n.replace(" ", "_") for n in only)),
         "E4tri": lambda: P.e4_triangular_afm(out, device=a.device, sizes=(6, 12) if sm else (24, 48, 96),
                                              meas=2000 if sm else 1_000_000, probe_cap=4000 if sm else 2_000_000),
         # exploratory, outside the declared sizes: does the peak flatten above the crossover once L > xi?
