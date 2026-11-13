@@ -64,11 +64,12 @@ def parse_raw_csv(text: str) -> list[dict]:
             continue
         d = dict(zip(names, r))
         k = {"kernel": d.get("Kernel Name", ""), "id": d.get("ID", "")}
-        for m in KEEP:
-            if m in d:
-                k[m] = _num(d[m])
+        # every DRAM metric and device attribute as well: the roofline reads achieved and peak bandwidth
+        kept = [m for m in names if m in KEEP or m.startswith(("dram__", "device__attribute_"))]
+        for m in kept:
+            k[m] = _num(d[m]) if not m.startswith("device__attribute_display") else d[m]
         k["stalls"] = {STALL.match(m).group(1): _num(v) for m, v in d.items() if STALL.match(m)}
-        k["units"] = {m: units.get(m, "") for m in KEEP if m in d}
+        k["units"] = {m: units.get(m, "") for m in kept}
         out.append(k)
     return out
 
@@ -133,6 +134,9 @@ def inner(spec: str, dump: Path, out_json: Path):
 GEN = {"ising-square-1024-int8": ("ising", "square", 1024, 16, False),
        "ising-square-1024-packed": ("ising", "square", 1024, 32, True),
        "heis-sc-32": ("heisenberg", "sc", 32, 128, None),
+       # roofline targets: state far above the 50 MB L2 of the H100 (vector spins, and a basis of 4)
+       "heis-sc-64": ("heisenberg", "sc", 64, 128, None),
+       "heis-fcc-32": ("heisenberg", "fcc", 32, 128, None),
        "ising-square-512-bitwise": ("ising", "square", 512, 64, "bitwise"),
        "ising-square-512-independent": ("ising", "square", 512, 64, "independent"),
        "ising-square-4096-independent": ("ising", "square", 4096, 64, "independent"),

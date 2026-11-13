@@ -553,3 +553,23 @@ def test_rows_longer_than_max_block_are_chunked_exactly(s):
 def test_max_block_must_be_a_power_of_two():
     with pytest.raises(ValueError):
         Sampler(sy.xy("square", 8), 1, device="cpu", max_block=24)
+
+
+def test_e5_profile_keeps_every_dram_and_device_metric():
+    from Spin_Colour_Kernel.e5_profile import parse_raw_csv
+    head = ['"ID"', '"Kernel Name"', '"dram__bytes.sum.per_second"', '"dram__bytes.sum.peak_sustained"',
+            '"device__attribute_display_name"']
+    text = "\n".join([",".join(head), ",".join(['""', '""', '"Gbyte/s"', '"byte/cycle"', '""']),
+                      ",".join(['"0"', '"kernel"', '"1,500.5"', '"2,048"', '"NVIDIA H100 80GB HBM3"'])])
+    k = parse_raw_csv(text)[0]
+    assert k["dram__bytes.sum.per_second"] == 1500.5 and k["dram__bytes.sum.peak_sustained"] == 2048.0
+    assert k["device__attribute_display_name"] == "NVIDIA H100 80GB HBM3"
+    assert k["units"]["dram__bytes.sum.per_second"] == "Gbyte/s"
+
+
+def test_e5_profile_roofline_targets_exceed_the_h100_l2():
+    from Spin_Colour_Kernel.e5_profile import GEN
+    for spec in ("heis-sc-64", "heis-fcc-32"):
+        kind, crystal, L, B, packed = GEN[spec]
+        basis = {"sc": 1, "fcc": 4}[crystal]
+        assert kind == "heisenberg" and L ** 3 * basis * B * 3 * 4 > 50 * 2 ** 20

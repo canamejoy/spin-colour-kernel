@@ -1,0 +1,9 @@
+Device,System,Box,B,Colours,Colour pass,Time (us),DRAM read (MB),DRAM write (MB),DRAM bandwidth (TB/s),Peak DRAM bandwidth (TB/s),DRAM fraction of peak (%),SM throughput (% of peak),Registers per thread,Run
+H100,"Ising square, multi-spin coded",4096x4096,64,2,0,851.3,135.0,113.4,0.292,3.352,8.7,72.4,48,h100/20261112-230535-ising-square-4096-independent-heis-sc-64-heis-fcc-32
+H100,"Ising square, multi-spin coded",4096x4096,64,2,1,851.1,135.1,113.3,0.292,3.352,8.7,72.4,48,h100/20261112-230535-ising-square-4096-independent-heis-sc-64-heis-fcc-32
+H100,Heisenberg simple cubic,64x64x64,128,2,0,419.7,468.9,383.5,2.031,3.352,60.6,81.3,70,h100/20261112-230535-ising-square-4096-independent-heis-sc-64-heis-fcc-32
+H100,Heisenberg simple cubic,64x64x64,128,2,1,420.9,468.4,383.9,2.025,3.352,60.4,81.4,70,h100/20261112-230535-ising-square-4096-independent-heis-sc-64-heis-fcc-32
+H100,Heisenberg face-centred cubic,32x32x32,128,4,0,98.7,204.5,46.0,2.539,3.35,75.8,62.0,59,h100/20261112-230535-ising-square-4096-independent-heis-sc-64-heis-fcc-32
+H100,Heisenberg face-centred cubic,32x32x32,128,4,1,101.2,204.5,45.6,2.472,3.353,73.7,62.8,59,h100/20261112-230535-ising-square-4096-independent-heis-sc-64-heis-fcc-32
+H100,Heisenberg face-centred cubic,32x32x32,128,4,2,98.5,204.5,45.9,2.542,3.351,75.9,62.3,59,h100/20261112-230535-ising-square-4096-independent-heis-sc-64-heis-fcc-32
+H100,Heisenberg face-centred cubic,32x32x32,128,4,3,99.6,204.5,45.5,2.511,3.351,74.9,63.4,59,h100/20261112-230535-ising-square-4096-independent-heis-sc-64-heis-fcc-32
