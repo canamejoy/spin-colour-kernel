@@ -1253,7 +1253,7 @@
       "experiment": "E6"
     },
     {
-      "comparison": "E6 batch slope Heisenberg nanodot (section0)",
+      "comparison": "E6 batch slope Heisenberg nanodot",
       "test": "bootstrap of the log-cost slope per doubling",
       "statistic": -0.04025603200866125,
       "ci_low": -0.07813473223752741,
@@ -1273,17 +1273,6 @@
       "alpha": 0.05,
       "hypothesis": "H5",
       "experiment": "E6"
-    },
-    {
-      "comparison": "E7 section0 pair",
-      "test": "paired bootstrap of the log speed ratio",
-      "statistic": 0.42749399283719747,
-      "ci_low": 0.4192287066817381,
-      "ci_high": 0.4365286922595333,
-      "n": 10,
-      "alpha": 0.05,
-      "hypothesis": "H6",
-      "experiment": "E7"
     },
     {
       "comparison": "E8 two-GPU scaling Ising square",
@@ -1306,7 +1295,7 @@
       "experiment": "E8"
     },
     {
-      "comparison": "E8 two-GPU scaling Heisenberg nanodot (section0)",
+      "comparison": "E8 two-GPU scaling Heisenberg nanodot",
       "test": "bootstrap of the scaling ratio",
       "statistic": 2.182539459162809,
       "ci_low": 2.082122501073444,

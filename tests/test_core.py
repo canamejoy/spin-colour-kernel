@@ -484,7 +484,7 @@ def test_set_temperature_updates_beta_in_place():
     assert torch.allclose(A.beta, torch.tensor([2.0, 1.0, 0.5, 0.25]))
 
 
-def test_anneal_state_cools_and_matches_section0_layout(tmp_path):
+def test_anneal_state_cools_and_writes_the_dataset_layout(tmp_path):
     import json
     from Spin_Colour_Kernel import anneal as AN
     rows = [[0.0, 0.0, 0.0, 0.2867, 0.0, 0.7691, 0.6535], [0.2, 0.0, 0.0, 0.2867, 0.0, 0.7691, 0.6535]]
@@ -497,7 +497,7 @@ def test_anneal_state_cools_and_matches_section0_layout(tmp_path):
     red = AN.reduce_obs(r["obs"], temps, s.n_active)
     assert np.all(np.isfinite(red["E"])) and np.all(red["Cv"] >= 0) and np.all(red["chi"] >= 0)
     assert red["E"][1] < red["E"][0] and red["M"][1] > red["M"][0]          # cooling orders the disk
-    # the module entry point writes one .npz per state with the section0 dataset layout
+    # the module entry point writes one .npz per state with the dataset layout
     cfg = dict(params=rows[:1], names=["uniform"], Rd=2.5, layers=3, angle=90.0, T_start=20.0, T_end=0.1,
                n_temps=2, sweeps=15, replicas=2, every=5, seed=42)
     (tmp_path / "run.json").write_text(json.dumps(cfg))

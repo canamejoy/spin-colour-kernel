@@ -1,4 +1,4 @@
 System,Total batch,1 GPU flips/ns,2 GPU flips/ns,Scaling,Low,High
 Ising square,16,7.081,13.085,1.848,1.754,1.914
 Heisenberg sc,128,2.766,6.131,2.217,2.202,2.229
-Heisenberg nanodot (section0),1024,1.21,2.641,2.183,2.082,2.291
+Heisenberg nanodot,1024,1.21,2.641,2.183,2.082,2.291

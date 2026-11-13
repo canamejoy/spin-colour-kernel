@@ -1,4 +1,4 @@
-"""Experiments E4, E6, E7 and the supplementary two-GPU measurement E8 of experiments v03."""
+"""Experiments E4, E6 and the supplementary two-GPU measurement E8 of experiments v03."""
 
 from __future__ import annotations
 
@@ -662,81 +662,6 @@ def e6_independence(out: Path, device="cuda", L: int = 512, B: int = 64, therm: 
     res["criterion_met"] = bool(ind["mean_abs_within"] < 0.1 and ind["mean_abs_within"] < ind["mean_abs_across"] + 0.05)
     res["params"] = {"L": L, "B": B, "therm": therm, "sweeps": sweeps, "seed": seed}
     return save(out, tag, res)
-
-
-# ------------------------------------------------------------------ E7
-def section0_launcher(geo_sys: sy.System, B: int, device, Rd=18.30, L=5, params=None, seed: int = 1):
-    """Torch launcher for the vendored section0 kernel, on the same nanodot as `geo_sys`."""
-    from .section0_kernel import _substep_kernel
-    p = {"Jex": 1.0, "Kan2": 0.034, "Hex": 0.483, "KDM": 0.88, "g": 90.0}
-    if params:
-        p.update(params)
-    N, LZ = geo_sys.L1, geo_sys.L3
-    mask = torch.as_tensor(geo_sys.site_mask()[0], device=device)              # (LZ, N, N)
-    disk = mask[0].to(torch.float32).contiguous()
-    k1 = torch.as_tensor(geo_sys.cubic_k1[0], device=device).expand(B, LZ, N, N).contiguous()
-    g = math.radians(p["g"])
-    par = torch.tensor([p["Jex"], p["Kan2"], p["Hex"], p["KDM"], math.cos(g), math.sin(g)],
-                       dtype=torch.float32, device=device).expand(B, 6).contiguous()
-    step = torch.tensor([seed * 1000], dtype=torch.int32, device=device)
-    dum = torch.zeros(1, dtype=torch.float32, device=device)
-    BY, BX = 4, 1 << (N - 1).bit_length()
-    grid = (B, LZ, -(-N // BY))
-
-    def run(S, beta, sweeps):
-        for _ in range(sweeps):
-            for parity in (0, 1):
-                _substep_kernel[grid](S, k1, par, disk, beta, step, dum, dum, S, dum,
-                                      N=N, LZ=LZ, PARITY=parity, BY=BY, BX=BX, HAS_RNG=True,
-                                      WRITE_DE=False, SO=1.0, num_warps=4)
-                step.add_(1)
-        return S
-    return run
-
-
-def e7(out: Path, device="cuda", B: int = 1024, reps: int = 10, T: float = 2.0, k: int = 10):
-    """Generated kernel against the hand-specialized section0 kernel on the production nanodot (H6)."""
-    s = sy.nanodot()
-    dev = torch.device(device)
-    A = Sampler(s, B, dev, 1)
-    A.set_temperature(T)
-    S_ours = A.init_spins(seed=1)
-    S_s0 = S_ours[:, :, 0].clone().contiguous()            # (B, 3, LZ, N, N): section0 layout
-    beta = torch.tensor([1.0 / T], dtype=torch.float32, device=dev)
-    run0 = section0_launcher(s, B, dev)
-    run0(S_s0, beta, 1)
-    torch.cuda.synchronize(dev)
-    g0 = torch.cuda.CUDAGraph()
-    with torch.cuda.graph(g0):
-        run0(S_s0, beta, k)
-    ours_replay = A.graph(S_ours, k)
-    ours_replay()
-    g0.replay()
-    upd = B * s.n_active * k
-    ours, theirs = [], []
-    for i in range(reps):
-        if i % 2 == 0:
-            ours.append(upd / (_events_ms(ours_replay, 1, dev) * 1e6))
-            theirs.append(upd / (_events_ms(g0.replay, 1, dev) * 1e6))
-        else:
-            theirs.append(upd / (_events_ms(g0.replay, 1, dev) * 1e6))
-            ours.append(upd / (_events_ms(ours_replay, 1, dev) * 1e6))
-    lr = np.log(np.asarray(ours) / np.asarray(theirs))
-    m, lo, hi = boot_ci(lr)
-    # cross-check of the Hamiltonian: both chains equilibrated at T, mean energy per active site
-    for _ in range(30):
-        ours_replay()
-        g0.replay()
-    torch.cuda.synchronize(dev)
-    e_ours = (A.energy(S_ours) / s.n_active).cpu().numpy()
-    e_s0 = (A.energy(S_s0[:, :, None]) / s.n_active).cpu().numpy()
-    res = {"generated_flips_per_ns": ours, "section0_flips_per_ns": theirs, "log_ratio": m, "low": lo,
-           "high": hi, "batch": B, "active_sites": s.n_active, "T": T,
-           "energy_per_site": {"generated": boot_ci(e_ours), "section0": boot_ci(e_s0)},
-           "colours": s.colouring.n_colours}
-    print(f"E7 ours {np.mean(ours):.3f}/ns section0 {np.mean(theirs):.3f}/ns log ratio {m:+.3f} [{lo:+.3f},{hi:+.3f}]; "
-          f"E/site {e_ours.mean():.4f} vs {e_s0.mean():.4f}", flush=True)
-    return save(out, "E7", res)
 
 
 # ------------------------------------------------------------------ E8 (supplementary, two GPUs)

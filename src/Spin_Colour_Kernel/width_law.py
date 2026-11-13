@@ -2,8 +2,7 @@
 
     v2(#) = v2(B) + v2(n) + v2(b) + sum_k v2(L_k),   w = min(4, 2^v2(#))          (11)
 
-The baseline is an array-compiler Metropolis step on the tensor (10), written with jnp.roll as in
-section0. Every grid is compiled with XLA's dump enabled; the width is read from the PTX as the
+The baseline is an array-compiler Metropolis step on the tensor (10), written with jnp.roll. Every grid is compiled with XLA's dump enabled; the width is read from the PTX as the
 widest f32 global load (`ld.global[.nc].vK.f32`) of the module and of its dominant kernel.
 
 Run as its own process (the dump flag must be set before JAX starts):

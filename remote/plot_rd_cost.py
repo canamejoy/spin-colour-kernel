@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 throughput, nanodisk, out = sys.argv[1], sys.argv[2], sys.argv[3]
 rows = list(csv.DictReader(open(throughput)))
-names = {"Heisenberg nanodot (section0)": "Heisenberg nanodot, masked"}
+names = {"Heisenberg nanodot": "Heisenberg nanodot, masked"}
 labels = [names.get(r["System"], r["System"]) for r in rows]
 rates = [float(r["Flips/ns B=128"]) for r in rows]
 disk = {}

@@ -1,6 +1,6 @@
-"""H100 runs on Modal, launched by the operator (experiments v03: E4, E6 H100 rows, E7 H100 row).
+"""H100 runs on Modal, launched by the operator (experiments v03: E4, E6 H100 rows).
 
-    modal run remote/modal_h100.py --exp E4,E4tri,E6,E7          # full H100 set, ~7 GPU hours
+    modal run remote/modal_h100.py --exp E4,E4tri,E6             # full H100 set
     modal run remote/modal_h100.py --exp E4smoke,E6 --smoke      # minutes: checks the pipeline only
     modal run remote/modal_h100.py --exp E4 --only "Ising sc" --hours 3   # one E4 system, hard cost cap
     SCK_GPU=A100 modal run remote/modal_h100.py --exp E5conf,E6conf       # another GPU type (default H100)
@@ -68,7 +68,7 @@ def run(exp: str, smoke: bool, run_id: str, only: str = "", limit_s: int = 0, me
 
 
 @app.local_entrypoint()
-def main(exp: str = "E4,E4tri,E6,E7", smoke: bool = False, only: str = "", hours: float = 24.0,
+def main(exp: str = "E4,E4tri,E6", smoke: bool = False, only: str = "", hours: float = 24.0,
          meas: int = 20000):
     import time
 

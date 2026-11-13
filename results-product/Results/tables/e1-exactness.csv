@@ -11,4 +11,4 @@ Heisenberg bcc,2,128,3,9000,0,none
 Heisenberg fcc,4,256,3,9000,0,none
 Heisenberg triangular AFM,3,36,3,9000,0,none
 Heisenberg kagome AFM,3,108,3,9000,0,none
-Heisenberg nanodot (section0),2,87,3,9000,0,none
+Heisenberg nanodot,2,87,3,9000,0,none

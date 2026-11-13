@@ -106,7 +106,6 @@ def main(argv=None):
         "E6vamp": lambda: VP.vampire_pair(out, device=a.device, reps=2 if sm else 5, batches=(1, "1d", 128)),
         "E6indep": lambda: P.e6_independence(out, device=a.device, L=64 if sm else 512, therm=50 if sm else 2000,
                                              sweeps=40 if sm else 1000),
-        "E7": lambda: P.e7(out, device=a.device, B=64 if sm else 1024, reps=3 if sm else 10),
         "E8": lambda: P.e8(out, reps=3 if sm else 10),
     }
     status = {}

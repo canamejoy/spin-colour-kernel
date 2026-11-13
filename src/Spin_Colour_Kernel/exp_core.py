@@ -266,9 +266,6 @@ def e2(out: Path, seeds=tuple(range(1, 11)), samples: int = 100_000, batch: int 
 
 
 # ------------------------------------------------------------------ E3
-SECTION0 = {("sc", (1,)): 2, ("sc", (1, 2)): 8, ("sc", (1, 2, 3, 4)): 27}
-
-
 def e3(out: Path):
     """Minimum linear colouring, clique number, independent admissibility check (H2)."""
     rows = []
@@ -285,7 +282,7 @@ def e3(out: Path):
         rows.append({"crystal": name, "shells": list(sh), "bonds": len(c.bonds), "group": list(col.m),
                      "colouring": col.describe(), "linear_colours": col.n_colours, "clique_number": w,
                      "admissible": ok, "optimality_certified": col.n_colours == w, "check_box": list(box),
-                     "section0_colours": SECTION0.get((name, sh)), "seconds": time.time() - t0})
+                     "seconds": time.time() - t0})
         print(f"E3 {name:10s} {sh} colours={col.n_colours} clique={w} ok={ok}", flush=True)
     return save(out, "E3", {"rows": rows, "verdict": "supported" if all(r["admissible"] for r in rows) else
                             "not supported"})

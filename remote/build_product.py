@@ -14,7 +14,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 K = ROOT / "results" / "kaggle"
 OUT = ROOT / "Spin-Colour-Kernel" / "Results"
-JOBS = {"E1": "a", "E3": "a", "E2": "e", "E2b": "f", "E6": "b", "E7": "b", "E8": "d", "E5": "c",
+JOBS = {"E1": "a", "E3": "a", "E2": "e", "E2b": "f", "E6": "b", "E8": "d", "E5": "c",
         "E5-jax0435": "h", "E5-sass": "g"}
 
 
@@ -43,10 +43,9 @@ def main():
     # E3
     e3 = load("E3")
     write_csv("e3-colourings.csv", ["Crystal and shells", "Group", "Linear colours", "Clique number", "Admissible",
-                                    "Optimality certified", "section0 colours"],
+                                    "Optimality certified"],
               [[f"{r['crystal']}, {'-'.join(map(str, r['shells']))}", "x".join(f"Z{m}" for m in r["group"]),
-                r["linear_colours"], r["clique_number"], r["admissible"], r["optimality_certified"],
-                r["section0_colours"] if r["section0_colours"] is not None else ""] for r in e3["rows"]])
+                r["linear_colours"], r["clique_number"], r["admissible"], r["optimality_certified"]] for r in e3["rows"]])
     # E2 and E2b
     rows = []
     for tag in ("E2", "E2b"):
@@ -85,17 +84,6 @@ def main():
     sig.append({"comparison": "E6 ising-gpu pair", "test": "paired bootstrap of the log speed ratio",
                 "statistic": p["log_ratio"], "ci_low": p["low"], "ci_high": p["high"], "n": 10, "alpha": 0.05,
                 "hypothesis": "H5", "experiment": "E6"})
-    # E7
-    e7 = load("E7")
-    write_csv("e7-generality-cost.csv", ["Device", "Generated flips/ns", "section0 flips/ns", "Log ratio", "Interval low",
-                                         "Interval high", "Energy/site generated", "Energy/site section0"],
-              [["T4", round(float(np.mean(e7["generated_flips_per_ns"])), 4),
-                round(float(np.mean(e7["section0_flips_per_ns"])), 4), round(e7["log_ratio"], 4), round(e7["low"], 4),
-                round(e7["high"], 4), round(e7["energy_per_site"]["generated"][0], 5),
-                round(e7["energy_per_site"]["section0"][0], 5)]])
-    sig.append({"comparison": "E7 section0 pair", "test": "paired bootstrap of the log speed ratio",
-                "statistic": e7["log_ratio"], "ci_low": e7["low"], "ci_high": e7["high"], "n": 10, "alpha": 0.05,
-                "hypothesis": "H6", "experiment": "E7"})
     # E8
     e8 = load("E8")
     write_csv("e8-two-gpu.csv", ["System", "Total batch", "1 GPU flips/ns", "2 GPU flips/ns", "Scaling", "Low", "High"],

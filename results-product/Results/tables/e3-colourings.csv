@@ -1,10 +1,10 @@
-Crystal and shells,Group,Linear colours,Clique number,Admissible,Optimality certified,section0 colours
-"square, 1",Z2,2,2,True,True,
-"sc, 1",Z2,2,2,True,True,2
-"sc, 1-2",Z2xZ2,4,4,True,True,8
-"sc, 1-2-3-4",Z9,9,8,True,False,27
-"bcc, 1",Z2,2,2,True,True,
-"fcc, 1",Z2xZ2,4,4,True,True,
-"triangular, 1",Z3,3,3,True,True,
-"honeycomb, 1",Z2,2,2,True,True,
-"kagome, 1",Z3,3,3,True,True,
+Crystal and shells,Group,Linear colours,Clique number,Admissible,Optimality certified
+"square, 1",Z2,2,2,True,True
+"sc, 1",Z2,2,2,True,True
+"sc, 1-2",Z2xZ2,4,4,True,True
+"sc, 1-2-3-4",Z9,9,8,True,False
+"bcc, 1",Z2,2,2,True,True
+"fcc, 1",Z2xZ2,4,4,True,True
+"triangular, 1",Z3,3,3,True,True
+"honeycomb, 1",Z2,2,2,True,True
+"kagome, 1",Z3,3,3,True,True

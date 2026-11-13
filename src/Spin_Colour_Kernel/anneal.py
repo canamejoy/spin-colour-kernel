@@ -1,15 +1,15 @@
-"""Cooling ladder of the section0 nanodisk on the generated kernel, with section0's observables.
+"""Cooling ladder of the magnetic nanodisk on the generated kernel.
 
 One state is one Hamiltonian (seven parameters), one compiled kernel and one batch of replicas. Every
 replica follows the same ladder from T_start to T_end (kelvin); at each temperature it thermalizes
-n_therm sweeps and measures every `every` sweeps during n_meas sweeps. The accumulators follow
-section0's `anneal` exactly (fluctuations about a reference taken once per temperature, so float
-cancellation cannot destroy C_v and chi), so `reduce_obs` gives the same metrics:
+n_therm sweeps and measures every `every` sweeps during n_meas sweeps. The accumulators hold
+fluctuations about a reference taken once per temperature, so float cancellation cannot destroy
+C_v and chi, and `reduce_obs` gives the metrics from
 
     obs[t] = (<dE>, <dE^2>, <dM>, <dM^2>, <Mz>, <Q>, E_ref, M_ref)      shape (n_T, 8, B)
 
 with E the total energy (units of Jex), M = |sum_i s_i| / N_active, Mz its z component, and Q the
-Berg-Luscher charge of the middle layer. Differences from section0, all deliberate:
+Berg-Luscher charge of the middle layer. Design choices:
 - the update is the generated multi-colour kernel (any of the sc shells 1-4, colouring searched and
   verified), launched from CUDA graphs of `every` sweeps;
 - observables are read every `every` sweeps, not after every sweep (they cost more than a sweep);
@@ -33,7 +33,7 @@ import torch
 from . import system as sy
 from .sampler import Sampler
 
-KB = 0.086173404     # meV / K, as in section0 (Jex = 1 sets the energy unit)
+KB = 0.086173404     # meV / K (Jex = 1 sets the energy unit)
 PARAM_NAMES = ("Jex2", "Jex3", "Jex4", "Kan1", "KanS", "Hex", "KDM")
 
 
@@ -219,7 +219,7 @@ def anneal_state(s, replicas: int, temps_K, n_therm: int, n_meas: int, every: in
 
 
 def reduce_obs(obs, temps, n_spins, kB: float = KB):
-    """section0's reduction: accumulators (n_T, 8, B) -> per-temperature scalars."""
+    """Reduction: accumulators (n_T, 8, B) -> per-temperature scalars."""
     obs = np.asarray(obs)
     assert obs.ndim == 3 and obs.shape[1] == 8, f"expected (n_T, 8, batch), got {obs.shape}"
     dE, dE2, dM, dM2, Mz, Q, E_ref, M_ref = [obs[:, i] for i in range(8)]

@@ -666,7 +666,7 @@
       "note": "below log 1.05: True; role reported; source table e6-conf-slopes.csv"
     },
     {
-      "comparison": "E6conf batch slope T4 Heisenberg nanodot (section0)",
+      "comparison": "E6conf batch slope T4 Heisenberg nanodot",
       "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
       "statistic": 0.1427,
       "p_value": null,
@@ -913,7 +913,7 @@
       "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
     },
     {
-      "comparison": "E6conf batch slope A100 Heisenberg nanodot (section0)",
+      "comparison": "E6conf batch slope A100 Heisenberg nanodot",
       "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
       "statistic": -0.2178,
       "p_value": null,
@@ -1160,7 +1160,7 @@
       "note": "below log 1.05: True; role test; source table e6-conf-slopes.csv"
     },
     {
-      "comparison": "E6conf batch slope H100 Heisenberg nanodot (section0)",
+      "comparison": "E6conf batch slope H100 Heisenberg nanodot",
       "test": "bootstrap of the log-cost slope per batch doubling, one-sided equivalence bound",
       "statistic": -0.2359,
       "p_value": null,

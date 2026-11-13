@@ -1,4 +1,4 @@
-"""Build notebooks/nanodisk_simulation.ipynb: a self-contained cooling run of the section0 nanodisk on
+"""Build notebooks/nanodisk_simulation.ipynb: a self-contained cooling run of the magnetic nanodisk on
 the generated kernel. The package modules it needs are embedded verbatim with their sha256, so the
 notebook runs byte-identical code to this repository without cloning it.
 
@@ -43,29 +43,20 @@ it runs code byte-identical to `spin-colour-kernel` at commit `{commit}`.
 
 ## What it does
 
-It cools the section0 magnetic nanodisk (sc Heisenberg disc with exchange up to four shells,
+It cools the magnetic nanodisk (sc Heisenberg disc with exchange up to four shells,
 interfacial DMI, cubic and surface anisotropy, Zeeman field) from a hot temperature to 0.1 K, one
-state per parameter row, and reports the same physical metrics as the section0 notebook at every
+state per parameter row, and reports these physical metrics at every
 step: E per site, |M|, Mz, Cv, χ and the Berg–Lüscher topological charge Q of the middle layer.
 
 ## How to use it
 
 **Edit only the parameters cell.** One row per state; the notebook counts the rows. Then *Run all*.
 
-## What changed against the section0 notebook
+## Performance
 
-| | section0 notebook | this notebook |
-|---|---|---|
-| update | JAX checkerboard, or a hand-written Triton stencil for the first shell only | the **generated** Triton kernel, for any of the sc shells 1–4 |
-| colouring | fixed: 2, 8 or 27 sublattices | searched and verified on the disk: 2 to 9 colours (27 → 3 with shell 4, 8 → 4 with shell 2) |
-| replicas | a width penalty when v₂(replicas) + v₂(layers) ≥ 2 | no penalty: the cost per update **falls** as the batch grows |
-| launches | one per substep | CUDA graphs of whole sweep blocks, no host launch cost |
-| exactness | the Triton stencil checked against the JAX one | every state checked spin by spin against the **sequential** chain before it runs |
-| several GPUs | `pmap` over states or replicas | one process per GPU, states dealt round-robin |
-
-Measured on the paper's benchmarks: on the production nanodisk the generated kernel is 1.53× the
-section0 hand kernel on an H100 and 1.86× on a T4 (E7), and its throughput on the nanodisk rises
-from 5.0 to 13.4 spin flips/ns between 8 and 128 replicas on an H100 (E6).
+Measured on the paper's benchmarks: on the nanodisk the generated kernel's throughput rises from
+5.0 to 13.4 spin flips/ns between 8 and 128 replicas on an H100 (E6), and every state is checked
+spin by spin against the sequential chain before it runs.
 
 > Needs a CUDA GPU with compute capability ≥ 7.0 (T4, A100, H100, …). Triton does not run on a P100.
 """
@@ -93,15 +84,15 @@ PARAMS = r'''
 # SHELLS AND COLOURINGS. A non-zero Jex2, Jex3 or Jex4 in ANY row switches that shell on for every
 # state (one colouring serves the whole run). The colouring is searched and checked on the disk:
 #
-#   active shells   colours   (section0 used)
-#   ─────────────   ───────   ───────────────
-#   1, 1+3             2             2
-#   1+2                4             8
-#   1+4                3            27
-#   1+3+4              4            27
-#   1+2+4              7            27
-#   1+2+3              8             8
-#   1+2+3+4            9            27
+#   active shells   colours
+#   ─────────────   ───────
+#   1, 1+3             2
+#   1+2                4
+#   1+4                3
+#   1+3+4              4
+#   1+2+4              7
+#   1+2+3              8
+#   1+2+3+4            9
 #
 # A sweep is one launch per colour; fewer colours means more parallel work per launch.
 
@@ -237,7 +228,7 @@ if bad:
 '''
 
 METRICS = r'''
-# The physical metrics, as in the section0 notebook:
+# The physical metrics:
 #
 #   E/site  total energy over active sites, each bond counted once
 #   |M|     norm of the mean magnetization over active sites; Mz its z component

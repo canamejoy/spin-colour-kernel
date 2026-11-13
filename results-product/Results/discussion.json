@@ -97,7 +97,7 @@
       "metric": "admissibility; colour count and clique number",
       "test": "independent check on every bond and the periodic seam",
       "criterion": "every returned colouring passes the independent check",
-      "observed": "All 9 colourings admissible; colour count equals the clique number except sc shells 1-4 (Z9, 9 against 8). section0 used 8 and 27 where the search finds 4 and 9.",
+      "observed": "All 9 colourings admissible; colour count equals the clique number except sc shells 1-4 (Z9, 9 against 8).",
       "evidence": [
         "Results/tables/e3-colourings.csv"
       ],
@@ -177,24 +177,6 @@
       ],
       "verdict": "partially_supported",
       "rationale": "(a) holds on every system of both test devices. (b) does not hold on any device: the specialists, given their best lattice size, are 1.8x (H100), 1.7x (A100-80GB) and 1.4x (T4) faster with the default 10 rounds (1.06-1.54x at the 7-round ablation); the lead at 4096^2 (H100 and A100 only: 1.19-1.27x at 7 rounds, 1.02-1.08x at 10 rounds) is at a size where the specialists are under-used. The generated kernel is far faster than the general-purpose VAMPIRE GPU Monte Carlo for Heisenberg. Against every general-purpose GPU code tested (VAMPIRE, BORIS, CUDA-METRO) the generated kernel is faster at the competitor's fastest size and at equal precision on both devices, which meets the v14 criterion for keeping the novelty statement."
-    },
-    {
-      "id": "H6",
-      "experiment": "E7",
-      "statement": "On the section0 nanodot the generated kernel's overhead against the hand-specialized section0 kernel is reported, paired on the same device.",
-      "metric": "paired log speed ratio",
-      "test": "paired bootstrap over 10 alternating repetitions",
-      "criterion": "ratio and interval reported on both devices",
-      "observed": "T4: 1.33 against 0.87 flips/ns, log ratio +0.427 [+0.419, +0.437]. H100: 12.39 against 8.10 flips/ns, log ratio +0.425 [+0.425, +0.426] (1.53x). Energy per site -0.8735 against -0.8723 on both. v06 E9 application: the nanodisk with shells 1 and with shells 1, 2, 4 (7 colours, no hand kernel) is exact on all 14 states; Q at 0.1 K is about -8 (shell 1) and -2.8 (shells 1, 2, 4) at H = 0.2, and the skyrmion window closes at H = 0.4 with the longer-range exchange; 2799/2800 points within the 0.1 precision bound. E9's own registered verdict is partially supported: one point of 2800 (shell 1, H = 0.4) has a bootstrap half-width of 0.104 against the 0.1 bound.",
-      "evidence": [
-        "Results/tables/e7-generality-cost.csv",
-        "significance:E7 section0 pair",
-        "Results/tables/e9-nanodisk-q.csv",
-        "Results/figures/e9-nanodisk-q.png",
-        "significance:E9 Q shells (1, 2, 4) H=0.2"
-      ],
-      "verdict": "supported",
-      "rationale": "The declared pair is reported on both devices; the generated kernel is faster with the same energy. The nanodisk application (E9) is exact on all 14 states but meets its precision bound on 2799 of 2800 points (partially supported)."
     }
   ],
   "novelty": {
@@ -226,7 +208,6 @@
   "qualitative_not_applicable": "",
   "limitations": [
     "E4 deviated from the declared measurement length (20000 to 400000 sweeps) after a first inconclusive run; the tau probe hit its cap at three sizes.",
-    "E5 tests a generic roll-based baseline, not section0's own JAX step.",
     "Kaggle jobs were pushed with the Kaggle CLI and Modal runs with modal run, not through remote_cli, so there is no remote-execution ledger.",
     "H1b, H4 and H5 rest on runs registered before they were made (experiments v04/v05); their earlier forms were restated after the v03 data.",
     "Against ising-gpu and cuIsing 2025 at their best lattice size the independent bitwise mode is 0.55x (H100), 0.60x (A100-80GB) and 0.71x (T4) with the default 10 Philox rounds (0.65x, 0.71x and 0.94x at the 7-round ablation); its lead holds only at 4096^2 on the H100 and the A100 (1.08x and 1.02x at 10 rounds); on the T4 it trails at every size.",
@@ -412,7 +393,7 @@
       "E6conf batch slope T4 Heisenberg fcc",
       "E6conf batch slope T4 Heisenberg triangular AFM",
       "E6conf batch slope T4 Heisenberg kagome AFM",
-      "E6conf batch slope T4 Heisenberg nanodot (section0)",
+      "E6conf batch slope T4 Heisenberg nanodot",
       "E6conf batch slope A100 Ising square",
       "E6conf batch slope A100 Ising triangular",
       "E6conf batch slope A100 Ising sc",
@@ -425,7 +406,7 @@
       "E6conf batch slope A100 Heisenberg fcc",
       "E6conf batch slope A100 Heisenberg triangular AFM",
       "E6conf batch slope A100 Heisenberg kagome AFM",
-      "E6conf batch slope A100 Heisenberg nanodot (section0)",
+      "E6conf batch slope A100 Heisenberg nanodot",
       "E6conf batch slope H100 Ising square",
       "E6conf batch slope H100 Ising triangular",
       "E6conf batch slope H100 Ising sc",
@@ -438,7 +419,7 @@
       "E6conf batch slope H100 Heisenberg fcc",
       "E6conf batch slope H100 Heisenberg triangular AFM",
       "E6conf batch slope H100 Heisenberg kagome AFM",
-      "E6conf batch slope H100 Heisenberg nanodot (section0)",
+      "E6conf batch slope H100 Heisenberg nanodot",
       "E9 Q shells (1, 2, 4) H=0.8",
       "E9 Q shells (1, 2, 4) H=1.0",
       "E9 Q shells (1, 2, 4) H=1.2",
@@ -1006,12 +987,11 @@
       "E6 batch slope Heisenberg fcc",
       "E6 batch slope Heisenberg triangular AFM",
       "E6 batch slope Heisenberg kagome AFM",
-      "E6 batch slope Heisenberg nanodot (section0)",
+      "E6 batch slope Heisenberg nanodot",
       "E6 ising-gpu pair",
-      "E7 section0 pair",
       "E8 two-GPU scaling Ising square",
       "E8 two-GPU scaling Heisenberg sc",
-      "E8 two-GPU scaling Heisenberg nanodot (section0)"
+      "E8 two-GPU scaling Heisenberg nanodot"
     ]
   },
   "contribution_type": {

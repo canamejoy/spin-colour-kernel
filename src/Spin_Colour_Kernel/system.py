@@ -116,17 +116,16 @@ def heisenberg(crystal: str, L: int, J: float = 1.0, T_ref=None, label=None) -> 
 
 def nanodot(Rd: float = 18.30, L: int = 5, Jex=1.0, Kan1=0.177, Kan2=0.034, KanS=0.139, Hex=0.483,
             KDM=0.88, gamma_deg=90.0, shells=(1,), J_shells=None) -> System:
-    """The section0 system: sc Heisenberg disc inside an open box (z open as in section0).
+    """The nanodot system: sc Heisenberg disc inside an open box.
 
     `shells` adds sc exchange shells beyond the first, with couplings `J_shells` {shell: J} relative
     to Jex; the colouring search then finds a colouring admissible for all of them. DMI stays on the
     first-shell in-plane bonds and the surface is still defined by first neighbours.
 
-    Section0 wraps x and y, but the disc never reaches the box edge, so every seam bond touches a
-    masked (zero) site; an open box is the same Hamiltonian and meets condition (8) without a
-    constraint on N.
+    The disc never reaches the box edge, so every seam bond would touch a masked (zero) site; an
+    open box is the same Hamiltonian as a periodic one and meets condition (8) without a constraint on N.
 
-    Interfacial DMI on in-plane bonds as in section0's `_substep_kernel` (the local field term
+    Interfacial DMI on in-plane bonds (the local field term
     KDM * (-dyz, dxz, dyx - dxy)), cubic anisotropy with surface constant KanS where a site has
     fewer than six in-disc neighbours, and a Zeeman field Hex (cos g, 0, sin g).
     """
@@ -167,7 +166,7 @@ def nanodot(Rd: float = 18.30, L: int = 5, Jex=1.0, Kan1=0.177, Kan2=0.034, KanS
         if E.any():
             extra[i] = E
     g = np.deg2rad(gamma_deg)
-    return System("Heisenberg nanodot (section0)", 3, c, (N, N, L), (False, False, False), J, extra,
+    return System("Heisenberg nanodot", 3, c, (N, N, L), (False, False, False), J, extra,
                   h=(Hex * float(np.cos(g)), 0.0, Hex * float(np.sin(g))), cubic_k1=k1, cubic_k2=Kan2,
                   mask=mask)
 

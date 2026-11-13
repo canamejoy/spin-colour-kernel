@@ -72,7 +72,6 @@ print(A.energy(S) / s.n_active)           # energy per site of each replica
 | `src/Spin_Colour_Kernel/bitwise.py` | Bitwise multi-spin-coded Ising mode and its NumPy reference |
 | `src/Spin_Colour_Kernel/exp_core.py`, `exp_perf.py`, `width_law*.py`, `chunk_check.py` | The paper's experiments (exactness, colouring control, critical points, throughput, XLA comparison) |
 | `src/Spin_Colour_Kernel/vampire_pair.py`, `boris_pair.py`, `cudametro_pair.py` | Paired comparisons with VAMPIRE, BORIS and CUDA-METRO (fetched and built at run time at pinned commits, not vendored) |
-| `src/Spin_Colour_Kernel/section0_kernel.py` | The hand-written kernel this work started from, used by experiment E7 |
 | `src/Spin_Colour_Kernel/run.py` | Command-line runner: `python -m Spin_Colour_Kernel.run --exp E1,E3 --out DIR` |
 | `tests/` | CPU test suite (Triton interpreter) |
 | `examples/` | Quick start with expected output |
