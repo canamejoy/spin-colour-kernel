@@ -200,6 +200,13 @@ def main(argv=None):
                 r = subprocess.run(cmd)
                 if r.returncode:
                     raise RuntimeError(f"width_law_b exited {r.returncode}")
+            elif e == "E5pp":
+                # periodic against periodic: the E5gen grids moved to even sides, no open-box fallback
+                cmd = [sys.executable, "-m", "Spin_Colour_Kernel.width_law_b", "--out", str(out), "--tag", "E5pp",
+                       "--set", "pp", "--reps", "3" if sm else "10"] + (["--quick"] if sm else [])
+                r = subprocess.run(cmd)
+                if r.returncode:
+                    raise RuntimeError(f"width_law_b exited {r.returncode}")
             elif e == "E5gen":
                 # experiments v15, H4 reframed: generated kernel against the XLA baseline (JAX 0.4.35 image)
                 cmd = [sys.executable, "-m", "Spin_Colour_Kernel.width_law_b", "--out", str(out), "--tag", "E5gen",

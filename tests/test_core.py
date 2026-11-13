@@ -573,3 +573,17 @@ def test_e5_profile_roofline_targets_exceed_the_h100_l2():
         kind, crystal, L, B, packed = GEN[spec]
         basis = {"sc": 1, "fcc": 4}[crystal]
         assert kind == "heisenberg" and L ** 3 * basis * B * 3 * 4 > 50 * 2 ** 20
+
+
+def test_periodic_pair_grids_are_even_and_admit_a_periodic_colouring():
+    from Spin_Colour_Kernel import crystals as cr
+    from Spin_Colour_Kernel import system as sy
+    from Spin_Colour_Kernel.width_law_b import grids_pp
+    g = grids_pp(threshold=270336)          # H100 resident-thread count (132 SMs x 2048)
+    assert {x[0] for x in g} >= {"below", "above", "layer-heis", "layer"}
+    for factor, B, n, b, box in g:
+        assert all(L % 2 == 0 for L in box), box
+    crystal_for_b = {1: "sc", 2: "bcc", 4: "fcc"}
+    for factor, B, n, b, box in {(x[0], x[1], x[2], x[3], x[4]) for x in g if x[0] in ("below", "above")}:
+        s = sy.System("pp", n, cr.make(crystal_for_b[b]), box, (True,) * 3, {1: 1.0})
+        assert s.colouring.n_colours <= 4

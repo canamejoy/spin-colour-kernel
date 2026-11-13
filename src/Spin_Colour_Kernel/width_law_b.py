@@ -192,6 +192,25 @@ def grids_gen(threshold: int, quick: bool = False):
     return g
 
 
+PP_L1 = tuple(range(98, 112, 2))      # even L1 next to GEN_L1, so both sides run periodic
+
+
+def _even(L: int) -> int:
+    return L if L % 2 == 0 else L + 1
+
+
+def grids_pp(threshold: int, quick: bool = False):
+    """Periodic against periodic: the grids of grids_gen with every side moved to its even neighbour (L + 1
+    for odd L), where the generated kernel admits a periodic linear colouring of at most four colours, so
+    neither side falls back to an open box. The slabs keep sides 32 x 32 and take L1 in PP_L1."""
+    g = [(f, B, n, b, tuple(_even(L) for L in box)) for f, B, n, b, box in grids_gen(threshold, quick)
+         if f in ("below", "above")]
+    L1s = PP_L1[:3] if quick else PP_L1
+    g += [("layer-heis", 21, 3, 1, (L1, 32, 32)) for L1 in L1s]
+    g += [("layer", 63, 1, 1, (L1, 32, 32)) for L1 in L1s]
+    return g
+
+
 GENB_B = tuple(range(1, 17)) + (20, 24, 28, 31, 32, 33, 40, 48, 56, 63, 64)
 GENB_BOX = (27, 27, 27)     # odd composite side: 3 colours for sc, while gcd(N, 4) = gcd(B n, 4) follows B
 JUMP = math.log(1.05)
@@ -307,11 +326,11 @@ def main(argv=None):
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--tag", default="E5b")
     ap.add_argument("--reps", type=int, default=5)
-    ap.add_argument("--set", choices=("b", "c", "conf", "gen", "genb"), default="b",
+    ap.add_argument("--set", choices=("b", "c", "conf", "gen", "genb", "pp"), default="b",
                     help="b: grids around the threshold; c: N >= 10^6; conf: experiments v04 E5 confirmatory grids")
     a = ap.parse_args(argv)
     conf = a.set == "conf"
-    genset = a.set in ("gen", "genb")
+    genset = a.set in ("gen", "genb", "pp")
     if conf or genset:   # the device threshold decides the (a) grids, so read it before JAX starts
         import torch
         props0 = torch.cuda.get_device_properties(0)
@@ -342,6 +361,7 @@ def main(argv=None):
     make_step = make_baseline_step          # the E5 baseline, unchanged
 
     G = (grids_conf(threshold0, a.quick) if conf else grids_genb(a.quick) if a.set == "genb"
+         else grids_pp(threshold0, a.quick) if a.set == "pp"
          else grids_gen(threshold0, a.quick) if genset
          else grids_c(a.quick) if a.set == "c" else grids(a.quick))
     mon = None
@@ -389,7 +409,8 @@ def main(argv=None):
         from Spin_Colour_Kernel.sampler import Sampler
         for i, (factor, B, n, b, box) in enumerate(G):
             c = cr.make(crystal_for_b[b])
-            for per_ in ((True,) * 3, (False,) * 3):
+            # the pp set never falls back to an open box: a grid without a periodic colouring stops the run
+            for per_ in (((True,) * 3,) if a.set == "pp" else ((True,) * 3, (False,) * 3)):
                 try:
                     s_ = sy.System(f"E5gen {crystal_for_b[b]} n={n}", n, c, box, per_, {1: 1.0})
                     break
