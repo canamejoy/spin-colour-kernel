@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 title: "spin-colour-kernel: exact replica-batched multi-colour Metropolis kernels for classical spin lattices on GPUs"
-version: 1.4.1
-date-released: 2026-11-13
+version: 1.4.2
+date-released: 2026-11-14
 license: MIT
 repository-code: "https://github.com/canamejoy/spin-colour-kernel"
 authors:
