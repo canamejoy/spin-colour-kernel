@@ -14,7 +14,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PKG = ROOT / "src" / "Spin_Colour_Kernel"
-MODULES = ("__init__.py", "crystals.py", "colouring.py", "system.py", "generator.py", "sampler.py", "anneal.py")
+MODULES = ("__init__.py", "crystals.py", "colouring.py", "system.py", "generator.py", "bitwise.py", "sampler.py",
+           "anneal.py")
 
 
 def md(text):

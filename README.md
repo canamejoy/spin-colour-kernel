@@ -23,6 +23,19 @@ and certified against the clique number of the bond graph.
 | Solution method | Linear colourings of the bond graph (exact parallel classes); a generator that emits one Triton kernel per system, batched over replicas, with counter-based Philox random numbers so that the parallel sweep reproduces a sequential reference chain bit for bit; an optional bitwise multi-spin-coded Ising mode (32 replicas per word, independent per-replica draws). |
 | Restrictions | With linear colourings a periodic side that is prime needs as many colours as its length; the bitwise mode applies to Ising with batches that fill 32-replica words. |
 
+## Simulating your own Hamiltonian
+
+`notebooks/spin_simulation.ipynb` is a self-contained notebook for users who do not program: upload it to
+Kaggle or Colab (or open it in Jupyter), edit its single parameters cell and press *Run all*. That cell sets
+the model (Ising, XY, Heisenberg), the states (one parameter set each: exchange per shell, DMI, cubic and
+surface anisotropy, field and its direction), the units, the crystal and box, the active sites as a shape
+written in Cartesian, spherical or cylindrical coordinates, the temperature ladder, the sweeps and the
+replicas. The notebook uses every NVIDIA GPU it finds (one process per GPU) or falls back to the CPU through
+the Triton interpreter, and writes `magnetization.npy` (states, replicas, temperatures, 3),
+`configurations.npy` (states, replicas, saved temperatures, sites, 3), `results.npz` (energy, <E^2>, |M|,
+M^2, Cv, chi) and `run.json`, with plots of E, |M|, Cv and chi. It embeds the package modules with their
+sha256; `python notebooks/build_simulation_notebook.py` regenerates it.
+
 ## Installation
 
 ```bash
@@ -37,7 +50,7 @@ also passes with recent CPU-only torch and triton through the Triton interpreter
 ## Test run
 
 ```bash
-pytest                                                    # 153 tests, CPU only (Triton interpreter), ~25 min
+pytest                                                    # 171 tests, CPU only (Triton interpreter), ~25 min
 TRITON_INTERPRET=1 python examples/quickstart.py --device cpu
 python examples/quickstart.py --device cuda               # on a GPU
 ```
@@ -75,7 +88,8 @@ print(A.energy(S) / s.n_active)           # energy per site of each replica
 | `src/Spin_Colour_Kernel/run.py` | Command-line runner: `python -m Spin_Colour_Kernel.run --exp E1,E3 --out DIR` |
 | `tests/` | CPU test suite (Triton interpreter) |
 | `examples/` | Quick start with expected output |
-| `notebooks/` | Nanodisk application notebook |
+| `src/Spin_Colour_Kernel/simulate.py` | General runs behind the simulation notebook: active-site shapes, Hamiltonian per state, temperature ladder, outputs |
+| `notebooks/` | `spin_simulation.ipynb` (any supported Hamiltonian, ready to run) and the nanodisk application notebook |
 | `remote/` | Scripts that ran the paper's experiments on Modal (H100, A100) and Kaggle (T4), and that fold run outputs into `results-product/` |
 | `results-product/Results/` | Tables, figures, significance tests and discussion of the paper's runs |
 | `third_party/` | cuIsing 2025 program files (MIT, from the CPC Program Library) used in the specialist comparison |
