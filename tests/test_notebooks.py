@@ -35,3 +35,15 @@ def test_the_simulation_notebook_has_one_parameters_cell_with_every_setting():
     for key in ("MODEL", "STATES", "UNITS", "CRYSTAL", "BOX", "PERIODIC", "COORDS", "SHAPE", "T_MAX", "T_MIN",
                 "T_STEP", "THERMALIZATION", "MEASUREMENT", "MEASURE_EVERY", "REPLICAS", "CONFIG_EVERY", "GPUS"):
         assert re.search(rf"^{key}\s*=", src, re.M), key
+
+
+def test_the_ready_for_run_folder_holds_the_current_notebook_and_both_manuals():
+    ready = ROOT / "ready_for_run"
+    assert (ready / "spin_simulation.ipynb").read_bytes() == (ROOT / "notebooks" / "spin_simulation.ipynb").read_bytes()
+    for lang in ("en", "es"):
+        assert (ready / f"MANUAL_{lang}.md").is_file() and (ready / f"MANUAL_{lang}.pdf").is_file()
+
+
+def test_the_manual_converter_renders_every_construct_the_manuals_use():
+    tex = _builder("build_manuals").to_latex((ROOT / "ready_for_run" / "MANUAL_en.md").read_text(encoding="utf-8"))
+    assert r"\begin{tabularx}" in tex and r"\begin{code}" in tex and r"\inl{MODEL}" in tex

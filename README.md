@@ -25,6 +25,7 @@ and certified against the clique number of the bond graph.
 
 ## Simulating your own Hamiltonian
 
+`ready_for_run/` holds the notebook with a step-by-step user manual in English and Spanish (Markdown and PDF).
 `notebooks/spin_simulation.ipynb` is a self-contained notebook for users who do not program: upload it to
 Kaggle or Colab (or open it in Jupyter), edit its single parameters cell and press *Run all*. That cell sets
 the model (Ising, XY, Heisenberg), the states (one parameter set each: exchange per shell, DMI, cubic and
@@ -34,7 +35,8 @@ replicas. The notebook uses every NVIDIA GPU it finds (one process per GPU) or f
 the Triton interpreter, and writes `magnetization.npy` (states, replicas, temperatures, 3),
 `configurations.npy` (states, replicas, saved temperatures, sites, 3), `results.npz` (energy, <E^2>, |M|,
 M^2, Cv, chi) and `run.json`, with plots of E, |M|, Cv and chi. It embeds the package modules with their
-sha256; `python notebooks/build_simulation_notebook.py` regenerates it.
+sha256; `python notebooks/build_simulation_notebook.py` regenerates it, and `python notebooks/build_manuals.py`
+rebuilds the manuals and copies the notebook into `ready_for_run/`.
 
 ## Installation
 
@@ -50,7 +52,7 @@ also passes with recent CPU-only torch and triton through the Triton interpreter
 ## Test run
 
 ```bash
-pytest                                                    # 173 tests, CPU only (Triton interpreter), ~25 min
+pytest                                                    # 175 tests, CPU only (Triton interpreter), ~25 min
 TRITON_INTERPRET=1 python examples/quickstart.py --device cpu
 python examples/quickstart.py --device cuda               # on a GPU
 ```
@@ -89,6 +91,7 @@ print(A.energy(S) / s.n_active)           # energy per site of each replica
 | `tests/` | CPU test suite (Triton interpreter) |
 | `examples/` | Quick start with expected output |
 | `src/Spin_Colour_Kernel/simulate.py` | General runs behind the simulation notebook: active-site shapes, Hamiltonian per state, temperature ladder, outputs |
+| `ready_for_run/` | The simulation notebook and its user manuals (English, Spanish; Markdown and PDF) |
 | `notebooks/` | `spin_simulation.ipynb` (any supported Hamiltonian, ready to run) and the nanodisk application notebook |
 | `remote/` | Scripts that ran the paper's experiments on Modal (H100, A100) and Kaggle (T4), and that fold run outputs into `results-product/` |
 | `results-product/Results/` | Tables, figures, significance tests and discussion of the paper's runs |
