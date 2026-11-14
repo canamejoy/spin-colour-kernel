@@ -92,8 +92,9 @@ La energía que usa el cuadernillo es la suma de cuatro términos:
 - **Intercambio** `J`: los espines vecinos quieren estar paralelos (J > 0, ferromagneto) u opuestos
   (J < 0, antiferromagneto). Se da un valor por cada **capa** de vecinos: capa 1 = primeros vecinos,
   capa 2 = segundos vecinos, y así sucesivamente.
-- **DMI** `D`: interacción de Dzyaloshinskii–Moriya interfacial. Retuerce los espines y crea
-  skyrmiones. Actúa sobre los enlaces de primeros vecinos que están en el plano x–y.
+- **DMI** `D`: interacción de Dzyaloshinskii–Moriya de tipo bulk (Bloch): su vector apunta a lo largo de
+  cada enlace. Retuerce los espines y crea skyrmiones de tipo Bloch. Actúa sobre los enlaces de primeros
+  vecinos que están en el plano x–y.
 - **Anisotropía cúbica** `K1`, `Ks`, `K2`: favorece algunas direcciones del cristal. `Ks` es el valor en
   la **superficie** (sitios con menos vecinos que en el interior); si no lo escribe, vale lo mismo que
   `K1`.

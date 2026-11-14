@@ -125,8 +125,8 @@ def nanodot(Rd: float = 18.30, L: int = 5, Jex=1.0, Kan1=0.177, Kan2=0.034, KanS
     The disc never reaches the box edge, so every seam bond would touch a masked (zero) site; an
     open box is the same Hamiltonian as a periodic one and meets condition (8) without a constraint on N.
 
-    Interfacial DMI on in-plane bonds (the local field term
-    KDM * (-dyz, dxz, dyx - dxy)), cubic anisotropy with surface constant KanS where a site has
+    Bulk-type (Bloch) DMI restricted to the in-plane bonds: its vector lies along each bond, D_ij = -KDM r_ij,
+    so the bond energy is -KDM r_ij . (S_i x S_j) (local field term KDM * (-dyz, dxz, dyx - dxy)), cubic anisotropy with surface constant KanS where a site has
     fewer than six in-disc neighbours, and a Zeeman field Hex (cos g, 0, sin g).
     """
     shells = tuple(sorted(set(shells) | {1}))

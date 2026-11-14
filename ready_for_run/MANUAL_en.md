@@ -88,8 +88,9 @@ The energy the notebook uses is the sum of four terms:
 - **Exchange** `J`: neighbouring spins want to be parallel (J > 0, ferromagnet) or opposite (J < 0,
   antiferromagnet). You give one value per **shell** of neighbours: shell 1 = nearest neighbours,
   shell 2 = next nearest, and so on.
-- **DMI** `D`: interfacial Dzyaloshinskii–Moriya interaction. It twists the spins and creates skyrmions.
-  It acts on the nearest-neighbour bonds lying in the x–y plane.
+- **DMI** `D`: Dzyaloshinskii–Moriya interaction of bulk (Bloch) type: its vector points along each bond.
+  It twists the spins and creates Bloch skyrmions. It acts on the nearest-neighbour bonds lying in the
+  x–y plane.
 - **Cubic anisotropy** `K1`, `Ks`, `K2`: favours some directions of the crystal. `Ks` is the value on the
   **surface** (sites with fewer neighbours than in the bulk); if you leave it out, it equals `K1`.
 - **Field** `H`: an external magnetic field. Its direction is given by two angles in degrees:

@@ -45,7 +45,7 @@ it runs code byte-identical to `spin-colour-kernel` at commit `{commit}`.
 ## What it does
 
 It cools the magnetic nanodisk (sc Heisenberg disc with exchange up to four shells,
-interfacial DMI, cubic and surface anisotropy, Zeeman field) from a hot temperature to 0.1 K, one
+bulk-type DMI on the in-plane bonds, cubic and surface anisotropy, Zeeman field) from a hot temperature to 0.1 K, one
 state per parameter row, and reports these physical metrics at every
 step: E per site, |M|, Mz, Cv, χ and the Berg–Lüscher topological charge Q of the middle layer.
 
@@ -77,7 +77,7 @@ PARAMS = r'''
 #     3    Kan1   cubic anisotropy, first order                 meV
 #     4    KanS   surface anisotropy                            meV
 #     5    Hex    external field (magnitude)                    meV
-#     6    KDM    interfacial Dzyaloshinskii–Moriya             meV
+#     6    KDM    Dzyaloshinskii–Moriya (bulk type, in-plane)   meV
 #
 # First-neighbour exchange is Jex = 1 meV, the energy unit. Temperature is not a parameter: every
 # state follows the same ladder, so the transition temperature is measured, not declared.

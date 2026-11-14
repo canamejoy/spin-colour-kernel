@@ -4,7 +4,7 @@ A run is one model (Ising, XY or Heisenberg), one crystal, one box, one set of a
 of states; a state is one parameter set theta of the Hamiltonian
 
     H = - sum_<ij> J_s  S_i . S_j                       exchange, per neighbour shell s
-        - sum_<ij> S_i^T A_ij S_j                       interfacial DMI, A_lm = D sum_k r_k eps_klm
+        - sum_<ij> S_i^T A_ij S_j                       bulk-type (Bloch) DMI along the bond, A_lm = D sum_k r_k eps_klm
                                                         (in-plane first-shell bonds, Heisenberg only)
         + sum_i K1_i (sx^2 sy^2 + sx^2 sz^2 + sy^2 sz^2) + K2 sum_i (sx sy sz)^2     cubic anisotropy
         - sum_i H . S_i                                 Zeeman field
@@ -110,7 +110,7 @@ def _f(theta, key, default=0.0) -> float:
 
 
 def _dmi(crystal: cr.Crystal, D: float) -> dict[int, np.ndarray]:
-    """A_lm = D sum_k r_k eps_klm on in-plane first-shell bonds (r the unit bond vector)."""
+    """Bulk-type (Bloch) DMI: A_lm = D sum_k r_k eps_klm on in-plane first-shell bonds (r the unit bond vector)."""
     eps = np.zeros((3, 3, 3))
     for i, j, k in ((0, 1, 2), (1, 2, 0), (2, 0, 1)):
         eps[i, j, k], eps[i, k, j] = 1.0, -1.0

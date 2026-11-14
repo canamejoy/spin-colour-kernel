@@ -59,7 +59,7 @@ MODEL = "heisenberg"
 # ── 1.2  THE HAMILTONIAN (how it is written) ────────────────────────────────────────────────────
 #
 #   H = − Σ_s J_s Σ_<ij> in shell s  S_i · S_j    exchange, one constant per neighbour shell (each pair once)
-#       − Σ_<ij>  S_i^T A_ij S_j      interfacial DMI on in-plane nearest-neighbour bonds, A_lm = D Σ_k r̂_k ε_klm
+#       − Σ_<ij>  S_i^T A_ij S_j      bulk-type (Bloch) DMI on in-plane nearest-neighbour bonds, A_lm = D Σ_k r̂_k ε_klm
 #       + Σ_i K1_i (sx² sy² + sx² sz² + sy² sz²)  +  K2 Σ_i (sx sy sz)²      cubic anisotropy
 #       − Σ_i  H · S_i                                           Zeeman field
 #
@@ -73,7 +73,7 @@ MODEL = "heisenberg"
 # ── 1.3  THE STATES: one set θ of parameters each — add as many as you want ─────────────────────
 #   name     a label for the plots and files
 #   J        {shell: constant}, e.g. {1: 1.0} or {1: 1.0, 2: -0.2}
-#   D        interfacial Dzyaloshinskii–Moriya constant
+#   D        Dzyaloshinskii–Moriya constant (bulk type: its vector lies along the bond)
 #   K1, Ks   cubic anisotropy, bulk and surface (Ks left out = K1)
 #   K2       second-order cubic anisotropy
 #   H, H_theta, H_phi   field magnitude and direction (degrees)
