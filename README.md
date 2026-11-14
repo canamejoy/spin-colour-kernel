@@ -50,7 +50,7 @@ also passes with recent CPU-only torch and triton through the Triton interpreter
 ## Test run
 
 ```bash
-pytest                                                    # 171 tests, CPU only (Triton interpreter), ~25 min
+pytest                                                    # 173 tests, CPU only (Triton interpreter), ~25 min
 TRITON_INTERPRET=1 python examples/quickstart.py --device cpu
 python examples/quickstart.py --device cuda               # on a GPU
 ```

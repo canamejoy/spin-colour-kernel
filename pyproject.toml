@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "spin-colour-kernel"
-version = "1.0.0"
+version = "1.4.1"
 description = "Exact replica-batched multi-colour Metropolis kernels for classical O(n) spin models on crystals with a basis, generated for GPUs"
 readme = "README.md"
 license = {text = "MIT"}
