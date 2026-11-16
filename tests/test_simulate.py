@@ -99,3 +99,42 @@ def test_the_run_writes_the_combined_arrays_for_every_state(tmp_path):
 def test_the_size_estimate_counts_the_configuration_array():
     gb = SIM.size_estimate_gb(n_states=2, replicas=128, n_saved=200, n_sites=5000)
     assert abs(gb - 2 * 128 * 200 * 5000 * 3 * 4 / 1e9) < 1e-9
+
+
+def test_replicas_are_split_equally_with_every_replica_covered_once():
+    assert SIM.replica_blocks(10, 4) == [(0, 3), (3, 6), (6, 8), (8, 10)]
+    assert SIM.replica_blocks(32, 2) == [(0, 16), (16, 32)]
+    assert SIM.replica_blocks(3, 8) == [(0, 1), (1, 2), (2, 3)]          # never an empty block
+
+
+def test_replica_blocks_run_apart_combine_into_the_full_replica_axis(tmp_path):
+    cfg = SIM.default_config()
+    cfg.update(model="ising", crystal="square", box=[6, 6], periodic=[True, True],
+               states=[{"name": "a", "J": {"1": 1.0}}, {"name": "b", "J": {"1": 1.0}, "H": 0.2}],
+               replicas=5, T_max=3.0, T_min=2.0, T_step=0.5, thermalization=3, measurement=3,
+               measure_every=1, units="reduced", seed=1)
+    out = tmp_path / "out"
+    SIM.prepare(cfg, out)
+    run = json.loads((out / "run.json").read_text())
+    blocks = SIM.replica_blocks(5, 2)
+    for part, rng in enumerate(blocks):                                 # as two GPUs would, one block each
+        SIM.run(run, [0, 1], out, device="cpu", log=lambda m: None, replicas=rng, part=part)
+    res = SIM.collect(out)
+    assert res["magnetization"].shape == (2, 5, 3, 3) and res["energy"].shape == (2, 5, 3)
+    cf = np.load(out / "configurations.npy", mmap_mode="r")
+    assert np.all(np.abs(cf[..., 0]) == 1)                               # every replica slot was written
+    # the two blocks are different chains, not copies of one another
+    assert not np.array_equal(cf[0, 0], cf[0, 3])
+
+
+def test_collect_refuses_a_replica_axis_with_a_missing_block(tmp_path):
+    cfg = SIM.default_config()
+    cfg.update(model="ising", crystal="square", box=[4, 4], periodic=[True, True],
+               states=[{"name": "a", "J": {"1": 1.0}}], replicas=4, T_max=2.0, T_min=2.0, T_step=0.5,
+               thermalization=1, measurement=1, measure_every=1, units="reduced", seed=1)
+    out = tmp_path / "out"
+    SIM.prepare(cfg, out)
+    run = json.loads((out / "run.json").read_text())
+    SIM.run(run, [0], out, device="cpu", log=lambda m: None, replicas=(0, 2), part=0)
+    with pytest.raises(ValueError, match="replicas"):
+        SIM.collect(out)

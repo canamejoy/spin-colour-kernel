@@ -168,7 +168,9 @@ lengths are in lattice units and angles in radians.
 | `SEED` | seed of the random numbers; the same seed repeats the same run | any integer |
 
 One **sweep** means every spin gets one chance to change. More sweeps give smoother curves and take
-longer. On a GPU, more replicas cost little extra time per spin, so 64 or 128 is a good choice.
+longer. On a GPU, more replicas cost little extra time per spin, so 64 or 128 is a good choice. With
+several GPUs, give each one at least 32 replicas (for example 64 replicas on 2 GPUs): a GPU with only a
+few replicas works below its speed.
 
 ### 3.8 Output — `CONFIG_EVERY`, `OUTPUT_DIR`, `GPUS`
 
@@ -185,7 +187,8 @@ longer. On a GPU, more replicas cost little extra time per spin, so 64 or 128 is
   configuration file will be. It **does not stop** the run because of the size: make sure there is
   enough disk.
 - **Cell 5** runs the simulation and prints a line every few temperatures. With several GPUs, each
-  line starts with the GPU that printed it, and the states are shared among the GPUs.
+  line starts with the GPU that printed it. The replicas of every state are split equally among the
+  GPUs, so all of them finish at the same time and two GPUs take about half the time of one.
 - **Cells 6 and 7** show a summary table and four plots: energy, |M|, Cv and χ against temperature.
 
 As a guide, the default settings (Heisenberg on a 12 × 12 × 12 sc box, 32 replicas, 19 temperatures,

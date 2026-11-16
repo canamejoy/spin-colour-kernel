@@ -37,7 +37,7 @@ spin configuration of every replica.
 
 1. **Edit only cell 1 (the parameters).** Every setting is explained next to it.
 2. *Run all*. The notebook finds your hardware by itself: every NVIDIA GPU it sees (one process per GPU,
-   states dealt round-robin), or the CPU when there is none.
+   the replicas of every state split equally among them), or the CPU when there is none.
 3. Read the plots (E, |M|, Cv, χ against T) and download the output folder.
 
 > GPU: an NVIDIA GPU with compute capability ≥ 7.0 (T4, A100, H100, …; Triton does not run on a P100).
@@ -116,7 +116,7 @@ T_STEP = 0.1          # step of the ladder
 THERMALIZATION = 1000 # sweeps at each temperature before measuring
 MEASUREMENT    = 2000 # sweeps at each temperature while measuring
 MEASURE_EVERY  = 10   # read E and M every this many measuring sweeps
-REPLICAS       = 32   # independent chains per state (more is cheaper per spin update on a GPU)
+REPLICAS       = 32   # independent chains per state, split equally among the GPUs (more is cheaper per update)
 SEED           = 1
 
 # ── 1.8  OUTPUT ─────────────────────────────────────────────────────────────────────────────────
@@ -189,23 +189,25 @@ print(f"configurations saved at {RUN['n_saved']} temperature(s) per state "
 '''
 
 RUN_CELL = r'''
-# 5 · The run: one process per GPU with the states dealt round-robin, or one process on the CPU.
+# 5 · The run. The replicas of every state are split equally among the GPUs (one process per GPU, each with
+# its own block of replicas and its own seeds); the work per replica is the same, so every GPU finishes
+# at the same time. On the CPU, one process runs every replica.
 import threading, time
 
 t0 = time.perf_counter()
 if DEVICE == "cpu":
     SIM.run(RUN, list(range(N_STATES)), OUTPUT_DIR, device="cpu", log=print)
 else:
-    devs = usable[:N_STATES]
+    blocks = SIM.replica_blocks(REPLICAS, len(usable))
+    every = ",".join(map(str, range(N_STATES)))
     procs = []
-    for j, g in enumerate(devs):
-        mine = [i for i in range(N_STATES) if i % len(devs) == j]
+    for part, (g, (r0, r1)) in enumerate(zip(usable, blocks)):
         env = dict(os.environ, CUDA_VISIBLE_DEVICES=str(g), PYTHONPATH=os.getcwd())
         cmd = [sys.executable, "-u", "-m", "Spin_Colour_Kernel.simulate", "--run", OUTPUT_DIR,
-               "--states", ",".join(map(str, mine)), "--device", "cuda:0"]
+               "--states", every, "--replicas", f"{r0}:{r1}", "--part", str(part), "--device", "cuda:0"]
         procs.append((g, subprocess.Popen(cmd, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                                           text=True)))
-        print(f"GPU {g}: states {[names[i] for i in mine]}")
+        print(f"GPU {g}: replicas {r0}-{r1 - 1} of every state ({r1 - r0} per state)")
 
     def _pump(g, p):
         for line in p.stdout:

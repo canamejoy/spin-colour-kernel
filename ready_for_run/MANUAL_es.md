@@ -175,7 +175,8 @@ el **centro de la caja**, las longitudes están en unidades de red y los ángulo
 
 Un **barrido** significa que cada espín tiene una oportunidad de cambiar. Más barridos dan curvas más
 suaves y tardan más. En una GPU, más réplicas cuestan poco tiempo adicional por espín, así que 64 o 128
-es una buena elección.
+es una buena elección. Con varias GPU, dé a cada una al menos 32 réplicas (por ejemplo, 64 réplicas en
+2 GPU): una GPU con pocas réplicas trabaja por debajo de su velocidad.
 
 ### 3.8 Salida — `CONFIG_EVERY`, `OUTPUT_DIR`, `GPUS`
 
@@ -191,7 +192,8 @@ es una buena elección.
 - **La celda 4** revisa sus parámetros e imprime cuántos sitios están activos y cuánto pesará el archivo
   de configuraciones. **No detiene** la corrida por el tamaño: asegúrese de tener espacio en disco.
 - **La celda 5** corre la simulación e imprime una línea cada pocas temperaturas. Con varias GPU, cada
-  línea empieza con la GPU que la imprimió, y los estados se reparten entre las GPU.
+  línea empieza con la GPU que la imprimió. Las réplicas de cada estado se reparten en partes iguales
+  entre las GPU, así que todas terminan a la vez y dos GPU tardan más o menos la mitad que una.
 - **Las celdas 6 y 7** muestran una tabla resumen y cuatro gráficas: energía, |M|, Cv y χ contra la
   temperatura.
 

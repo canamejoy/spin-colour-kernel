@@ -20,13 +20,14 @@ theta keys: J {shell: value}, D, K1, Ks, K2, H, H_theta, H_phi. The field direct
 Outputs, in the run directory:
     run.json             the configuration and the derived ladder, sites and units
     sites.npy            (n_sites, 3) Cartesian positions of the active sites
-    state_XXX.npz        per state: M (B, nT, 3), E, E2, Mabs, M2 (B, nT)
+    state_XXX_pYY.npz    per state and replica block: r0, r1, M (B, nT, 3), E, E2, Mabs, M2 (B, nT)
     configurations.npy   (n_states, B, n_saved, n_sites, 3) float32 spins every config_every T steps
     magnetization.npy    (n_states, B, nT, 3), written by `collect`
     results.npz          every combined array, Cv and chi included, written by `collect`
 
-Run as a module to process some states of a prepared run on one device:
-    python -m Spin_Colour_Kernel.simulate --run DIR --states 0,2 --device cuda
+Run as a module to process a block of replicas of some states of a prepared run on one device (the
+notebook gives every GPU an equal block of the replicas of every state):
+    python -m Spin_Colour_Kernel.simulate --run DIR --states 0,1 --replicas 0:16 --part 0 --device cuda
 """
 
 from __future__ import annotations
@@ -322,6 +323,8 @@ def prepare(cfg: dict, out, log=print) -> dict:
     n_sites = int(mask.sum())
     run.update(kB=kB, temperatures=temps.tolist(), periodic_used=list(s0.periodic), n_sites=n_sites,
                n_saved=n_saved, config_temperatures=temps[::ce].tolist())
+    for stale in out.glob("state_*.npz"):          # a new run never mixes with an earlier one's blocks
+        stale.unlink()
     (out / "run.json").write_text(json.dumps(run, indent=1))
     np.save(out / "sites.npy", pos[mask].astype(np.float32))
     np.save(out / "mask.npy", mask)
@@ -333,22 +336,53 @@ def prepare(cfg: dict, out, log=print) -> dict:
     return run
 
 
-def run(cfg: dict, state_indices, out, device="cpu", log=print) -> None:
-    """Simulate the given states of a prepared run and write state_XXX.npz and their configurations."""
+def replica_blocks(replicas: int, parts: int) -> list[tuple[int, int]]:
+    """Split replicas 0..R-1 into at most `parts` contiguous blocks whose sizes differ by at most one."""
+    R, g = int(replicas), max(1, min(int(parts), int(replicas)))
+    q, r = divmod(R, g)
+    edges = [0]
+    for k in range(g):
+        edges.append(edges[-1] + q + (1 if k < r else 0))
+    return list(zip(edges[:-1], edges[1:]))
+
+
+def run(cfg: dict, state_indices, out, device="cpu", log=print, replicas=None, part: int = 0) -> None:
+    """Simulate the given states of a prepared run for the replica block [r0, r1) (all replicas by default).
+
+    Each block is an independent set of chains: its seed is offset by the block index `part`, so blocks
+    run on different devices never repeat one another. Writes state_XXX_pYY.npz and the block's slice of
+    configurations.npy.
+    """
     out = Path(out)
+    r0, r1 = (0, int(cfg["replicas"])) if replicas is None else (int(replicas[0]), int(replicas[1]))
+    if not 0 <= r0 < r1 <= int(cfg["replicas"]):
+        raise ValueError(f"replica block [{r0}, {r1}) is outside 0..{cfg['replicas']}")
     mask = np.load(out / "mask.npy")
     cf = np.load(out / "configurations.npy", mmap_mode="r+")
     for i in state_indices:
         theta = cfg["states"][i]
-        log(f"state {i} ({theta.get('name', i)}) on {device}")
+        log(f"state {i} ({theta.get('name', i)}), replicas {r0}-{r1 - 1}, on {device}")
         s = build_system(cfg["model"], cfg["crystal"], cfg["box"], cfg["periodic_used"], theta, mask, log)
-        r = simulate_state(s, cfg["replicas"], cfg["temperatures"], int(cfg["thermalization"]),
+        r = simulate_state(s, r1 - r0, cfg["temperatures"], int(cfg["thermalization"]),
                            int(cfg["measurement"]), int(cfg["measure_every"]), int(cfg["config_every"]),
-                           int(cfg["seed"]) + 1000 * int(i), device, float(cfg["kB"]), log)
-        cf[i] = r.pop("configs")
+                           int(cfg["seed"]) + 1000 * int(i) + 100000 * int(part), device, float(cfg["kB"]), log)
+        cf[i, r0:r1] = r.pop("configs")
         cf.flush()
-        np.savez(out / f"state_{i:03d}.npz", **r)
+        np.savez(out / f"state_{i:03d}_p{int(part):02d}.npz", r0=r0, r1=r1, **r)
     del cf
+
+
+def _state_parts(out: Path, i: int, R: int) -> list:
+    """The replica blocks of state i, in replica order; they must cover 0..R-1 exactly once."""
+    parts = sorted((np.load(f) for f in out.glob(f"state_{i:03d}_p*.npz")), key=lambda z: int(z["r0"]))
+    edge = 0
+    for z in parts:
+        if int(z["r0"]) != edge:
+            break
+        edge = int(z["r1"])
+    if edge != R or not parts:
+        raise ValueError(f"state {i}: its replica blocks do not cover replicas 0..{R - 1} exactly once")
+    return parts
 
 
 def collect(out) -> dict:
@@ -357,8 +391,10 @@ def collect(out) -> dict:
     cfg = json.loads((out / "run.json").read_text())
     T = np.asarray(cfg["temperatures"])
     N, kB = float(cfg["n_sites"]), float(cfg["kB"])
-    parts = [np.load(out / f"state_{i:03d}.npz") for i in range(len(cfg["states"]))]
-    res = {k: np.stack([p[k] for p in parts]) for k in ("M", "E", "E2", "Mabs", "M2")}
+    R = int(cfg["replicas"])
+    states = [_state_parts(out, i, R) for i in range(len(cfg["states"]))]
+    res = {k: np.stack([np.concatenate([z[k] for z in parts]) for parts in states])
+           for k in ("M", "E", "E2", "Mabs", "M2")}
     varE = np.maximum(res["E2"] - res["E"] ** 2, 0.0)
     varM = np.maximum(res["M2"] - res["Mabs"] ** 2, 0.0)
     combined = dict(temperatures=T, magnetization=res["M"], energy=res["E"], energy2=res["E2"],
@@ -375,10 +411,14 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--run", required=True, help="run directory holding run.json")
     ap.add_argument("--states", required=True, help="comma-separated state indices")
+    ap.add_argument("--replicas", default=None, help="replica block r0:r1 (default: every replica)")
+    ap.add_argument("--part", type=int, default=0, help="index of the replica block; offsets its seed")
     ap.add_argument("--device", default="cuda")
     a = ap.parse_args(argv)
     cfg = json.loads((Path(a.run) / "run.json").read_text())
-    run(cfg, [int(x) for x in a.states.split(",") if x != ""], a.run, a.device, lambda m: print(m, flush=True))
+    block = None if a.replicas is None else tuple(int(x) for x in a.replicas.split(":"))
+    run(cfg, [int(x) for x in a.states.split(",") if x != ""], a.run, a.device, lambda m: print(m, flush=True),
+        replicas=block, part=a.part)
 
 
 if __name__ == "__main__":
