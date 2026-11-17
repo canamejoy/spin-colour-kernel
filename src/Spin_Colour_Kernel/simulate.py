@@ -224,15 +224,76 @@ def _spins(A: Sampler, S: torch.Tensor, mask: np.ndarray) -> np.ndarray:
     return out
 
 
+class _Observer:
+    """Total energy (float64) and mean magnetization vector per replica, safe inside a CUDA graph.
+
+    The same quantities as Sampler.energy and Sampler.magnetization for any n, but every constant (bond
+    matrices, open-boundary masks, field, anisotropy) is built once here: inside a graph capture no
+    host-to-device copy may run, and those methods build their constants on every call.
+    """
+
+    def __init__(self, A: Sampler):
+        s = A.sys
+        dev = A.k1.device
+        self.A, self.n_act = A, float(s.n_active)
+        self.bonds = []
+        dims = {0: 5, 1: 4, 2: 3}
+        for i, bd in enumerate(s.crystal.bonds):
+            M = s.bond_matrix(i)
+            if not M.any():
+                continue
+            valid = torch.ones(s.shape[1:], dtype=torch.float64, device=dev)
+            shifts = []
+            for k in range(s.crystal.D):
+                d = bd.delta[k]
+                if d == 0:
+                    continue
+                shifts.append((-d, dims[k] - 1))
+                if not s.periodic[k]:
+                    idx = torch.arange(s.box[k], device=dev)
+                    ok = ((idx + d) >= 0) & ((idx + d) < s.box[k])
+                    shp = [1, 1, 1]
+                    shp[2 - k] = s.box[k]
+                    valid = valid * ok.to(torch.float64).reshape(shp)
+            self.bonds.append((bd.alpha, bd.alpha2, shifts, valid, torch.as_tensor(M, dtype=torch.float64, device=dev)))
+        self.h = (None if s.h is None else
+                  torch.as_tensor(s.h, dtype=torch.float64, device=dev).reshape(1, -1, 1, 1, 1, 1))
+        self.k1 = None if s.cubic_k1 is None else A.k1.double()
+        self.k2 = float(s.cubic_k2)
+
+    def __call__(self, S: torch.Tensor):
+        S64 = self.A.unpack(S).double()
+        v = torch.zeros_like(S64)
+        for a, a2, shifts, valid, M in self.bonds:
+            src = S64[:, :, a2]
+            for sh, dim in shifts:
+                src = torch.roll(src, shifts=sh, dims=dim)
+            v[:, :, a] += torch.einsum("kl,blzyx->bkzyx", M, src * valid)
+        E = -0.5 * (S64 * v).sum(dim=(1, 2, 3, 4, 5))
+        if self.h is not None:
+            E = E - (S64 * self.h).sum(dim=(1, 2, 3, 4, 5))
+        if self.k1 is not None:
+            x, y, z = S64[:, 0], S64[:, 1], S64[:, 2]
+            E = E + (self.k1 * ((x * y) ** 2 + (x * z) ** 2 + (y * z) ** 2)
+                     + self.k2 * (x * y * z) ** 2).sum(dim=(1, 2, 3, 4))
+        return E, S64.sum(dim=(2, 3, 4, 5)) / self.n_act
+
+
 def simulate_state(s: System, replicas: int, temps, n_therm: int, n_meas: int, every: int, config_every: int,
-                   seed: int, device="cpu", kB: float = 1.0, log=print) -> dict:
-    """Run the ladder for one state. Energies are totals; M is the mean magnetization per site."""
+                   seed: int, device="cpu", kB: float = 1.0, log=print, graphs: bool | None = None) -> dict:
+    """Run the ladder for one state. Energies are totals; M is the mean magnetization per site.
+
+    On a GPU the thermalization blocks and the sweep-and-measure step are each captured once in a CUDA
+    graph (as in `anneal`), so a temperature costs a few graph replays instead of one host launch per
+    colour per sweep; `graphs=False` turns that off (packed Ising never uses it).
+    """
     A = Sampler(s, int(replicas), device, seed)
     S = A.init_spins(seed=seed)
     mask = s.site_mask()
     n_act = float(s.n_active)
     k = max(1, int(every))
     m = max(1, int(n_meas) // k)
+    big = 10 * k
     ce = max(1, int(config_every))
     temps = np.asarray(temps, float)
     nT, B = len(temps), int(replicas)
@@ -241,37 +302,57 @@ def simulate_state(s: System, replicas: int, temps, n_therm: int, n_meas: int, e
                Mabs=np.zeros((B, nT)), M2=np.zeros((B, nT)),
                configs=np.zeros((B, len(saved), int(mask.sum()), 3), np.float32),
                config_temperatures=temps[saved])
+    observe = _Observer(A)
+    dev = S.device
+    f64 = dict(dtype=torch.float64, device=dev)
+    E_ref = torch.zeros(B, **f64)
+    acc = torch.zeros(4, B, **f64)                       # dE, dE^2, |M|, |M|^2 about the reference
+    accv = torch.zeros(B, s.n, **f64)
 
-    def observe():
-        E = A.energy(S)
-        Mv = A.magnetization(S).sum(dim=1) / n_act               # (B, n)
-        return E, Mv
+    def chunk():                                         # k sweeps, then one observation folded in
+        A.sweep(S, k)
+        E, Mv = observe(S)
+        d = E - E_ref
+        a = Mv.norm(dim=1)
+        acc.add_(torch.stack([d, d * d, a, a * a]))
+        accv.add_(Mv)
+
+    use_graphs = (dev.type == "cuda" and not A.packed) if graphs is None else bool(graphs)
+    A.set_temperature(kB * float(temps[0]))
+    if use_graphs:
+        rep_big = A.graph(S, big)
+        with torch.cuda.device(dev):
+            side = torch.cuda.Stream(device=dev)
+            side.wait_stream(torch.cuda.current_stream(dev))
+            with torch.cuda.stream(side):
+                chunk()                                  # warm-up outside the capture
+            torch.cuda.current_stream(dev).wait_stream(side)
+            g = torch.cuda.CUDAGraph()
+            with torch.cuda.graph(g):
+                chunk()
+        rep_obs = g.replay
+    else:
+        rep_big, rep_obs = (lambda: A.sweep(S, big)), chunk
 
     t0 = time.perf_counter()
     for t, T in enumerate(temps):
         A.set_temperature(kB * float(T))
-        if n_therm > 0:
-            A.sweep(S, int(n_therm))
-        E_ref = observe()[0]
-        dE = torch.zeros_like(E_ref)
-        dE2, Ma, M2 = torch.zeros_like(E_ref), torch.zeros_like(E_ref), torch.zeros_like(E_ref)
-        Mv_acc = None
+        for _ in range(int(n_therm) // big):
+            rep_big()
+        if int(n_therm) % big:
+            A.sweep(S, int(n_therm) % big)
+        E_ref.copy_(observe(S)[0])
+        acc.zero_()
+        accv.zero_()
         for _ in range(m):
-            A.sweep(S, k)
-            E, Mv = observe()
-            d = E - E_ref
-            dE += d
-            dE2 += d * d
-            a = Mv.norm(dim=1)
-            Ma += a
-            M2 += a * a
-            Mv_acc = Mv.clone() if Mv_acc is None else Mv_acc + Mv
-        dE, dE2 = dE / m, dE2 / m
-        out["E"][:, t] = (E_ref + dE).cpu().numpy()
-        out["E2"][:, t] = (dE2 + 2 * E_ref * dE + E_ref * E_ref).cpu().numpy()
-        out["Mabs"][:, t] = (Ma / m).cpu().numpy()
-        out["M2"][:, t] = (M2 / m).cpu().numpy()
-        out["M"][:, t, :s.n] = (Mv_acc / m).float().cpu().numpy()
+            rep_obs()
+        dE, dE2, Ma, M2 = (acc / m).cpu().numpy()
+        Er = E_ref.cpu().numpy()
+        out["E"][:, t] = Er + dE
+        out["E2"][:, t] = dE2 + 2 * Er * dE + Er * Er
+        out["Mabs"][:, t] = Ma
+        out["M2"][:, t] = M2
+        out["M"][:, t, :s.n] = (accv / m).float().cpu().numpy()
         if t in saved:
             out["configs"][:, saved.index(t)] = _spins(A, S, mask)
         if t % max(1, nT // 10) == 0 or t == nT - 1:

@@ -138,3 +138,17 @@ def test_collect_refuses_a_replica_axis_with_a_missing_block(tmp_path):
     SIM.run(run, [0], out, device="cpu", log=lambda m: None, replicas=(0, 2), part=0)
     with pytest.raises(ValueError, match="replicas"):
         SIM.collect(out)
+
+
+def test_the_graph_safe_observer_matches_the_sampler_energy_and_magnetization():
+    theta = {"J": {1: 1.0}, "D": 0.88, "K1": 0.177, "Ks": 0.139, "K2": 0.034, "H": 0.483}
+    nd = sy.nanodot(Rd=3.3, L=3)
+    for s in (SIM.build_system("heisenberg", "sc", nd.box, (False, False, False), theta, mask=nd.site_mask()),
+              SIM.build_system("xy", "triangular", (6, 6), (True, True), {"J": {1: 1.0, 2: -0.3}, "H": 0.1}),
+              SIM.build_system("ising", "square", (4, 4), (True, True), {"J": {1: 1.0}, "H": 0.2})):
+        from Spin_Colour_Kernel.sampler import Sampler
+        A = Sampler(s, 3, "cpu", 1)
+        S = A.init_spins(seed=2)
+        E, Mv = SIM._Observer(A)(S)
+        assert np.allclose(E.numpy(), A.energy(S).numpy(), atol=1e-9)
+        assert np.allclose(Mv.numpy(), (A.magnetization(S).sum(dim=1) / s.n_active).numpy(), atol=1e-12)
