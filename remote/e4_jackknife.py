@@ -21,7 +21,11 @@ from Spin_Colour_Kernel import exp_perf as P  # noqa: E402
 T975 = {9: 2.262157}   # Student t quantile, 9 degrees of freedom
 
 
-def jackknife(run: Path, drop_smallest: bool = False) -> dict:
+def estimator(run: Path, drop_smallest: bool = False, device: str = "cpu"):
+    """(row, estimate(weights), seeds): E4's critical-temperature estimate from a run's saved raw series.
+
+    estimate(None) uses every seed; estimate(w) weights the seeds by w (a bootstrap or jackknife draw).
+    """
     row = json.loads(next(run.glob("E4*.json")).read_text())["rows"][0]
     name, x, Tc = row["system"], row["correction_exponent"], row["T_ref"]
     data = {}
@@ -42,7 +46,7 @@ def jackknife(run: Path, drop_smallest: bool = False) -> dict:
             for L in (a, b):
                 d = data[L]
                 ww = None if w is None else np.broadcast_to(w[None, :, None], d["E"].shape)
-                u, lnZ = P._binder_curve(d["E"], d["m2"], d["m4"], d["temps"], g, weights=ww, device="cpu",
+                u, lnZ = P._binder_curve(d["E"], d["m2"], d["m4"], d["temps"], g, weights=ww, device=device,
                                          lnZ0=lnZ_full.get(L))
                 if w is None:
                     lnZ_full[L] = lnZ
@@ -53,8 +57,13 @@ def jackknife(run: Path, drop_smallest: bool = False) -> dict:
         Y = np.array([t for _, t in cr])
         return float(np.polyfit(X, Y, 1)[1])
 
+    return row, estimate, data[Ls[0]]["E"].shape[1], Ls
+
+
+def jackknife(run: Path, drop_smallest: bool = False) -> dict:
+    row, estimate, seeds, Ls = estimator(run, drop_smallest)
+    name, Tc = row["system"], row["T_ref"]
     full = estimate(None)
-    seeds = data[Ls[0]]["E"].shape[1]
     loo = []
     for s in range(seeds):
         w = np.ones(seeds)
