@@ -7,6 +7,27 @@ repository: the notebook carries its own code.
 **In one sentence:** you open the notebook in Kaggle or Google Colab, change the numbers in **one cell**,
 press **Run all**, and download the results.
 
+## The easiest way: the SCK configurator
+
+Open `configurator.html` (in this folder) with any web browser by double-clicking it. It needs no
+installation and no internet. On one screen you:
+
+1. choose the model and write your states; the **Hamiltonian** appears at the top with your numbers in it;
+2. choose the crystal, the box, the borders and, if you want, a shape of active sites (or press an example:
+   disc, sphere, ring, thin film);
+3. look at the **model**: drag to rotate it, scroll to zoom, and switch between **Colouring** (the classes
+   of sites that update together), **Active sites** and **Surface** (where Kₛ applies); the **Layers**
+   slider shows the inside of a 3D box;
+4. read the **parts tray**: how many sites each colour holds, how many are active and on the surface, and
+   the run budget (number of temperatures, spin updates and the size of the output against the 20 GB
+   Kaggle disk);
+5. choose **.ipynb notebook** (for Kaggle, Colab or Jupyter) or **.py script** (for a terminal or a
+   cluster: `python spin_simulation.py`) and press **Download**.
+
+The file it writes is this notebook with cell 1 already filled in, so everything below still applies. A
+setting marked in red must be fixed before the download button turns on. The page offers a light and a dark
+theme (Auto follows your system).
+
 ## 1. What the notebook does
 
 It simulates spins (tiny magnets) sitting on the sites of a crystal. For every temperature, from hot to

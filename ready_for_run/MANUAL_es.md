@@ -7,6 +7,27 @@ propio código.
 **En una frase:** abra el cuadernillo en Kaggle o en Google Colab, cambie los números de **una sola
 celda**, pulse **Run all** (ejecutar todo) y descargue los resultados.
 
+## La forma más fácil: el configurador SCK
+
+Abra `configurator.html` (en esta carpeta) con cualquier navegador, con doble clic. No necesita instalar
+nada ni conexión a internet. En una sola pantalla usted:
+
+1. elige el modelo y escribe sus estados; el **hamiltoniano** aparece arriba con sus números;
+2. elige el cristal, la caja, los bordes y, si quiere, una forma de sitios activos (o pulsa un ejemplo:
+   disco, esfera, anillo, película delgada);
+3. mira el **modelo**: arrastre para rotarlo, use la rueda para acercar, y cambie entre **Colouring** (las
+   clases de sitios que se actualizan juntas), **Active sites** (sitios activos) y **Surface** (superficie,
+   donde se aplica Kₛ); el control **Layers** muestra el interior de una caja 3D;
+4. lee la **bandeja de piezas** (parts tray): cuántos sitios tiene cada color, cuántos son activos y de
+   superficie, y el presupuesto de la corrida (número de temperaturas, actualizaciones de espín y tamaño de
+   la salida frente al disco de 20 GB de Kaggle);
+5. elige **.ipynb notebook** (para Kaggle, Colab o Jupyter) o **.py script** (para una terminal o un
+   clúster: `python spin_simulation.py`) y pulsa **Download** (descargar).
+
+El archivo que descarga es este mismo cuadernillo con la celda 1 ya llena, así que todo lo que sigue aplica
+igual. Un ajuste marcado en rojo debe corregirse antes de que se active el botón de descarga. La página tiene
+tema claro y oscuro (Auto sigue el de su sistema).
+
 ## 1. Qué hace el cuadernillo
 
 Simula espines (pequeños imanes) ubicados en los sitios de un cristal. Para cada temperatura, de

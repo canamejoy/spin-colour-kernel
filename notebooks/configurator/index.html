@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>SCK Run Configurator</title>
+<style>/*{{STYLE}}*/</style>
+</head>
+<body>
+<header class="bar">
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 40 28" aria-hidden="true">
+      <line x1="9" y1="18" x2="20" y2="8" /><line x1="20" y1="8" x2="31" y2="18" />
+      <circle cx="9" cy="18" r="6.5" class="b1" /><circle cx="20" cy="8" r="6.5" class="b2" /><circle cx="31" cy="18" r="6.5" class="b1" />
+    </svg>
+    <span class="name"><b>SCK</b> <span class="long">Spin-Colour Kernel</span></span>
+    <span class="sub">Run configurator</span>
+  </div>
+  <div class="bar-end">
+    <span class="commit" id="commit"></span>
+    <div class="seg small" role="radiogroup" aria-label="Theme" id="theme">
+      <button type="button" role="radio" data-v="auto">Auto</button>
+      <button type="button" role="radio" data-v="light">Light</button>
+      <button type="button" role="radio" data-v="dark">Dark</button>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="rail" aria-label="Run settings">
+    <form id="form" novalidate autocomplete="off">
+      <section class="sec">
+        <h2>Model</h2>
+        <div class="seg" role="radiogroup" aria-label="Model" id="model">
+          <button type="button" role="radio" data-v="ising">Ising</button>
+          <button type="button" role="radio" data-v="xy">XY</button>
+          <button type="button" role="radio" data-v="heisenberg">Heisenberg</button>
+        </div>
+        <p class="help" id="model-help"></p>
+        <label class="row">Units
+          <select id="units">
+            <option value="reduced">Reduced (J, k_B = 1)</option>
+            <option value="meV">meV, kelvin</option>
+          </select>
+        </label>
+        <p class="err" data-for="model"></p>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h2>States</h2><button type="button" class="ghost" id="add-state">Add state</button></div>
+        <p class="help">One parameter set each. Every state runs the same ladder with its own replicas. A field left empty is zero.</p>
+        <div id="states"></div>
+        <p class="err" data-for="states"></p>
+      </section>
+
+      <section class="sec">
+        <h2>Lattice</h2>
+        <label class="row">Crystal
+          <select id="crystal">
+            <optgroup label="2D">
+              <option value="square">square</option><option value="triangular">triangular</option>
+              <option value="honeycomb">honeycomb</option><option value="kagome">kagome</option>
+            </optgroup>
+            <optgroup label="3D">
+              <option value="sc">simple cubic (sc)</option><option value="bcc">body-centred cubic (bcc)</option>
+              <option value="fcc">face-centred cubic (fcc)</option>
+            </optgroup>
+          </select>
+        </label>
+        <div class="axes" id="axes"></div>
+        <p class="help">Sizes count unit cells. Periodic axes wrap around; open axes end at the box.</p>
+        <p class="err" data-for="box"></p>
+        <p class="warn" data-for="periodic"></p>
+        <p class="err" data-for="crystal"></p>
+      </section>
+
+      <section class="sec">
+        <h2>Active sites</h2>
+        <label class="row">Coordinates
+          <select id="coords">
+            <option value="">every site of the box</option>
+            <option value="cartesian">cartesian (x, y, z)</option>
+            <option value="spherical">spherical (r, theta, phi)</option>
+            <option value="cylindrical">cylindrical (rho, phi, z)</option>
+          </select>
+        </label>
+        <label class="col" id="shape-wrap">Shape
+          <input id="shape" class="mono" spellcheck="false" placeholder="(rho <= 10) & (abs(z) <= 2)">
+        </label>
+        <div class="chips" id="presets" aria-label="Shape examples"></div>
+        <p class="help" id="shape-help"></p>
+        <p class="err" data-for="shape"></p>
+      </section>
+
+      <section class="sec">
+        <h2>Temperatures and sweeps</h2>
+        <div class="grid3">
+          <label class="col">From <input id="T_max" inputmode="decimal"></label>
+          <label class="col">To <input id="T_min" inputmode="decimal"></label>
+          <label class="col">Step <input id="T_step" inputmode="decimal"></label>
+        </div>
+        <p class="help" id="t-help"></p>
+        <p class="err" data-for="temperature"></p>
+        <div class="grid3">
+          <label class="col">Thermalize <input id="thermalization" inputmode="numeric"></label>
+          <label class="col">Measure <input id="measurement" inputmode="numeric"></label>
+          <label class="col">Every <input id="measure_every" inputmode="numeric"></label>
+        </div>
+        <p class="help">Sweeps at each temperature: first to thermalize, then to measure, reading E and M every few sweeps.</p>
+        <div class="grid3">
+          <label class="col">Replicas <input id="replicas" inputmode="numeric"></label>
+          <label class="col">Seed <input id="seed" inputmode="numeric"></label>
+          <span></span>
+        </div>
+        <p class="help">Replicas per state: independent chains, split equally among the GPUs.</p>
+      </section>
+
+      <section class="sec">
+        <h2>Output</h2>
+        <label class="row">Save configurations every
+          <span class="unit"><input id="config_every" inputmode="numeric" class="short"> temperature steps</span>
+        </label>
+        <label class="row">Output folder <input id="output_dir" class="mono mid" spellcheck="false"></label>
+        <label class="row">GPUs <input id="gpus" class="mono mid" spellcheck="false" placeholder="all or 0, 1"></label>
+        <button type="button" class="ghost" id="reset">Reset every setting</button>
+      </section>
+    </form>
+  </aside>
+
+  <main class="stage">
+    <section class="ham" aria-label="Hamiltonian">
+      <div class="ham-head">
+        <h2>Hamiltonian</h2>
+        <div class="chips" id="state-pick" role="radiogroup" aria-label="State shown"></div>
+      </div>
+      <div class="ham-math" id="ham-math"></div>
+      <dl class="ham-terms" id="ham-terms"></dl>
+    </section>
+
+    <section class="view" aria-label="Model">
+      <div class="viewbar">
+        <div class="tabs" role="tablist" aria-label="Colour the model by" id="tabs">
+          <button type="button" role="tab" data-v="colour">Colouring</button>
+          <button type="button" role="tab" data-v="active">Active sites</button>
+          <button type="button" role="tab" data-v="surface">Surface</button>
+        </div>
+        <div class="viewopts">
+          <label class="check"><input type="checkbox" id="opt-bonds"> Bonds</label>
+          <label class="check"><input type="checkbox" id="opt-ghost"> Cut-away sites</label>
+          <label class="layers" id="layers-wrap">Layers <input type="range" id="layers" min="1" max="1" value="1"><output id="layers-out"></output></label>
+          <button type="button" class="ghost" id="reset-view">Reset view</button>
+        </div>
+      </div>
+      <div class="viewer" id="viewer">
+        <canvas id="model-canvas" tabindex="0" aria-label="Lattice model. Drag or use the arrow keys to rotate, scroll or plus and minus to zoom, 0 to reset."></canvas>
+        <p class="hint" id="hint"></p>
+        <div class="legend" id="legend"></div>
+        <p class="view-msg" id="view-msg" hidden></p>
+      </div>
+    </section>
+  </main>
+
+  <aside class="tray" aria-label="Parts tray and download">
+    <section>
+      <div class="sec-head"><h2>Parts tray</h2><span class="count" id="ncol"></span></div>
+      <p class="help" id="group"></p>
+      <ul class="compartments" id="classes"></ul>
+    </section>
+    <section>
+      <h2>Sites</h2>
+      <ul class="compartments two" id="sites"></ul>
+    </section>
+    <section>
+      <h2>Run budget</h2>
+      <div class="budget" id="budget"></div>
+    </section>
+    <section class="download" aria-label="Download">
+      <div class="seg" role="radiogroup" aria-label="File format" id="format">
+        <button type="button" role="radio" data-v="ipynb">.ipynb notebook</button>
+        <button type="button" role="radio" data-v="py">.py script</button>
+      </div>
+      <p class="help" id="format-help"></p>
+      <label class="col">File name
+        <span class="fname"><input id="fname" class="mono" spellcheck="false"><span id="fext">.ipynb</span></span>
+      </label>
+      <button type="button" class="primary" id="download">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10m0 0-4-4m4 4 4-4M4 16h12" /></svg>
+        <span id="download-label">Download notebook</span>
+      </button>
+      <p class="err" id="download-msg"></p>
+    </section>
+  </aside>
+</div>
+
+<script>/*{{CORE}}*/</script>
+<script>const TEMPLATE = /*{{TEMPLATE}}*/;</script>
+<script>/*{{APP}}*/</script>
+</body>
+</html>
