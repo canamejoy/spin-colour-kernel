@@ -90,12 +90,33 @@ button, input, select { font: inherit; color: inherit; }
 .sweep .sweep-go:disabled { opacity: 0.5; cursor: not-allowed; }
 .ham-head select { width: auto; max-width: 260px; }
 
-/* view cube, top right of the model */
-.viewcube { position: absolute; top: 10px; right: 10px; width: 104px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.viewcube canvas { width: 104px; height: 104px; display: block; cursor: pointer; }
-.cube-home { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid var(--line-strong); background: var(--card); border-radius: 6px; cursor: pointer; color: var(--ink); }
-.cube-home:hover { background: var(--bench); }
-.cube-home svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+/* axis gizmo, top right of the model */
+.gizmo { position: absolute; top: 10px; right: 10px; width: 104px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.gizmo canvas { width: 104px; height: 104px; display: block; }
+.gizmo-home { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid var(--line-strong); background: var(--card); border-radius: 6px; cursor: pointer; color: var(--ink); }
+.gizmo-home:hover { background: var(--bench); }
+.gizmo-home svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* the two tabs: States (one by one, with the model) and Parameter sweep (no model) */
+.modes { flex: none; }
+.modes button { padding: 5px 14px; white-space: nowrap; }
+body.mode-sweep .states-col, body.mode-sweep .view { display: none; }
+body.mode-sweep .layout { grid-template-columns: 290px minmax(0, 1fr) 290px; }
+.sweep-panel { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+.sp-left { display: flex; flex-direction: column; gap: 14px; min-height: 0; overflow-y: auto; }
+.sp-block { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px 16px; box-shadow: var(--shadow); }
+.sp-block .sub-h { margin: 10px 0 0; font-size: 12px; color: var(--mute); }
+.sp-table { display: flex; flex-direction: column; min-height: 0; }
+.sweep-row { display: grid; grid-template-columns: minmax(84px, 1.3fr) 1fr 1fr 1fr auto auto; gap: 6px; align-items: end; margin-top: 10px; }
+.sweep-row label { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: var(--mute); min-width: 0; }
+.sweep-row input, .sweep-row select { padding: 5px 6px; min-height: 30px; font-family: var(--mono); font-size: 12.5px; }
+.sweep-row .n { font: 12px var(--mono); color: var(--mute); padding-bottom: 7px; white-space: nowrap; }
+.sweep-table { overflow: auto; min-height: 0; flex: 1; margin-top: 6px; }
+.sweep-table table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.sweep-table th { position: sticky; top: 0; background: var(--card); text-align: left; font-weight: 600; color: var(--mute); border-bottom: 1px solid var(--line-strong); padding: 6px 8px; }
+.sweep-table td { padding: 5px 8px; border-bottom: 1px solid var(--line); font-family: var(--mono); }
+.sweep-table td.nm { color: var(--mute); }
+.sweep-table tr:hover td { background: var(--bench); }
 .rail { background: var(--panel); border-right: 1px solid var(--line); overflow-y: auto; }
 .tray { background: var(--panel); border-left: 1px solid var(--line); overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 18px; }
 .stage { display: flex; flex-direction: column; min-width: 0; min-height: 0; padding: 18px 22px; gap: 14px; }
@@ -244,6 +265,9 @@ input::placeholder { color: var(--faint); }
 
 /* ---------- narrow screens: one column, the model first after the Hamiltonian */
 @media (max-width: 1320px) {
+  body.mode-sweep .layout { grid-template-columns: 280px minmax(0, 1fr); }
+  body.mode-sweep .stage, body.mode-sweep .tray { grid-column: 2; }
+  .sweep-panel { grid-template-columns: minmax(0, 1fr); }
   .layout { grid-template-columns: 280px 290px minmax(0, 1fr); grid-template-rows: auto auto; height: auto; }
   .rail, .states-col { grid-row: span 2; height: calc(100vh - 52px); position: sticky; top: 52px; }
   .stage { min-height: calc(100vh - 52px); grid-column: 3; }

@@ -17,6 +17,10 @@
     <span class="name"><b>SCK</b> <span class="long">Spin-Colour Kernel</span></span>
     <span class="sub">Run configurator</span>
   </div>
+  <div class="seg modes" role="radiogroup" aria-label="What to simulate" id="mode">
+    <button type="button" role="radio" data-v="states">States</button>
+    <button type="button" role="radio" data-v="sweep">Parameter sweep</button>
+  </div>
   <div class="bar-end">
     <span class="commit" id="commit"></span>
     <div class="seg small" role="radiogroup" aria-label="Theme" id="theme">
@@ -143,6 +147,26 @@
       <dl class="ham-terms" id="ham-terms"></dl>
     </section>
 
+    <section class="sweep-panel" id="sweep-panel" aria-label="Parameter sweep" hidden>
+      <div class="sp-left">
+        <div class="sp-block">
+          <h2>Fixed parameters</h2>
+          <p class="help">Shared by every state of the sweep. A field left empty is zero.</p>
+          <div id="sweep-base"></div>
+        </div>
+        <div class="sp-block">
+          <div class="sec-head"><h2>Swept parameters</h2><button type="button" class="ghost" id="sweep-add">Add parameter</button></div>
+          <p class="help">From, to and step for each one. Every combination of the values becomes one state, up to 1 000.</p>
+          <div id="sweep-rows"></div>
+          <label class="row">Name prefix <input id="sweep-prefix" class="mono mid" spellcheck="false"></label>
+        </div>
+      </div>
+      <div class="sp-block sp-table">
+        <div class="sec-head"><h2>States of the sweep</h2><span class="count" id="sweep-count"></span></div>
+        <div class="sweep-table" id="sweep-table"></div>
+      </div>
+    </section>
+
     <section class="view" aria-label="Model">
       <div class="viewbar">
         <div class="tabs" role="tablist" aria-label="Colour the model by" id="tabs">
@@ -159,9 +183,9 @@
       </div>
       <div class="viewer" id="viewer">
         <canvas id="model-canvas" tabindex="0" aria-label="Lattice model. Drag or use the arrow keys to rotate, scroll or plus and minus to zoom, 0 to reset."></canvas>
-        <div class="viewcube" id="viewcube">
-          <canvas id="cube-canvas" width="104" height="104" aria-label="View cube: press a face, edge or corner to look from there"></canvas>
-          <button type="button" class="cube-home" id="cube-home" title="Home view" aria-label="Home view">
+        <div class="gizmo" id="gizmo">
+          <canvas id="gizmo-canvas" width="104" height="104" aria-label="Axis gizmo: press an axis ball to look along it"></canvas>
+          <button type="button" class="gizmo-home" id="gizmo-home" title="Home view" aria-label="Home view">
             <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 9.5 10 4l6.5 5.5M5.5 8v8h9V8" /></svg>
           </button>
         </div>

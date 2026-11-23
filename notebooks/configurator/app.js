@@ -23,6 +23,8 @@
   let ui = Object.assign({ format: "ipynb", fname: "spin_simulation", view: "colour", shown: 0, bonds: true,
                            ghost: true, theme: "auto" }, (store.get(STORE) || {}).ui || {});
   let res = null;           // the last analysis
+  if (!cfg.mode) cfg.mode = "states";
+  if (!cfg.sweep) cfg.sweep = { base: { J: { 1: 1.0 } }, rows: [{ p: "D", from: 0, to: 1, step: 0.1 }], prefix: "sweep" };
   if (cfg.box.length < 3) cfg.box = cfg.box.concat([5, 5, 5]).slice(0, 3);
   if (cfg.periodic.length < 3) cfg.periodic = cfg.periodic.concat([false, false, false]).slice(0, 3);
 
@@ -66,7 +68,7 @@
   let syncModel;
 
   function bindForm() {
-    syncModel = seg("model", cfg.model, (v) => { cfg.model = v; renderStates(); changed(); });
+    syncModel = seg("model", cfg.model, (v) => { cfg.model = v; renderStates(); if (cfg.mode === "sweep") renderSweep(); changed(); });
     $("units").value = cfg.units;
     $("units").addEventListener("change", (e) => { cfg.units = e.target.value; changed(); });
     $("crystal").value = cfg.crystal;
@@ -96,11 +98,14 @@
       inputs[inputs.length - 1].select();
     });
     $("reset").addEventListener("click", () => {
+      const mode = cfg.mode;
       cfg = clone(DEF);
+      cfg.mode = mode;
+      cfg.sweep = { base: { J: { 1: 1.0 } }, rows: [{ p: "D", from: 0, to: 1, step: 0.1 }], prefix: "sweep" };
       cfg.box = cfg.box.concat([5, 5, 5]).slice(0, 3);
       cfg.periodic = cfg.periodic.concat([false, false, false]).slice(0, 3);
       ui.shown = 0;
-      bindValues(); changed();
+      bindValues(); if (cfg.mode === "sweep") renderSweep(); changed();
     });
     renderAxes(); renderPresets(); renderStates(); shapeHelp();
   }
@@ -165,23 +170,10 @@
       : "Every site of the box carries a spin. Pick a coordinate system to cut a shape out of the box.";
   }
 
-  // the parameters a state carries, and which models carry them
-  const PARAMS = [
-    ["J1", "J₁", () => true], ["J2", "J₂", () => true], ["J3", "J₃", () => true], ["J4", "J₄", () => true],
-    ["D", "D", (m) => m === "heisenberg"], ["K1", "K₁", (m) => m === "heisenberg"], ["Ks", "Kₛ", (m) => m === "heisenberg"],
-    ["K2", "K₂", (m) => m === "heisenberg"], ["H", "H", () => true], ["H_theta", "θ", (m) => m === "heisenberg"],
-    ["H_phi", "φ", (m) => m !== "ising"],
-  ];
-  const getP = (st, p) => (p[0] === "J" && p.length === 2 ? (st.J || {})[p[1]] : st[p]);
-  function setP(st, p, v) {
-    if (p[0] === "J" && p.length === 2) { st.J = Object.assign({}, st.J); st.J[p[1]] = v; } else st[p] = v;
-  }
   function summary(st) {
-    return PARAMS.filter(([p]) => { const v = getP(st, p); return v !== undefined && v !== "" && Number(v) !== 0; })
-      .map(([p, l]) => `${l} ${fmtNum(getP(st, p))}`).join(" · ") || "all zero";
+    return SCK.PARAMS.filter(([p]) => { const v = SCK.getParam(st, p); return v !== undefined && v !== "" && Number(v) !== 0; })
+      .map(([p, l]) => `${l} ${fmtNum(SCK.getParam(st, p))}`).join(" · ") || "all zero";
   }
-  const series = SCK.series;
-  const MAX_STATES = 200;
 
   function renderStates() {
     const m = cfg.model;
@@ -198,7 +190,6 @@
         return `<div class="state compact" data-i="${i}"><button type="button" class="state-sum" data-open="${i}" aria-label="Open ${esc(st.name || "")}">
           <b>${esc(st.name || `state-${i + 1}`)}</b><span>${esc(summary(st))}</span></button>${del(i, st)}<p class="err" data-for="state.${i}"></p></div>`;
       const J = st.J || {};
-      const opts = PARAMS.filter(([, , ok]) => ok(m)).map(([p, l]) => `<option value="${p}">${l}</option>`).join("");
       return `<div class="state ${i === ui.shown ? "on" : ""}" data-i="${i}">
         <div class="state-top"><input data-i="${i}" data-k="name" value="${esc(st.name || "")}" aria-label="Name of state ${i + 1}">${del(i, st)}</div>
         <p class="sub-h">Exchange per neighbour shell (J &gt; 0 ferromagnetic)</p>
@@ -218,44 +209,12 @@
           ${field(i, st, "H_phi", "φ (°)", "Azimuth from +x (XY, Heisenberg)", m === "ising")}
           <span></span>
         </div>
-        <details class="sweep" ${ui.sweepOpen ? "open" : ""}>
-          <summary>Sweep a parameter over a range</summary>
-          <p class="help">Turns this state into one state per value; every other parameter stays as it is.</p>
-          <div class="pgrid">
-            <label>Parameter <select data-sw="p">${opts}</select></label>
-            <label>From <input data-sw="from" inputmode="decimal"></label>
-            <label>To <input data-sw="to" inputmode="decimal"></label>
-            <label>Step <input data-sw="step" inputmode="decimal"></label>
-          </div>
-          <button type="button" class="ghost sweep-go" data-sweep="${i}" disabled>Make the states</button>
-          <p class="help" data-sw-msg></p>
-        </details>
         <p class="err" data-for="state.${i}"></p>
       </div>`;
     }).join("");
     const box = $("states");
-    const sweepRead = (card) => {
-      const g = (k) => card.querySelector(`[data-sw="${k}"]`).value.trim();
-      const vals = g("from") === "" || g("to") === "" || g("step") === "" ? null : series(g("from"), g("to"), g("step"));
-      return { p: g("p"), vals };
-    };
-    const sweepSync = (card) => {
-      const { vals } = sweepRead(card);
-      const total = vals ? cfg.states.length - 1 + vals.length : 0;
-      const msg = card.querySelector("[data-sw-msg]"), go = card.querySelector(".sweep-go");
-      go.disabled = !vals || total > MAX_STATES;
-      go.textContent = vals ? `Make ${vals.length} state${vals.length > 1 ? "s" : ""}` : "Make the states";
-      msg.textContent = !vals ? "Give from, to and a step above zero."
-        : total > MAX_STATES ? `That would make ${total} states in all; the page keeps at most ${MAX_STATES}. Use a larger step.`
-        : `Values ${vals.slice(0, 6).map(fmtNum).join(", ")}${vals.length > 6 ? ", …, " + fmtNum(vals[vals.length - 1]) : ""}.`;
-    };
-    box.querySelectorAll(".sweep").forEach((d) => {
-      sweepSync(d);
-      d.addEventListener("toggle", () => { ui.sweepOpen = d.open; });
-    });
     box.oninput = (e) => {
       const t = e.target;
-      if (t.dataset.sw) { sweepSync(t.closest(".sweep")); return; }
       const i = +t.dataset.i;
       if (Number.isNaN(i)) return;
       const st = cfg.states[i];
@@ -269,7 +228,6 @@
       ui.shown = i;
       changed();
     };
-    box.onchange = (e) => { if (e.target.dataset.sw) sweepSync(e.target.closest(".sweep")); };
     box.onfocusin = (e) => {
       const card = e.target.closest(".state");
       if (card && !card.classList.contains("compact") && +card.dataset.i !== ui.shown) { ui.shown = +card.dataset.i; markShown(); renderHamiltonian(); }
@@ -279,19 +237,6 @@
       if (open) { ui.shown = +open.dataset.open; renderStates(); renderHamiltonian(); save(); return; }
       if (e.target.closest("[data-clear]")) {
         cfg.states = [cfg.states[ui.shown]]; ui.shown = 0; renderStates(); changed(); return;
-      }
-      const sw = e.target.closest("[data-sweep]");
-      if (sw) {
-        const i = +sw.dataset.sweep;
-        const { p, vals } = sweepRead(sw.closest(".sweep"));
-        if (!vals) return;
-        const base = cfg.states[i];
-        const label = PARAMS.find((x) => x[0] === p)[1];
-        const made = vals.map((v) => { const s = clone(base); setP(s, p, v); s.name = `${base.name || `state-${i + 1}`} ${label}=${fmtNum(v)}`; return s; });
-        cfg.states.splice(i, 1, ...made);
-        ui.shown = i; ui.sweepOpen = false;
-        renderStates(); changed();
-        return;
       }
       const b = e.target.closest("[data-del]");
       if (!b) return;
@@ -322,8 +267,12 @@
 
   function renderHamiltonian() {
     const pick = $("state-pick");
+    const sweep = cfg.mode === "sweep";
     const label = (s, i) => esc(s.name || `state-${i + 1}`);
-    if (cfg.states.length > 6) {
+    if (sweep) {
+      pick.removeAttribute("role"); pick.onclick = pick.onchange = null;
+      pick.innerHTML = `<span class="count">${esc(sweepNote())}</span>`;
+    } else if (cfg.states.length > 6) {
       pick.removeAttribute("role");
       pick.innerHTML = `<select aria-label="State shown">${cfg.states.map((s, i) => `<option value="${i}" ${i === ui.shown ? "selected" : ""}>${label(s, i)}</option>`).join("")}</select>`;
       pick.onclick = null;
@@ -334,45 +283,156 @@
       pick.onchange = null;
       pick.onclick = (e) => { const b = e.target.closest("button"); if (b) { ui.shown = +b.dataset.i; cfg.states.length > 3 ? renderStates() : markShown(); renderHamiltonian(); save(); } };
     }
-    const st = cfg.states[ui.shown] || cfg.states[0];
+    const st = sweep ? cfg.sweep.base : (cfg.states[ui.shown] || cfg.states[0]);
     if (!st) { $("ham-math").innerHTML = ""; $("ham-terms").innerHTML = ""; return; }
+    // in a sweep, a swept parameter is written as its symbol and its values are listed below
+    const rows = sweep ? cfg.sweep.rows : [];
+    const swept = (k) => rows.some((r) => r.p === k);
+    const range = (k) => {
+      const r = rows.find((x) => x.p === k), v = r && SCK.series(r.from, r.to, r.step);
+      if (!v) return "a range still to complete";
+      return v.length > 5 ? `{${v.slice(0, 3).map(fmtNum).join(", ")}, …, ${fmtNum(v[v.length - 1])}} (${v.length} values)` : `{${v.map(fmtNum).join(", ")}}`;
+    };
     const m = cfg.model, heis = m === "heisenberg";
     const terms = [], notes = [];
-    const n = (k) => (st[k] === undefined || st[k] === "" ? 0 : Number(st[k]));
+    const n = (k) => { const v = SCK.getParam(st, k); return v === undefined || v === "" ? 0 : Number(v); };
+    const on = (k) => swept(k) || n(k) !== 0;
+    // coefficient: "−D", "+K₂" for a swept symbol, else the signed number
+    const coef = (k, symbol, sign, rest) => (swept(k)
+      ? `${!terms.length ? (sign < 0 ? mo("−") : "") : mo(sign < 0 ? "−" : "+")}${symbol}${rest}`
+      : signed(!terms.length, sign * n(k), rest));
+    const value = (k, sym) => (swept(k) ? `${sym} ∈ ${range(k)}` : `${sym} = ${fmtNum(n(k))}`);
     const dot = m === "ising" ? `${spin("i", m)}${spin("j", m)}` : `${spin("i", m)}${mo("·")}${spin("j", m)}`;
-    const shells = Object.keys(st.J || {}).map(Number).filter((s) => Number(st.J[s])).sort();
     const shellName = ["nearest", "next-nearest", "third", "fourth"];
-    for (const s of shells) {
+    for (const s of [1, 2, 3, 4]) {
+      const k = `J${s}`;
+      if (!on(k)) continue;
       // H = − J Σ S·S: a positive J gives a leading minus
-      terms.push(signed(!terms.length, -st.J[s], `${sum(pair(s))}${dot}`));
-      notes.push([`J${"₁₂₃₄"[s - 1]} = ${fmtNum(st.J[s])}`, `exchange with ${shellName[s - 1]} neighbours, each pair once; ${st.J[s] > 0 ? "ferromagnetic" : "antiferromagnetic"}`]);
+      terms.push(coef(k, sub(mi("J"), `<mn>${s}</mn>`), -1, `${sum(pair(s))}${dot}`));
+      notes.push([value(k, `J${"₁₂₃₄"[s - 1]}`), `exchange with ${shellName[s - 1]} neighbours, each pair once; J > 0 ferromagnetic`]);
     }
-    if (heis && n("D")) {
-      terms.push(signed(!terms.length, -n("D"), `${sum(`${pair(1)}${mo("∥")}`)}${sup(spin("i", m), mi("T"))}${sub(mi("A"), `<mrow><mi>i</mi><mi>j</mi></mrow>`)}${spin("j", m)}`));
-      notes.push([`D = ${fmtNum(n("D"))}`, "bulk-type (Bloch) DMI on in-plane nearest-neighbour bonds: A_lm = Σ_k r̂_k ε_klm, the DM vector along the bond"]);
+    if (heis && on("D")) {
+      terms.push(coef("D", mi("D"), -1, `${sum(`${pair(1)}${mo("∥")}`)}${sup(spin("i", m), mi("T"))}${sub(mi("A"), `<mrow><mi>i</mi><mi>j</mi></mrow>`)}${spin("j", m)}`));
+      notes.push([value("D", "D"), "bulk-type (Bloch) DMI on in-plane nearest-neighbour bonds: A_lm = Σ_k r̂_k ε_klm, the DM vector along the bond"]);
     }
-    const K1 = n("K1"), Ks = st.Ks === undefined || st.Ks === "" ? K1 : n("Ks"), K2 = n("K2");
-    if (heis && (K1 || Ks)) {
+    const ksSet = SCK.getParam(st, "Ks") !== undefined && SCK.getParam(st, "Ks") !== "";
+    if (heis && (on("K1") || on("Ks"))) {
       const sq = (a, b) => `${sup(sub(mi("s"), mi(a)), "<mn>2</mn>")}${sup(sub(mi("s"), mi(b)), "<mn>2</mn>")}`;
       terms.push(`${terms.length ? mo("+") : ""}${sum(mi("i"))}${sub(mi("K"), `<mrow><mn>1</mn><mo>,</mo><mi>i</mi></mrow>`)}${mo("(")}${sq("x", "y")}${mo("+")}${sq("x", "z")}${mo("+")}${sq("y", "z")}${mo(")")}`);
-      notes.push([`K₁ = ${fmtNum(K1)}, Kₛ = ${fmtNum(Ks)}`, "cubic anisotropy: K₁ on bulk sites, Kₛ on surface sites (fewer active nearest neighbours than the bulk)"]);
+      notes.push([`${value("K1", "K₁")}, ${swept("Ks") || ksSet ? value("Ks", "Kₛ") : "Kₛ = K₁"}`, "cubic anisotropy: K₁ on bulk sites, Kₛ on surface sites (fewer active nearest neighbours than the bulk)"]);
     }
-    if (heis && K2) {
-      terms.push(signed(!terms.length, K2, `${sum(mi("i"))}${sup(`<mrow>${mo("(")}${sub(mi("s"), mi("x"))}${sub(mi("s"), mi("y"))}${sub(mi("s"), mi("z"))}${mo(")")}</mrow>`, "<mn>2</mn>")}`));
-      notes.push([`K₂ = ${fmtNum(K2)}`, "second-order cubic anisotropy"]);
+    if (heis && on("K2")) {
+      terms.push(coef("K2", sub(mi("K"), "<mn>2</mn>"), 1, `${sum(mi("i"))}${sup(`<mrow>${mo("(")}${sub(mi("s"), mi("x"))}${sub(mi("s"), mi("y"))}${sub(mi("s"), mi("z"))}${mo(")")}</mrow>`, "<mn>2</mn>")}`));
+      notes.push([value("K2", "K₂"), "second-order cubic anisotropy"]);
     }
-    if (n("H")) {
+    if (on("H")) {
+      const angleSwept = swept("H_theta") || swept("H_phi");
       const th = n("H_theta") * Math.PI / 180, ph = n("H_phi") * Math.PI / 180;
       const h = m === "ising" ? [1] : m === "xy" ? [Math.cos(ph), Math.sin(ph)] : [Math.sin(th) * Math.cos(ph), Math.sin(th) * Math.sin(ph), Math.cos(th)];
-      const hv = `<mrow>${mo("(")}${h.map((x) => mn(Math.round(x * 1000) / 1000)).join(mo(","))}${mo(")")}</mrow>`;
-      terms.push(signed(!terms.length, -n("H"), `${sum(mi("i"))}${m === "ising" ? "" : `${hv}${mo("·")}`}${spin("i", m)}`));
-      notes.push([`H = ${fmtNum(n("H"))}`, m === "ising" ? "Zeeman field along +1" : `Zeeman field along (${h.map((x) => (Math.round(x * 1000) / 1000)).join(", ")})${heis ? ` (θ = ${fmtNum(n("H_theta"))}°, φ = ${fmtNum(n("H_phi"))}°)` : ` (φ = ${fmtNum(n("H_phi"))}°)`}`]);
+      const hv = angleSwept ? `<mover>${mi("h")}${mo("^")}</mover>`
+        : `<mrow>${mo("(")}${h.map((x) => mn(Math.round(x * 1000) / 1000)).join(mo(","))}${mo(")")}</mrow>`;
+      terms.push(coef("H", mi("H"), -1, `${sum(mi("i"))}${m === "ising" ? "" : `${hv}${mo("·")}`}${spin("i", m)}`));
+      const dir = m === "ising" ? "along +1" : angleSwept
+        ? `along ĥ(θ, φ), ${heis ? value("H_theta", "θ") + "°, " : ""}${value("H_phi", "φ")}°`
+        : `along (${h.map((x) => (Math.round(x * 1000) / 1000)).join(", ")})${heis ? ` (θ = ${fmtNum(n("H_theta"))}°, φ = ${fmtNum(n("H_phi"))}°)` : ` (φ = ${fmtNum(n("H_phi"))}°)`}`;
+      notes.push([value("H", "H"), `Zeeman field ${dir}`]);
     }
     const parts = terms.length ? terms : [mn(0)];
     $("ham-math").innerHTML = parts.map((t, k) => `<math displaystyle="true">${k ? "" : `${mi("H")}${mo("=")}`}<mrow>${t}</mrow></math>`).join("");
     const unit = cfg.units === "meV" ? "Energies in meV, temperatures in kelvin." : "Energies in units of J, k_B = 1.";
     $("ham-terms").innerHTML = notes.map(([a, b]) => `<dt>${esc(a)}</dt><dd>${esc(b)}</dd>`).join("") +
       `<dt>${esc({ ising: "s = ±1", xy: "|S| = 1, 2D", heisenberg: "|S| = 1, 3D" }[m] || "")}</dt><dd>${esc(unit)}</dd>`;
+  }
+
+  // ------------------------------------------------------------------ parameter sweep (its own tab)
+  const PLABEL = Object.fromEntries(SCK.PARAMS.map(([k, l]) => [k, l]));
+  const allowed = (k) => SCK.PARAMS.find((x) => x[0] === k)[2].includes(cfg.model);
+  function sweepResult() { return SCK.sweepStates(cfg.sweep.base, cfg.sweep.rows.filter((r) => allowed(r.p)), cfg.sweep.prefix, 1000); }
+  function sweepNote() { const r = sweepResult(); return r.states ? `${r.states.length} states` : "sweep incomplete"; }
+  /* The states the downloaded file runs: the list of the States tab, or every combination of the sweep. */
+  function runStates() {
+    if (cfg.mode !== "sweep") return cfg.states.map((s, i) => Object.assign({}, s, { name: s.name || `state-${i + 1}` }));
+    const r = sweepResult();
+    return r.states || [];
+  }
+  function renderSweep() {
+    const sw = cfg.sweep, m = cfg.model;
+    const groups = [["Exchange per neighbour shell (J > 0 ferromagnetic)", ["J1", "J2", "J3", "J4"]],
+                    [`DMI and anisotropy${m === "heisenberg" ? "" : " (Heisenberg only)"}`, ["D", "K1", "Ks", "K2"]],
+                    ["Field", ["H", "H_theta", "H_phi"]]];
+    $("sweep-base").innerHTML = groups.map(([h, keys]) => `<p class="sub-h">${esc(h)}</p><div class="pgrid">${keys.map((k) => {
+      const swept = sw.rows.some((r) => r.p === k), off = !allowed(k);
+      const v = SCK.getParam(sw.base, k);
+      return `<label class="${off ? "off" : ""}">${PLABEL[k]}${k === "H_theta" || k === "H_phi" ? " (°)" : ""}
+        <input data-bk="${k}" inputmode="decimal" value="${swept ? "" : v === undefined ? "" : esc(v)}" placeholder="${swept ? "swept" : ""}" ${off || swept ? "disabled" : ""}></label>`;
+    }).join("")}</div>`).join("");
+    const used = (k, i) => sw.rows.some((r, j) => j !== i && r.p === k);
+    $("sweep-rows").innerHTML = sw.rows.map((r, i) => {
+      const vals = SCK.series(r.from, r.to, r.step);
+      return `<div class="sweep-row" data-i="${i}">
+        <label>Parameter <select data-rk="p">${SCK.PARAMS.filter(([k]) => allowed(k) && !used(k, i)).map(([k, l]) => `<option value="${k}" ${k === r.p ? "selected" : ""}>${l}</option>`).join("")}</select></label>
+        <label>From <input data-rk="from" inputmode="decimal" value="${esc(r.from)}"></label>
+        <label>To <input data-rk="to" inputmode="decimal" value="${esc(r.to)}"></label>
+        <label>Step <input data-rk="step" inputmode="decimal" value="${esc(r.step)}"></label>
+        <span class="n">${vals ? `${vals.length} value${vals.length > 1 ? "s" : ""}` : "–"}</span>
+        <button type="button" class="ghost" data-rdel="${i}" aria-label="Stop sweeping ${PLABEL[r.p]}">Remove</button>
+      </div>`;
+    }).join("") || `<p class="help">No parameter is swept yet.</p>`;
+    $("sweep-add").disabled = sw.rows.length >= 3 || SCK.PARAMS.every(([k]) => !allowed(k) || sw.rows.some((r) => r.p === k));
+    $("sweep-prefix").value = sw.prefix;
+    renderSweepTable();
+  }
+  function renderSweepTable() {
+    const r = sweepResult();
+    const rows = cfg.sweep.rows.filter((x) => allowed(x.p));
+    $("sweep-count").textContent = r.states ? `${fmt(r.states.length)} states` : "";
+    if (!r.states) { $("sweep-table").innerHTML = `<p class="help">${esc(r.error)}.</p>`; return; }
+    const shown = r.states.slice(0, 150);
+    $("sweep-table").innerHTML = `<table><thead><tr><th>#</th>${rows.map((x) => `<th>${PLABEL[x.p]}</th>`).join("")}<th>name in the files</th></tr></thead><tbody>${
+      shown.map((s, i) => `<tr><td>${i + 1}</td>${rows.map((x) => `<td>${fmtNum(SCK.getParam(s, x.p))}</td>`).join("")}<td class="nm">${esc(s.name)}</td></tr>`).join("")}</tbody></table>${
+      r.states.length > shown.length ? `<p class="help">… and ${fmt(r.states.length - shown.length)} more.</p>` : ""}`;
+  }
+  function bindSweep() {
+    $("sweep-base").addEventListener("input", (e) => {
+      const k = e.target.dataset.bk; if (!k) return;
+      const v = e.target.value.trim();
+      if (v === "") { if (/^J/.test(k)) { const J = Object.assign({}, cfg.sweep.base.J); delete J[k[1]]; cfg.sweep.base.J = J; } else delete cfg.sweep.base[k]; }
+      else SCK.setParam(cfg.sweep.base, k, Number(v));
+      renderSweepTable(); changed();
+    });
+    const rowsEl = $("sweep-rows");
+    rowsEl.addEventListener("input", (e) => {
+      const k = e.target.dataset.rk, row = e.target.closest(".sweep-row"); if (!k || !row) return;
+      const r = cfg.sweep.rows[+row.dataset.i];
+      if (k === "p") return;
+      r[k] = e.target.value.trim() === "" ? "" : Number(e.target.value);
+      const vals = SCK.series(r.from, r.to, r.step);
+      row.querySelector(".n").textContent = vals ? `${vals.length} value${vals.length > 1 ? "s" : ""}` : "–";
+      renderSweepTable(); changed();
+    });
+    rowsEl.addEventListener("change", (e) => {
+      if (e.target.dataset.rk !== "p") return;
+      cfg.sweep.rows[+e.target.closest(".sweep-row").dataset.i].p = e.target.value;
+      renderSweep(); changed();
+    });
+    rowsEl.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-rdel]"); if (!b) return;
+      cfg.sweep.rows.splice(+b.dataset.rdel, 1); renderSweep(); changed();
+    });
+    $("sweep-add").addEventListener("click", () => {
+      const free = SCK.PARAMS.find(([k]) => allowed(k) && !cfg.sweep.rows.some((r) => r.p === k));
+      if (!free) return;
+      cfg.sweep.rows.push({ p: free[0], from: 0, to: 1, step: 0.1 });
+      renderSweep(); changed();
+    });
+    $("sweep-prefix").addEventListener("input", (e) => { cfg.sweep.prefix = e.target.value; renderSweepTable(); changed(); });
+  }
+  function setMode(v) {
+    cfg.mode = v;
+    document.body.classList.toggle("mode-sweep", v === "sweep");
+    $("sweep-panel").hidden = v !== "sweep";
+    if (v === "sweep") renderSweep(); else view.resize();
+    changed();
   }
 
   // ------------------------------------------------------------------ analysis and error display
@@ -388,6 +448,7 @@
     const D = dims();
     const c = clone(cfg);
     c.box = cfg.box.slice(0, D); c.periodic = cfg.periodic.slice(0, D);
+    c.states = runStates();
     try { res = SCK.analyse(c); } catch (e) { res = { errors: [{ field: "crystal", msg: e.message }], warnings: [] }; }
     for (const el of document.querySelectorAll("[data-for]")) el.textContent = "";
     for (const el of document.querySelectorAll("[aria-invalid]")) el.removeAttribute("aria-invalid");
@@ -422,6 +483,7 @@
     }
     if (cfg.gpus !== "all" && (!cfg.gpus.length || cfg.gpus.some((g) => !Number.isInteger(g) || g < 0))) out.push('GPUs must be "all" or GPU numbers such as 0, 1');
     if (!String(cfg.output_dir || "").trim()) out.push("name the output folder");
+    if (cfg.mode === "sweep") { const r = sweepResult(); if (!r.states) out.unshift(`sweep: ${r.error}`); }
     return out;
   }
 
@@ -460,7 +522,7 @@
 
     const T = res.temperatures || [];
     const sw = (Number(cfg.thermalization) || 0) + (Number(cfg.measurement) || 0);
-    const R = Number(cfg.replicas) || 0, S = cfg.states.length;
+    const R = Number(cfg.replicas) || 0, S = runStates().length;
     const updates = T.length * sw * R * S * res.nActive;
     const gb = res.sizeGB || 0;
     $("budget").innerHTML = `<dl>
@@ -496,7 +558,7 @@
     const D = dims();
     const c = clone(cfg);
     c.box = cfg.box.slice(0, D); c.periodic = cfg.periodic.slice(0, D);
-    c.states = cfg.states.map((s, i) => Object.assign({}, s, { name: s.name || `state-${i + 1}` }));
+    c.states = runStates();
     const nb = ui.format === "ipynb";
     let text;
     try { text = nb ? SCK.notebookFor(TEMPLATE, c) : SCK.scriptFor(TEMPLATE, c); }
@@ -511,22 +573,13 @@
   // ------------------------------------------------------------------ the model view (canvas, painter's algorithm)
   const HOME = [-0.6, -0.5];                 // yaw, pitch of the home view: front, right and top in sight
   const clampPitch = (p) => Math.max(-Math.PI / 2, Math.min(Math.PI / 2, p));
-  const CUBE_FACES = [
-    { label: "TOP", n: [0, 0, 1], v: [[-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1]] },
-    { label: "BOTTOM", n: [0, 0, -1], v: [[-1, 1, -1], [1, 1, -1], [1, -1, -1], [-1, -1, -1]] },
-    { label: "FRONT", n: [0, -1, 0], v: [[-1, -1, -1], [1, -1, -1], [1, -1, 1], [-1, -1, 1]] },
-    { label: "BACK", n: [0, 1, 0], v: [[1, 1, -1], [-1, 1, -1], [-1, 1, 1], [1, 1, 1]] },
-    { label: "RIGHT", n: [1, 0, 0], v: [[1, -1, -1], [1, 1, -1], [1, 1, 1], [1, -1, 1]] },
-    { label: "LEFT", n: [-1, 0, 0], v: [[-1, 1, -1], [-1, -1, -1], [-1, -1, 1], [-1, 1, 1]] },
-  ];
-  const CUBE_CORNERS = [], CUBE_EDGES = [];
-  for (const x of [-1, 1]) for (const y of [-1, 1]) for (const z of [-1, 1]) CUBE_CORNERS.push([x, y, z]);
-  for (const [a, b] of [[0, 1], [0, 2], [1, 2]]) for (const u of [-1, 1]) for (const w of [-1, 1]) {
-    const e = [0, 0, 0]; e[a] = u; e[b] = w; CUBE_EDGES.push(e);
-  }
+  // the axis gizmo: its centre and radius in CSS pixels, and its six balls (x red, y green, z blue)
+  const G_C = 52, G_R = 34;
+  const AXES = [["x", [1, 0, 0], "#d7263d"], ["y", [0, 1, 0], "#1e9e5a"], ["z", [0, 0, 1], "#1b5bd6"]]
+    .flatMap(([l, n, c]) => [{ l: l.toUpperCase(), n, c, pos: true }, { l: "-" + l.toUpperCase(), n: n.map((x) => -x), c, pos: false }]);
 
   const view = {
-    canvas: null, ctx: null, w: 0, h: 0, dpr: 1, dirty: true, yaw: -0.6, pitch: -0.5, zoom: 1, tween: null, cubeHover: null, panX: 0, panY: 0,
+    canvas: null, ctx: null, w: 0, h: 0, dpr: 1, dirty: true, yaw: -0.6, pitch: -0.5, zoom: 1, tween: null, gizmoHover: null, panX: 0, panY: 0,
     sprites: {}, res: null, D: 3, layer: 1, radius: 0.3, extent: 1, order: null, bondPairs: null,
 
     init() {
@@ -559,19 +612,14 @@
         e.preventDefault(); this.dirty = true;
       });
       $("reset-view").addEventListener("click", () => this.reset());
-      const cube = $("cube-canvas");
-      const local = (e) => { const r = cube.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
-      cube.addEventListener("pointermove", (e) => { this.cubeHover = this.cubeHit(...local(e)); this.dirty = true; });
-      cube.addEventListener("pointerleave", () => { this.cubeHover = null; this.dirty = true; });
-      cube.addEventListener("click", (e) => {
-        const h = this.cubeHit(...local(e));
-        if (!h) return;
-        const len = Math.hypot(...h.n);
-        this.lookFrom(h.n.map((x) => x / len));
-      });
-      $("cube-home").addEventListener("click", () => { this.animateTo(HOME[0], HOME[1]); });
+      const giz = $("gizmo-canvas");
+      const local = (e) => { const r = giz.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+      giz.addEventListener("pointermove", (e) => { this.gizmoHover = this.gizmoHit(...local(e)); giz.style.cursor = this.gizmoHover ? "pointer" : "default"; this.dirty = true; });
+      giz.addEventListener("pointerleave", () => { this.gizmoHover = null; this.dirty = true; });
+      giz.addEventListener("click", (e) => { const a = this.gizmoHit(...local(e)); if (a) this.lookFrom(a.n); });
+      $("gizmo-home").addEventListener("click", () => { this.animateTo(HOME[0], HOME[1]); });
       $("layers").addEventListener("input", (e) => { this.layer = +e.target.value; this.syncLayers(); this.dirty = true; });
-      const loop = (now) => { this.step(now); if (this.dirty) { this.dirty = false; this.draw(); this.drawCube(); } requestAnimationFrame(loop); };
+      const loop = (now) => { this.step(now); if (this.dirty) { this.dirty = false; this.draw(); this.drawGizmo(); } requestAnimationFrame(loop); };
       requestAnimationFrame(loop);
     },
     reset() { this.tween = null; this.yaw = this.D === 3 ? HOME[0] : 0; this.pitch = this.D === 3 ? HOME[1] : -Math.PI / 2; this.zoom = 1; this.panX = this.panY = 0; this.dirty = true; },
@@ -602,62 +650,39 @@
       const x1 = v[0] * cy - v[1] * sy, y1 = v[0] * sy + v[1] * cy;
       return [c + x1 * s, c - (v[2] * cp - y1 * sp) * s, y1 * cp + v[2] * sp];
     },
-    cubeHit(px, py) {
-      const S = 28, C = 52;
-      const near = (v, r) => { const q = this.project(v, S, C); return q[2] < 0.05 && Math.hypot(q[0] - px, q[1] - py) < r; };
-      for (const c of CUBE_CORNERS) if (near(c, 9)) return { kind: "corner", n: c };
-      for (const e of CUBE_EDGES) if (near(e, 8)) return { kind: "edge", n: e };
-      for (const f of CUBE_FACES) {
-        if (this.project(f.n, 1, 0)[2] >= -1e-6) continue;
-        const poly = f.v.map((v) => this.project(v, S, C));
-        let inside = false;
-        for (let i = 0, j = poly.length - 1; i < poly.length; j = i++)
-          if ((poly[i][1] > py) !== (poly[j][1] > py) && px < ((poly[j][0] - poly[i][0]) * (py - poly[i][1])) / (poly[j][1] - poly[i][1]) + poly[i][0]) inside = !inside;
-        if (inside) return { kind: "face", n: f.n, f };
+    /* The axis gizmo: a ball at the end of each of ±x, ±y, ±z; the nearest ball under the pointer, front first. */
+    gizmoHit(px, py) {
+      let best = null;
+      for (const a of AXES) {
+        const q = this.project(a.n, G_R, G_C);
+        const r = a.pos ? 9 : 7;
+        if (Math.hypot(q[0] - px, q[1] - py) <= r + 2 && (!best || q[2] < best.d)) best = { a, d: q[2] };
       }
-      return null;
+      return best && best.a;
     },
-    drawCube() {
-      const cv = $("cube-canvas");
-      if (!cv || $("viewcube").hidden) return;
-      const dpr = this.dpr, S = 28, C = 52;
+    drawGizmo() {
+      const cv = $("gizmo-canvas");
+      if (!cv || $("gizmo").hidden) return;
+      const dpr = this.dpr;
       if (cv.width !== 104 * dpr) { cv.width = cv.height = 104 * dpr; }
       const g = cv.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
       g.clearRect(0, 0, 104, 104);
       const css = getComputedStyle(document.documentElement);
-      const card = css.getPropertyValue("--card").trim(), line = css.getPropertyValue("--line-strong").trim(),
-            ink = css.getPropertyValue("--ink").trim(), mute = css.getPropertyValue("--mute").trim(), focus = css.getPropertyValue("--focus").trim();
-      const hov = this.cubeHover;
-      const same = (a, b) => a && b && a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
-      for (const f of CUBE_FACES) {
-        const facing = -this.project(f.n, 1, 0)[2];
-        if (facing <= 1e-6) continue;
-        const poly = f.v.map((v) => this.project(v, S, C));
-        g.beginPath(); poly.forEach((q, i) => (i ? g.lineTo(q[0], q[1]) : g.moveTo(q[0], q[1]))); g.closePath();
-        g.fillStyle = card; g.fill();
-        if (hov && hov.kind === "face" && same(hov.n, f.n)) { g.globalAlpha = 0.22; g.fillStyle = focus; g.fill(); g.globalAlpha = 1; }
-        g.strokeStyle = line; g.lineWidth = 1; g.stroke();
-        if (facing > 0.3) {
-          const cx = poly.reduce((a, q) => a + q[0], 0) / 4, cy2 = poly.reduce((a, q) => a + q[1], 0) / 4;
-          g.globalAlpha = Math.min(1, (facing - 0.3) * 2.5);
-          g.fillStyle = ink; g.font = "600 9.5px system-ui, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
-          g.fillText(f.label, cx, cy2);
-          g.globalAlpha = 1;
-        }
+      const card = css.getPropertyValue("--card").trim(), line = css.getPropertyValue("--line-strong").trim(), focus = css.getPropertyValue("--focus").trim();
+      g.fillStyle = card; g.globalAlpha = 0.85;
+      g.beginPath(); g.arc(G_C, G_C, G_R + 12, 0, 2 * Math.PI); g.fill();
+      g.globalAlpha = 1; g.strokeStyle = line; g.lineWidth = 1; g.stroke();
+      const items = AXES.map((a) => ({ a, q: this.project(a.n, G_R, G_C) })).sort((u, v) => v.q[2] - u.q[2]);
+      for (const { a, q } of items) {
+        if (a.pos) { g.strokeStyle = a.c; g.lineWidth = 2; g.beginPath(); g.moveTo(G_C, G_C); g.lineTo(q[0], q[1]); g.stroke(); }
+        const r = a.pos ? 9 : 7;
+        g.beginPath(); g.arc(q[0], q[1], r, 0, 2 * Math.PI);
+        g.fillStyle = a.c; g.globalAlpha = a.pos ? 1 : 0.35; g.fill(); g.globalAlpha = 1;
+        if (!a.pos) { g.strokeStyle = a.c; g.lineWidth = 1.2; g.stroke(); }
+        if (this.gizmoHover === a) { g.strokeStyle = focus; g.lineWidth = 2; g.beginPath(); g.arc(q[0], q[1], r + 2.5, 0, 2 * Math.PI); g.stroke(); }
+        if (a.pos) { g.fillStyle = "#fff"; g.font = "700 10px system-ui, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(a.l, q[0], q[1] + 0.5); }
       }
-      if (hov && hov.kind !== "face") {
-        const q = this.project(hov.n, S, C);
-        g.fillStyle = focus; g.beginPath(); g.arc(q[0], q[1], 4.5, 0, 2 * Math.PI); g.fill();
-      }
-      // the lattice axes, from the cube's lower-left corner
-      const o = this.project([-1, -1, -1], S, C);
-      [["x", [1, 0, 0], "#d7263d"], ["y", [0, 1, 0], "#1e9e5a"], ["z", [0, 0, 1], "#1b5bd6"]].forEach(([l, d, col]) => {
-        const a = this.project([-1 + d[0] * 0.9, -1 + d[1] * 0.9, -1 + d[2] * 0.9], S, C);
-        if (a[2] > o[2] + 0.4 && this.project(d, 1, 0)[2] > 0.3) return;
-        g.strokeStyle = col; g.lineWidth = 2; g.beginPath(); g.moveTo(o[0], o[1]); g.lineTo(a[0], a[1]); g.stroke();
-        g.fillStyle = mute; g.font = "600 9px ui-monospace, monospace"; g.fillText(l, a[0] + (a[0] - o[0]) * 0.18, a[1] + (a[1] - o[1]) * 0.18);
-      });
     },
     resize() {
       const r = $("viewer").getBoundingClientRect();
@@ -724,7 +749,7 @@
         this.bondPairs = new Int32Array(pairs);
       }
       $("opt-bonds").disabled = !this.bondPairs;
-      $("viewcube").hidden = this.D !== 3;
+      $("gizmo").hidden = this.D !== 3;
       if (firstLoad || !sameBox) this.reset();
       this.legend();
       this.dirty = true;
@@ -847,7 +872,12 @@
     view.init();
     setView(ui.view);
     bindForm();
+    bindSweep();
     bindDownload();
+    seg("mode", cfg.mode, setMode);
+    document.body.classList.toggle("mode-sweep", cfg.mode === "sweep");
+    $("sweep-panel").hidden = cfg.mode !== "sweep";
+    if (cfg.mode === "sweep") renderSweep();
     renderHamiltonian();
     analyse();
   }

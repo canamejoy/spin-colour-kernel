@@ -13,13 +13,13 @@ Abra `configurator.html` (en esta carpeta) con cualquier navegador, con doble cl
 nada ni conexión a internet. En una sola pantalla usted:
 
 1. elige el modelo y escribe sus estados; el **hamiltoniano** aparece arriba con sus números;
-   los estados tienen su propia columna. Para simular un **rango de valores**, abra *Sweep a parameter over a
-   range* en un estado: elija el parámetro (por ejemplo D), desde, hasta y el paso, y la página convierte ese
-   estado en un estado por valor;
+   los estados tienen su propia columna. Para simular un **rango de valores**, cambie a la pestaña **Parameter
+   sweep** (barrido de parámetros) arriba: escriba los parámetros fijos y, para uno a tres parámetros (por
+   ejemplo D), desde, hasta y el paso; cada combinación se vuelve un estado, listado en una tabla, hasta 1 000;
 2. elige el cristal, la caja, los bordes y, si quiere, una forma de sitios activos (o pulsa un ejemplo:
    disco, esfera, anillo, película delgada);
-3. mira el **modelo**: arrastre para rotarlo, use la rueda para acercar, pulse una cara, arista o vértice del
-   **cubo de vistas** (arriba a la derecha) para mirar desde ahí, o su botón de casa para volver, y cambie entre **Colouring** (las
+3. mira el **modelo**: arrastre para rotarlo, use la rueda para acercar, pulse una esfera del **indicador de ejes**
+   (arriba a la derecha) para mirar a lo largo de ese eje, o su botón de casa para volver, y cambie entre **Colouring** (las
    clases de sitios que se actualizan juntas), **Active sites** (sitios activos) y **Surface** (superficie,
    donde se aplica Kₛ); el control **Layers** muestra el interior de una caja 3D;
 4. lee la **bandeja de piezas** (parts tray): cuántos sitios tiene cada color, cuántos son activos y de

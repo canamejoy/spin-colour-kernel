@@ -40,6 +40,7 @@ const out = req.map((q) => {
     }
     if (q.op === "params") return SCK.writeParams(q.template, q.cfg);
     if (q.op === "series") return SCK.series(q.a, q.b, q.s);
+    if (q.op === "sweep") return SCK.sweepStates(q.base, q.rows, q.prefix, q.limit);
     if (q.op === "files") { const t = JSON.parse(require("fs").readFileSync(q.tpl, "utf8")); return [SCK.notebookFor(t, q.cfg), SCK.scriptFor(t, q.cfg)]; }
   } catch (e) { return { thrown: e.message }; }
 });
@@ -204,3 +205,16 @@ def test_a_parameter_sweep_lists_every_value_from_start_to_end():
     assert got[0] == [round(0.1 * k, 10) for k in range(11)]
     assert got[1] == [1, 0.75, 0.5, 0.25, 0]
     assert got[2] == [0.5] and got[3] is None
+
+
+def test_a_two_parameter_sweep_makes_every_combination_on_top_of_the_base_state():
+    base = dict(J={"1": 1.0}, K1=0.177, H=0.5)
+    got = js([{"op": "sweep", "base": base, "prefix": "disk",
+               "rows": [dict(p="D", **{"from": 0, "to": 1, "step": 0.5}), dict(p="J2", **{"from": 0.1, "to": 0.2, "step": 0.1})]},
+              {"op": "sweep", "base": base, "rows": [dict(p="H", **{"from": 0, "to": 10, "step": 0.001})], "limit": 1000},
+              {"op": "sweep", "base": base, "rows": [dict(p="D", **{"from": 0, "to": 1, "step": 0.5}), dict(p="D", **{"from": 0, "to": 1, "step": 1})]}])
+    states = got[0]["states"]
+    assert [s["name"] for s in states] == ["disk D=0 J₂=0.1", "disk D=0 J₂=0.2", "disk D=0.5 J₂=0.1", "disk D=0.5 J₂=0.2",
+                                           "disk D=1 J₂=0.1", "disk D=1 J₂=0.2"]
+    assert states[3]["D"] == 0.5 and states[3]["J"] == {"1": 1.0, "2": 0.2} and states[3]["K1"] == 0.177
+    assert "at most 1000" in got[1]["error"] and "only once" in got[2]["error"]

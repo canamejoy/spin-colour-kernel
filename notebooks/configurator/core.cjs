@@ -518,6 +518,53 @@
     return out;
   }
 
+
+  // ------------------------------------------------------------------ parameter sweeps
+  /* Every parameter a state carries: key, label, and the models that carry it. */
+  const PARAMS = [
+    ["J1", "J₁", ["ising", "xy", "heisenberg"]], ["J2", "J₂", ["ising", "xy", "heisenberg"]],
+    ["J3", "J₃", ["ising", "xy", "heisenberg"]], ["J4", "J₄", ["ising", "xy", "heisenberg"]],
+    ["D", "D", ["heisenberg"]], ["K1", "K₁", ["heisenberg"]], ["Ks", "Kₛ", ["heisenberg"]], ["K2", "K₂", ["heisenberg"]],
+    ["H", "H", ["ising", "xy", "heisenberg"]], ["H_theta", "θ", ["heisenberg"]], ["H_phi", "φ", ["xy", "heisenberg"]],
+  ];
+  const isJ = (p) => /^J[1-4]$/.test(p);
+  function getParam(st, p) { return isJ(p) ? (st.J || {})[p[1]] : st[p]; }
+  function setParam(st, p, v) {
+    if (isJ(p)) { st.J = Object.assign({}, st.J); st.J[p[1]] = v; } else st[p] = v;
+  }
+  const shortNum = (v) => String(+Number(v).toPrecision(10));
+
+  /* The states of a sweep: every combination of the swept values (the first row varies slowest), each one the
+   * base state with those values set. Returns { states } or { error }. */
+  function sweepStates(base, rows, prefix, limit) {
+    limit = limit || 1000;
+    if (!rows || !rows.length) return { error: "add a parameter to sweep" };
+    const keys = rows.map((r) => r.p);
+    if (new Set(keys).size !== keys.length) return { error: "each parameter can be swept only once" };
+    const lists = [];
+    for (const r of rows) {
+      const label = (PARAMS.find((x) => x[0] === r.p) || [])[1];
+      if (!label) return { error: `unknown parameter "${r.p}"` };
+      const v = series(r.from, r.to, r.step);
+      if (!v) return { error: `${label}: give from, to and a step above zero` };
+      lists.push(v);
+    }
+    const total = lists.reduce((n, l) => n * l.length, 1);
+    if (total > limit) return { error: `${total} states: the sweep keeps at most ${limit}; use larger steps`, total };
+    const combos = product(lists);
+    const states = combos.map((vals) => {
+      const s = JSON.parse(JSON.stringify(base || {}));
+      const tags = [];
+      vals.forEach((v, k) => {
+        setParam(s, rows[k].p, v);
+        tags.push(`${PARAMS.find((x) => x[0] === rows[k].p)[1]}=${shortNum(v)}`);
+      });
+      s.name = `${(prefix || "sweep").trim() || "sweep"} ${tags.join(" ")}`;
+      return s;
+    });
+    return { states, total };
+  }
+
   // ------------------------------------------------------------------ the parameters cell
   function pyStr(s) { return JSON.stringify(String(s)); }
   function pyNum(v) {
@@ -593,6 +640,6 @@
     CRYSTALS, MODELS, COORDS, FUNCS: Object.keys(FUNCS), PARAM_KEYS,
     product, makeCrystal, abelianGroups, search, seamOk, verifyOnBox, colourOf, nColours, describeColouring,
     lattice, activeMask, parseShape, surfaceMask, shellsOf, analyse, ladder, ShapeError,
-    writeParams, notebookFor, scriptFor, bondVector, series,
+    writeParams, notebookFor, scriptFor, bondVector, series, PARAMS, getParam, setParam, sweepStates,
   };
 });

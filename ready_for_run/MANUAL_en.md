@@ -13,13 +13,13 @@ Open `configurator.html` (in this folder) with any web browser by double-clickin
 installation and no internet. On one screen you:
 
 1. choose the model and write your states; the **Hamiltonian** appears at the top with your numbers in it;
-   the states have their own column. To simulate a **range of values**, open *Sweep a parameter over a range*
-   in a state: choose the parameter (for example D), from, to and step, and the page turns that state into one
-   state per value;
+   the states have their own column. To simulate a **range of values**, switch to the **Parameter sweep** tab
+   at the top: write the fixed parameters, then for one to three parameters (for example D) the from, to and
+   step; every combination becomes one state, listed in a table, up to 1 000;
 2. choose the crystal, the box, the borders and, if you want, a shape of active sites (or press an example:
    disc, sphere, ring, thin film);
-3. look at the **model**: drag to rotate it, scroll to zoom, press a face, edge or corner of the **view cube**
-   (top right) to look from there, or its house button to go back, and switch between **Colouring** (the classes
+3. look at the **model**: drag to rotate it, scroll to zoom, press a ball of the **axis gizmo** (top right) to look
+   along that axis, or its house button to go back, and switch between **Colouring** (the classes
    of sites that update together), **Active sites** and **Surface** (where Kₛ applies); the **Layers**
    slider shows the inside of a 3D box;
 4. read the **parts tray**: how many sites each colour holds, how many are active and on the surface, and
