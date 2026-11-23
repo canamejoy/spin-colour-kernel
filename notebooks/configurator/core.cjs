@@ -507,6 +507,17 @@
     return { values };
   }
 
+  /* The values from..to by step, rounded so that 0.1 + 0.2 prints as 0.3; null when the range is unusable. */
+  function series(from, to, step) {
+    from = Number(from); to = Number(to); step = Number(step);
+    if (![from, to, step].every(Number.isFinite) || step <= 0) return null;
+    const k = Math.floor(Math.abs(to - from) / step + 1e-9);
+    const dir = to >= from ? 1 : -1;
+    const out = [];
+    for (let i = 0; i <= k; i++) out.push(Math.round((from + dir * step * i) * 1e10) / 1e10);
+    return out;
+  }
+
   // ------------------------------------------------------------------ the parameters cell
   function pyStr(s) { return JSON.stringify(String(s)); }
   function pyNum(v) {
@@ -582,6 +593,6 @@
     CRYSTALS, MODELS, COORDS, FUNCS: Object.keys(FUNCS), PARAM_KEYS,
     product, makeCrystal, abelianGroups, search, seamOk, verifyOnBox, colourOf, nColours, describeColouring,
     lattice, activeMask, parseShape, surfaceMask, shellsOf, analyse, ladder, ShapeError,
-    writeParams, notebookFor, scriptFor, bondVector,
+    writeParams, notebookFor, scriptFor, bondVector, series,
   };
 });

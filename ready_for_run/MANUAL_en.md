@@ -13,14 +13,17 @@ Open `configurator.html` (in this folder) with any web browser by double-clickin
 installation and no internet. On one screen you:
 
 1. choose the model and write your states; the **Hamiltonian** appears at the top with your numbers in it;
+   the states have their own column. To simulate a **range of values**, open *Sweep a parameter over a range*
+   in a state: choose the parameter (for example D), from, to and step, and the page turns that state into one
+   state per value;
 2. choose the crystal, the box, the borders and, if you want, a shape of active sites (or press an example:
    disc, sphere, ring, thin film);
-3. look at the **model**: drag to rotate it, scroll to zoom, and switch between **Colouring** (the classes
+3. look at the **model**: drag to rotate it, scroll to zoom, press a face, edge or corner of the **view cube**
+   (top right) to look from there, or its house button to go back, and switch between **Colouring** (the classes
    of sites that update together), **Active sites** and **Surface** (where Kₛ applies); the **Layers**
    slider shows the inside of a 3D box;
 4. read the **parts tray**: how many sites each colour holds, how many are active and on the surface, and
-   the run budget (number of temperatures, spin updates and the size of the output against the 20 GB
-   Kaggle disk);
+   the run budget (number of temperatures, spin updates and the size of the output);
 5. choose **.ipynb notebook** (for Kaggle, Colab or Jupyter) or **.py script** (for a terminal or a
    cluster: `python spin_simulation.py`) and press **Download**.
 

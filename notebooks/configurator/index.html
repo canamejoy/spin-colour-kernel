@@ -48,13 +48,6 @@
       </section>
 
       <section class="sec">
-        <div class="sec-head"><h2>States</h2><button type="button" class="ghost" id="add-state">Add state</button></div>
-        <p class="help">One parameter set each. Every state runs the same ladder with its own replicas. A field left empty is zero.</p>
-        <div id="states"></div>
-        <p class="err" data-for="states"></p>
-      </section>
-
-      <section class="sec">
         <h2>Lattice</h2>
         <label class="row">Crystal
           <select id="crystal">
@@ -79,7 +72,7 @@
         <h2>Active sites</h2>
         <label class="row">Coordinates
           <select id="coords">
-            <option value="">every site of the box</option>
+            <option value="">every site</option>
             <option value="cartesian">cartesian (x, y, z)</option>
             <option value="spherical">spherical (r, theta, phi)</option>
             <option value="cylindrical">cylindrical (rho, phi, z)</option>
@@ -128,6 +121,18 @@
     </form>
   </aside>
 
+  <aside class="states-col" aria-label="States">
+  <form id="states-form" novalidate autocomplete="off" onsubmit="return false">
+      <section class="sec states-sec">
+      <div class="sec-head"><h2>States</h2><button type="button" class="ghost" id="add-state">Add state</button></div>
+      <p class="help">One parameter set each. Every state runs the same ladder with its own replicas. A field left empty is zero.</p>
+      <div id="states"></div>
+      <p class="err" data-for="states"></p>
+    </section>
+
+  </form>
+  </aside>
+
   <main class="stage">
     <section class="ham" aria-label="Hamiltonian">
       <div class="ham-head">
@@ -154,6 +159,12 @@
       </div>
       <div class="viewer" id="viewer">
         <canvas id="model-canvas" tabindex="0" aria-label="Lattice model. Drag or use the arrow keys to rotate, scroll or plus and minus to zoom, 0 to reset."></canvas>
+        <div class="viewcube" id="viewcube">
+          <canvas id="cube-canvas" width="104" height="104" aria-label="View cube: press a face, edge or corner to look from there"></canvas>
+          <button type="button" class="cube-home" id="cube-home" title="Home view" aria-label="Home view">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 9.5 10 4l6.5 5.5M5.5 8v8h9V8" /></svg>
+          </button>
+        </div>
         <p class="hint" id="hint"></p>
         <div class="legend" id="legend"></div>
         <p class="view-msg" id="view-msg" hidden></p>

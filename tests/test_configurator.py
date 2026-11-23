@@ -39,6 +39,7 @@ const out = req.map((q) => {
                temperatures: r.temperatures, colouring: r.colouring && [r.colouring.m, r.colouring.K, r.colouring.o] };
     }
     if (q.op === "params") return SCK.writeParams(q.template, q.cfg);
+    if (q.op === "series") return SCK.series(q.a, q.b, q.s);
     if (q.op === "files") { const t = JSON.parse(require("fs").readFileSync(q.tpl, "utf8")); return [SCK.notebookFor(t, q.cfg), SCK.scriptFor(t, q.cfg)]; }
   } catch (e) { return { thrown: e.message }; }
 });
@@ -195,3 +196,11 @@ def test_the_ready_for_run_page_is_the_current_build():
 def test_nothing_covers_the_model_canvas_when_the_message_is_hidden():
     css = (ROOT / "notebooks" / "configurator" / "style.css").read_text()
     assert ".view-msg[hidden] { display: none; }" in css and "pointer-events: none" in css.split(".view-msg {")[1].split("}")[0]
+
+
+def test_a_parameter_sweep_lists_every_value_from_start_to_end():
+    got = js([{"op": "series", "a": 0, "b": 1, "s": 0.1}, {"op": "series", "a": 1, "b": 0, "s": 0.25},
+              {"op": "series", "a": 0.5, "b": 0.5, "s": 1}, {"op": "series", "a": 0, "b": 1, "s": 0}])
+    assert got[0] == [round(0.1 * k, 10) for k in range(11)]
+    assert got[1] == [1, 0.75, 0.5, 0.25, 0]
+    assert got[2] == [0.5] and got[3] is None

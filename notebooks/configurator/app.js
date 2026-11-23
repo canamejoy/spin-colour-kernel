@@ -165,7 +165,24 @@
       : "Every site of the box carries a spin. Pick a coordinate system to cut a shape out of the box.";
   }
 
-  const HEIS_ONLY = ["D", "K1", "Ks", "K2"];
+  // the parameters a state carries, and which models carry them
+  const PARAMS = [
+    ["J1", "J₁", () => true], ["J2", "J₂", () => true], ["J3", "J₃", () => true], ["J4", "J₄", () => true],
+    ["D", "D", (m) => m === "heisenberg"], ["K1", "K₁", (m) => m === "heisenberg"], ["Ks", "Kₛ", (m) => m === "heisenberg"],
+    ["K2", "K₂", (m) => m === "heisenberg"], ["H", "H", () => true], ["H_theta", "θ", (m) => m === "heisenberg"],
+    ["H_phi", "φ", (m) => m !== "ising"],
+  ];
+  const getP = (st, p) => (p[0] === "J" && p.length === 2 ? (st.J || {})[p[1]] : st[p]);
+  function setP(st, p, v) {
+    if (p[0] === "J" && p.length === 2) { st.J = Object.assign({}, st.J); st.J[p[1]] = v; } else st[p] = v;
+  }
+  function summary(st) {
+    return PARAMS.filter(([p]) => { const v = getP(st, p); return v !== undefined && v !== "" && Number(v) !== 0; })
+      .map(([p, l]) => `${l} ${fmtNum(getP(st, p))}`).join(" · ") || "all zero";
+  }
+  const series = SCK.series;
+  const MAX_STATES = 200;
+
   function renderStates() {
     const m = cfg.model;
     $("model-help").textContent = { ising: "Spins s = ±1. Carries exchange J and a field H.",
@@ -173,11 +190,17 @@
       heisenberg: "Unit spins in 3D. Carries exchange, DMI, cubic and surface anisotropy, and a field." }[m] || "";
     const field = (i, st, k, label, title, off) => `<label class="${off ? "off" : ""}" title="${esc(title)}">${label}
       <input data-i="${i}" data-k="${k}" inputmode="decimal" value="${st[k] === undefined ? "" : esc(st[k])}" ${off ? "disabled" : ""}></label>`;
-    $("states").innerHTML = cfg.states.map((st, i) => {
+    const compact = cfg.states.length > 3;
+    const del = (i, st) => (cfg.states.length > 1 ? `<button type="button" class="ghost" data-del="${i}" aria-label="Remove ${esc(st.name || "state")}">Remove</button>` : "");
+    $("states").innerHTML = (cfg.states.length > 1 ? `<div class="states-tools"><span>${cfg.states.length} states</span><button type="button" class="ghost" data-clear>Keep only the open state</button></div>` : "") +
+      cfg.states.map((st, i) => {
+      if (compact && i !== ui.shown)
+        return `<div class="state compact" data-i="${i}"><button type="button" class="state-sum" data-open="${i}" aria-label="Open ${esc(st.name || "")}">
+          <b>${esc(st.name || `state-${i + 1}`)}</b><span>${esc(summary(st))}</span></button>${del(i, st)}<p class="err" data-for="state.${i}"></p></div>`;
       const J = st.J || {};
+      const opts = PARAMS.filter(([, , ok]) => ok(m)).map(([p, l]) => `<option value="${p}">${l}</option>`).join("");
       return `<div class="state ${i === ui.shown ? "on" : ""}" data-i="${i}">
-        <div class="state-top"><input data-i="${i}" data-k="name" value="${esc(st.name || "")}" aria-label="Name of state ${i + 1}">
-          ${cfg.states.length > 1 ? `<button type="button" class="ghost" data-del="${i}" aria-label="Remove ${esc(st.name || "state")}">Remove</button>` : ""}</div>
+        <div class="state-top"><input data-i="${i}" data-k="name" value="${esc(st.name || "")}" aria-label="Name of state ${i + 1}">${del(i, st)}</div>
         <p class="sub-h">Exchange per neighbour shell (J &gt; 0 ferromagnetic)</p>
         <div class="pgrid">${[1, 2, 3, 4].map((s) => `<label title="Shell ${s}: ${["nearest", "next-nearest", "third", "fourth"][s - 1]} neighbours">J${["₁", "₂", "₃", "₄"][s - 1]}
           <input data-i="${i}" data-j="${s}" inputmode="decimal" value="${J[s] === undefined ? "" : esc(J[s])}"></label>`).join("")}</div>
@@ -195,12 +218,45 @@
           ${field(i, st, "H_phi", "φ (°)", "Azimuth from +x (XY, Heisenberg)", m === "ising")}
           <span></span>
         </div>
+        <details class="sweep" ${ui.sweepOpen ? "open" : ""}>
+          <summary>Sweep a parameter over a range</summary>
+          <p class="help">Turns this state into one state per value; every other parameter stays as it is.</p>
+          <div class="pgrid">
+            <label>Parameter <select data-sw="p">${opts}</select></label>
+            <label>From <input data-sw="from" inputmode="decimal"></label>
+            <label>To <input data-sw="to" inputmode="decimal"></label>
+            <label>Step <input data-sw="step" inputmode="decimal"></label>
+          </div>
+          <button type="button" class="ghost sweep-go" data-sweep="${i}" disabled>Make the states</button>
+          <p class="help" data-sw-msg></p>
+        </details>
         <p class="err" data-for="state.${i}"></p>
       </div>`;
     }).join("");
     const box = $("states");
+    const sweepRead = (card) => {
+      const g = (k) => card.querySelector(`[data-sw="${k}"]`).value.trim();
+      const vals = g("from") === "" || g("to") === "" || g("step") === "" ? null : series(g("from"), g("to"), g("step"));
+      return { p: g("p"), vals };
+    };
+    const sweepSync = (card) => {
+      const { vals } = sweepRead(card);
+      const total = vals ? cfg.states.length - 1 + vals.length : 0;
+      const msg = card.querySelector("[data-sw-msg]"), go = card.querySelector(".sweep-go");
+      go.disabled = !vals || total > MAX_STATES;
+      go.textContent = vals ? `Make ${vals.length} state${vals.length > 1 ? "s" : ""}` : "Make the states";
+      msg.textContent = !vals ? "Give from, to and a step above zero."
+        : total > MAX_STATES ? `That would make ${total} states in all; the page keeps at most ${MAX_STATES}. Use a larger step.`
+        : `Values ${vals.slice(0, 6).map(fmtNum).join(", ")}${vals.length > 6 ? ", …, " + fmtNum(vals[vals.length - 1]) : ""}.`;
+    };
+    box.querySelectorAll(".sweep").forEach((d) => {
+      sweepSync(d);
+      d.addEventListener("toggle", () => { ui.sweepOpen = d.open; });
+    });
     box.oninput = (e) => {
-      const t = e.target, i = +t.dataset.i;
+      const t = e.target;
+      if (t.dataset.sw) { sweepSync(t.closest(".sweep")); return; }
+      const i = +t.dataset.i;
       if (Number.isNaN(i)) return;
       const st = cfg.states[i];
       const v = t.value.trim();
@@ -213,11 +269,30 @@
       ui.shown = i;
       changed();
     };
+    box.onchange = (e) => { if (e.target.dataset.sw) sweepSync(e.target.closest(".sweep")); };
     box.onfocusin = (e) => {
       const card = e.target.closest(".state");
-      if (card && +card.dataset.i !== ui.shown) { ui.shown = +card.dataset.i; markShown(); renderHamiltonian(); }
+      if (card && !card.classList.contains("compact") && +card.dataset.i !== ui.shown) { ui.shown = +card.dataset.i; markShown(); renderHamiltonian(); }
     };
     box.onclick = (e) => {
+      const open = e.target.closest("[data-open]");
+      if (open) { ui.shown = +open.dataset.open; renderStates(); renderHamiltonian(); save(); return; }
+      if (e.target.closest("[data-clear]")) {
+        cfg.states = [cfg.states[ui.shown]]; ui.shown = 0; renderStates(); changed(); return;
+      }
+      const sw = e.target.closest("[data-sweep]");
+      if (sw) {
+        const i = +sw.dataset.sweep;
+        const { p, vals } = sweepRead(sw.closest(".sweep"));
+        if (!vals) return;
+        const base = cfg.states[i];
+        const label = PARAMS.find((x) => x[0] === p)[1];
+        const made = vals.map((v) => { const s = clone(base); setP(s, p, v); s.name = `${base.name || `state-${i + 1}`} ${label}=${fmtNum(v)}`; return s; });
+        cfg.states.splice(i, 1, ...made);
+        ui.shown = i; ui.sweepOpen = false;
+        renderStates(); changed();
+        return;
+      }
       const b = e.target.closest("[data-del]");
       if (!b) return;
       cfg.states.splice(+b.dataset.del, 1);
@@ -247,8 +322,18 @@
 
   function renderHamiltonian() {
     const pick = $("state-pick");
-    pick.innerHTML = cfg.states.map((s, i) => `<button type="button" class="chip" role="radio" aria-checked="${i === ui.shown}" data-i="${i}">${esc(s.name || `state-${i + 1}`)}</button>`).join("");
-    pick.onclick = (e) => { const b = e.target.closest("button"); if (b) { ui.shown = +b.dataset.i; markShown(); renderHamiltonian(); save(); } };
+    const label = (s, i) => esc(s.name || `state-${i + 1}`);
+    if (cfg.states.length > 6) {
+      pick.removeAttribute("role");
+      pick.innerHTML = `<select aria-label="State shown">${cfg.states.map((s, i) => `<option value="${i}" ${i === ui.shown ? "selected" : ""}>${label(s, i)}</option>`).join("")}</select>`;
+      pick.onclick = null;
+      pick.onchange = (e) => { ui.shown = +e.target.value; renderStates(); renderHamiltonian(); save(); };
+    } else {
+      pick.setAttribute("role", "radiogroup");
+      pick.innerHTML = cfg.states.map((s, i) => `<button type="button" class="chip" role="radio" aria-checked="${i === ui.shown}" data-i="${i}">${label(s, i)}</button>`).join("");
+      pick.onchange = null;
+      pick.onclick = (e) => { const b = e.target.closest("button"); if (b) { ui.shown = +b.dataset.i; cfg.states.length > 3 ? renderStates() : markShown(); renderHamiltonian(); save(); } };
+    }
     const st = cfg.states[ui.shown] || cfg.states[0];
     if (!st) { $("ham-math").innerHTML = ""; $("ham-terms").innerHTML = ""; return; }
     const m = cfg.model, heis = m === "heisenberg";
@@ -377,9 +462,7 @@
     const sw = (Number(cfg.thermalization) || 0) + (Number(cfg.measurement) || 0);
     const R = Number(cfg.replicas) || 0, S = cfg.states.length;
     const updates = T.length * sw * R * S * res.nActive;
-    const cap = 20;
     const gb = res.sizeGB || 0;
-    const pct = Math.min(100, (gb / cap) * 100);
     $("budget").innerHTML = `<dl>
       <dt>temperatures</dt><dd>${fmt(T.length)}</dd>
       <dt>sweeps per temperature</dt><dd>${fmt(sw)}</dd>
@@ -387,8 +470,7 @@
       <dt>spin updates</dt><dd>${updates ? updates.toExponential(2).replace("e+", " × 10^") : "–"}</dd>
       <dt>configurations saved</dt><dd>${fmt(res.nSaved)} per chain</dd></dl>
       <div class="cap"><div class="cap-top"><span>output size</span><b>${gb < 0.01 ? `${fmt(gb * 1000, 1)} MB` : `${fmt(gb, 2)} GB`}</b></div>
-      <div class="meter${gb > cap ? " over" : ""}" role="img" aria-label="${fmt(pct, 0)} percent of the 20 GB Kaggle working disk"><i style="width:${pct}%"></i></div>
-      <p class="help">${gb > cap ? "More than the 20 GB Kaggle working disk: save configurations less often or run fewer replicas." : "Against the 20 GB Kaggle working disk."}</p></div>`;
+      <p class="help">Spin configurations (float32) written to the output folder; make sure its disk can hold them.</p></div>`;
   }
 
   // ------------------------------------------------------------------ download
@@ -427,8 +509,24 @@
   }
 
   // ------------------------------------------------------------------ the model view (canvas, painter's algorithm)
+  const HOME = [-0.6, -0.5];                 // yaw, pitch of the home view: front, right and top in sight
+  const clampPitch = (p) => Math.max(-Math.PI / 2, Math.min(Math.PI / 2, p));
+  const CUBE_FACES = [
+    { label: "TOP", n: [0, 0, 1], v: [[-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1]] },
+    { label: "BOTTOM", n: [0, 0, -1], v: [[-1, 1, -1], [1, 1, -1], [1, -1, -1], [-1, -1, -1]] },
+    { label: "FRONT", n: [0, -1, 0], v: [[-1, -1, -1], [1, -1, -1], [1, -1, 1], [-1, -1, 1]] },
+    { label: "BACK", n: [0, 1, 0], v: [[1, 1, -1], [-1, 1, -1], [-1, 1, 1], [1, 1, 1]] },
+    { label: "RIGHT", n: [1, 0, 0], v: [[1, -1, -1], [1, 1, -1], [1, 1, 1], [1, -1, 1]] },
+    { label: "LEFT", n: [-1, 0, 0], v: [[-1, 1, -1], [-1, -1, -1], [-1, -1, 1], [-1, 1, 1]] },
+  ];
+  const CUBE_CORNERS = [], CUBE_EDGES = [];
+  for (const x of [-1, 1]) for (const y of [-1, 1]) for (const z of [-1, 1]) CUBE_CORNERS.push([x, y, z]);
+  for (const [a, b] of [[0, 1], [0, 2], [1, 2]]) for (const u of [-1, 1]) for (const w of [-1, 1]) {
+    const e = [0, 0, 0]; e[a] = u; e[b] = w; CUBE_EDGES.push(e);
+  }
+
   const view = {
-    canvas: null, ctx: null, w: 0, h: 0, dpr: 1, dirty: true, yaw: -0.5, pitch: 0.42, zoom: 1, panX: 0, panY: 0,
+    canvas: null, ctx: null, w: 0, h: 0, dpr: 1, dirty: true, yaw: -0.6, pitch: -0.5, zoom: 1, tween: null, cubeHover: null, panX: 0, panY: 0,
     sprites: {}, res: null, D: 3, layer: 1, radius: 0.3, extent: 1, order: null, bondPairs: null,
 
     init() {
@@ -442,7 +540,7 @@
         const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
         drag.x = e.clientX; drag.y = e.clientY;
         if (drag.pan) { this.panX += dx; this.panY += dy; }
-        else { this.yaw += dx * 0.008; this.pitch = Math.max(-1.55, Math.min(1.55, this.pitch + dy * 0.008)); }
+        else { this.tween = null; this.yaw += dx * 0.008; this.pitch = clampPitch(this.pitch - dy * 0.008); }
         this.dirty = true;
       });
       const end = () => { drag = null; };
@@ -452,8 +550,8 @@
       this.canvas.addEventListener("keydown", (e) => {
         const k = e.key;
         if (k === "ArrowLeft") this.yaw -= 0.12; else if (k === "ArrowRight") this.yaw += 0.12;
-        else if (k === "ArrowUp") this.pitch = Math.max(-1.55, this.pitch - 0.12);
-        else if (k === "ArrowDown") this.pitch = Math.min(1.55, this.pitch + 0.12);
+        else if (k === "ArrowUp") this.pitch = clampPitch(this.pitch + 0.12);
+        else if (k === "ArrowDown") this.pitch = clampPitch(this.pitch - 0.12);
         else if (k === "+" || k === "=") this.zoom = Math.min(12, this.zoom * 1.15);
         else if (k === "-") this.zoom = Math.max(0.2, this.zoom / 1.15);
         else if (k === "0") this.reset();
@@ -461,11 +559,106 @@
         e.preventDefault(); this.dirty = true;
       });
       $("reset-view").addEventListener("click", () => this.reset());
+      const cube = $("cube-canvas");
+      const local = (e) => { const r = cube.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+      cube.addEventListener("pointermove", (e) => { this.cubeHover = this.cubeHit(...local(e)); this.dirty = true; });
+      cube.addEventListener("pointerleave", () => { this.cubeHover = null; this.dirty = true; });
+      cube.addEventListener("click", (e) => {
+        const h = this.cubeHit(...local(e));
+        if (!h) return;
+        const len = Math.hypot(...h.n);
+        this.lookFrom(h.n.map((x) => x / len));
+      });
+      $("cube-home").addEventListener("click", () => { this.animateTo(HOME[0], HOME[1]); });
       $("layers").addEventListener("input", (e) => { this.layer = +e.target.value; this.syncLayers(); this.dirty = true; });
-      const loop = () => { if (this.dirty) { this.dirty = false; this.draw(); } requestAnimationFrame(loop); };
+      const loop = (now) => { this.step(now); if (this.dirty) { this.dirty = false; this.draw(); this.drawCube(); } requestAnimationFrame(loop); };
       requestAnimationFrame(loop);
     },
-    reset() { this.yaw = this.D === 3 ? -0.5 : 0; this.pitch = this.D === 3 ? 0.42 : -Math.PI / 2; this.zoom = 1; this.panX = this.panY = 0; this.dirty = true; },
+    reset() { this.tween = null; this.yaw = this.D === 3 ? HOME[0] : 0; this.pitch = this.D === 3 ? HOME[1] : -Math.PI / 2; this.zoom = 1; this.panX = this.panY = 0; this.dirty = true; },
+    /* Turn the camera so that the unit direction n (lattice axes) points at the viewer, in 300 ms. */
+    lookFrom(n) {
+      const h = Math.hypot(n[0], n[1]);
+      let yaw = h < 1e-9 ? Math.round(this.yaw / (Math.PI / 2)) * (Math.PI / 2) : Math.atan2(-n[0], -n[1]);
+      const pitch = -Math.asin(Math.max(-1, Math.min(1, n[2])));
+      this.animateTo(yaw, pitch);
+    },
+    animateTo(yaw, pitch) {
+      const d = ((yaw - this.yaw + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI;
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      this.tween = { t0: performance.now(), y0: this.yaw, p0: this.pitch, dy: d, dp: pitch - this.pitch, ms: reduce ? 0 : 300 };
+      this.dirty = true;
+    },
+    step(now) {
+      const tw = this.tween;
+      if (!tw) return;
+      const u = tw.ms ? Math.max(0, Math.min(1, (performance.now() - tw.t0) / tw.ms)) : 1;
+      const e = 1 - Math.pow(1 - u, 3);
+      this.yaw = tw.y0 + tw.dy * e; this.pitch = tw.p0 + tw.dp * e;
+      if (u >= 1) this.tween = null;
+      this.dirty = true;
+    },
+    project(v, s, c) {
+      const cy = Math.cos(this.yaw), sy = Math.sin(this.yaw), cp = Math.cos(this.pitch), sp = Math.sin(this.pitch);
+      const x1 = v[0] * cy - v[1] * sy, y1 = v[0] * sy + v[1] * cy;
+      return [c + x1 * s, c - (v[2] * cp - y1 * sp) * s, y1 * cp + v[2] * sp];
+    },
+    cubeHit(px, py) {
+      const S = 28, C = 52;
+      const near = (v, r) => { const q = this.project(v, S, C); return q[2] < 0.05 && Math.hypot(q[0] - px, q[1] - py) < r; };
+      for (const c of CUBE_CORNERS) if (near(c, 9)) return { kind: "corner", n: c };
+      for (const e of CUBE_EDGES) if (near(e, 8)) return { kind: "edge", n: e };
+      for (const f of CUBE_FACES) {
+        if (this.project(f.n, 1, 0)[2] >= -1e-6) continue;
+        const poly = f.v.map((v) => this.project(v, S, C));
+        let inside = false;
+        for (let i = 0, j = poly.length - 1; i < poly.length; j = i++)
+          if ((poly[i][1] > py) !== (poly[j][1] > py) && px < ((poly[j][0] - poly[i][0]) * (py - poly[i][1])) / (poly[j][1] - poly[i][1]) + poly[i][0]) inside = !inside;
+        if (inside) return { kind: "face", n: f.n, f };
+      }
+      return null;
+    },
+    drawCube() {
+      const cv = $("cube-canvas");
+      if (!cv || $("viewcube").hidden) return;
+      const dpr = this.dpr, S = 28, C = 52;
+      if (cv.width !== 104 * dpr) { cv.width = cv.height = 104 * dpr; }
+      const g = cv.getContext("2d");
+      g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      g.clearRect(0, 0, 104, 104);
+      const css = getComputedStyle(document.documentElement);
+      const card = css.getPropertyValue("--card").trim(), line = css.getPropertyValue("--line-strong").trim(),
+            ink = css.getPropertyValue("--ink").trim(), mute = css.getPropertyValue("--mute").trim(), focus = css.getPropertyValue("--focus").trim();
+      const hov = this.cubeHover;
+      const same = (a, b) => a && b && a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
+      for (const f of CUBE_FACES) {
+        const facing = -this.project(f.n, 1, 0)[2];
+        if (facing <= 1e-6) continue;
+        const poly = f.v.map((v) => this.project(v, S, C));
+        g.beginPath(); poly.forEach((q, i) => (i ? g.lineTo(q[0], q[1]) : g.moveTo(q[0], q[1]))); g.closePath();
+        g.fillStyle = card; g.fill();
+        if (hov && hov.kind === "face" && same(hov.n, f.n)) { g.globalAlpha = 0.22; g.fillStyle = focus; g.fill(); g.globalAlpha = 1; }
+        g.strokeStyle = line; g.lineWidth = 1; g.stroke();
+        if (facing > 0.3) {
+          const cx = poly.reduce((a, q) => a + q[0], 0) / 4, cy2 = poly.reduce((a, q) => a + q[1], 0) / 4;
+          g.globalAlpha = Math.min(1, (facing - 0.3) * 2.5);
+          g.fillStyle = ink; g.font = "600 9.5px system-ui, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
+          g.fillText(f.label, cx, cy2);
+          g.globalAlpha = 1;
+        }
+      }
+      if (hov && hov.kind !== "face") {
+        const q = this.project(hov.n, S, C);
+        g.fillStyle = focus; g.beginPath(); g.arc(q[0], q[1], 4.5, 0, 2 * Math.PI); g.fill();
+      }
+      // the lattice axes, from the cube's lower-left corner
+      const o = this.project([-1, -1, -1], S, C);
+      [["x", [1, 0, 0], "#d7263d"], ["y", [0, 1, 0], "#1e9e5a"], ["z", [0, 0, 1], "#1b5bd6"]].forEach(([l, d, col]) => {
+        const a = this.project([-1 + d[0] * 0.9, -1 + d[1] * 0.9, -1 + d[2] * 0.9], S, C);
+        if (a[2] > o[2] + 0.4 && this.project(d, 1, 0)[2] > 0.3) return;
+        g.strokeStyle = col; g.lineWidth = 2; g.beginPath(); g.moveTo(o[0], o[1]); g.lineTo(a[0], a[1]); g.stroke();
+        g.fillStyle = mute; g.font = "600 9px ui-monospace, monospace"; g.fillText(l, a[0] + (a[0] - o[0]) * 0.18, a[1] + (a[1] - o[1]) * 0.18);
+      });
+    },
     resize() {
       const r = $("viewer").getBoundingClientRect();
       this.dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -531,6 +724,7 @@
         this.bondPairs = new Int32Array(pairs);
       }
       $("opt-bonds").disabled = !this.bondPairs;
+      $("viewcube").hidden = this.D !== 3;
       if (firstLoad || !sameBox) this.reset();
       this.legend();
       this.dirty = true;
