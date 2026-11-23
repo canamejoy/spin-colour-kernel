@@ -465,7 +465,7 @@
       const loop = () => { if (this.dirty) { this.dirty = false; this.draw(); } requestAnimationFrame(loop); };
       requestAnimationFrame(loop);
     },
-    reset() { this.yaw = this.D === 3 ? -0.5 : 0; this.pitch = this.D === 3 ? 0.42 : 0; this.zoom = 1; this.panX = this.panY = 0; this.dirty = true; },
+    reset() { this.yaw = this.D === 3 ? -0.5 : 0; this.pitch = this.D === 3 ? 0.42 : -Math.PI / 2; this.zoom = 1; this.panX = this.panY = 0; this.dirty = true; },
     resize() {
       const r = $("viewer").getBoundingClientRect();
       this.dpr = Math.min(2, window.devicePixelRatio || 1);

@@ -46,6 +46,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html, body { height: 100%; }
 body {
   margin: 0; background: var(--bench); color: var(--ink); font: 14px/1.45 var(--sans);
@@ -177,7 +178,8 @@ input::placeholder { color: var(--faint); }
 .hint { position: absolute; left: 12px; bottom: 10px; margin: 0; font-size: 12px; color: var(--mute); pointer-events: none; }
 .legend { position: absolute; right: 12px; bottom: 10px; display: flex; gap: 12px; font-size: 12px; color: var(--mute); pointer-events: none; }
 .legend span { display: inline-flex; align-items: center; gap: 5px; }
-.view-msg { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; text-align: center; padding: 24px; color: var(--mute); font-size: 14px; }
+.view-msg { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; text-align: center; padding: 24px; color: var(--mute); font-size: 14px; pointer-events: none; }
+.view-msg[hidden] { display: none; }
 
 /* ---------- parts tray */
 .tray h2 { margin-bottom: 8px; }

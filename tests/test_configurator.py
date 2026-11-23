@@ -190,3 +190,8 @@ def test_the_ready_for_run_page_is_the_current_build():
     sys.path.insert(0, str(ROOT / "notebooks"))
     import build_configurator as bc
     assert (ROOT / "ready_for_run" / "configurator.html").read_text() == bc.build()
+
+
+def test_nothing_covers_the_model_canvas_when_the_message_is_hidden():
+    css = (ROOT / "notebooks" / "configurator" / "style.css").read_text()
+    assert ".view-msg[hidden] { display: none; }" in css and "pointer-events: none" in css.split(".view-msg {")[1].split("}")[0]
