@@ -33,6 +33,15 @@ El archivo que descarga es este mismo cuadernillo con la celda 1 ya llena, así 
 igual. Un ajuste marcado en rojo debe corregirse antes de que se active el botón de descarga. La página tiene
 tema claro y oscuro (Auto sigue el de su sistema).
 
+## Pedírselo a un agente de IA
+
+Si trabaja con un agente de IA (Claude Code, Gemini CLI u otro compatible con MCP), instale el paquete y registre
+su servidor una vez: `claude mcp add sck -- python -m Spin_Colour_Kernel.mcp`. Luego describa la simulación con sus
+palabras ("un nanodisco Heisenberg de radio 10 con anisotropía de superficie, de 2 a 0.2"); el agente revisa los
+parámetros, escribe el cuadernillo o el script y, si usted lo pide y tiene acceso, la lanza en su computador,
+Kaggle, Modal o RunPod y lee los resultados. Primero le muestra un plan y solo lanza una ejecución remota cuando
+usted la confirma.
+
 ## 1. Qué hace el cuadernillo
 
 Simula espines (pequeños imanes) ubicados en los sitios de un cristal. Para cada temperatura, de

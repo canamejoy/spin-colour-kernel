@@ -32,6 +32,15 @@ The file it writes is this notebook with cell 1 already filled in, so everything
 setting marked in red must be fixed before the download button turns on. The page offers a light and a dark
 theme (Auto follows your system).
 
+## Asking an AI agent to do it
+
+If you work with an AI agent (Claude Code, Gemini CLI or another that supports MCP), install the package and
+register its server once: `claude mcp add sck -- python -m Spin_Colour_Kernel.mcp`. Then describe the run in your
+own words ("a Heisenberg nanodisk of radius 10 with surface anisotropy, from 2 down to 0.2"); the agent checks the
+settings, writes the notebook or the script, and, if you ask and have access, launches it on your computer,
+Kaggle, Modal or RunPod and reads the results back. It shows you a plan first and launches a remote run only
+when you confirm it.
+
 ## 1. What the notebook does
 
 It simulates spins (tiny magnets) sitting on the sites of a crystal. For every temperature, from hot to

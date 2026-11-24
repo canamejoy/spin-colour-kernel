@@ -25,7 +25,10 @@ and certified against the clique number of the bond graph.
 
 ## Simulating your own Hamiltonian
 
-`ready_for_run/` holds the notebook with a step-by-step user manual in English and Spanish (Markdown and PDF).
+`ready_for_run/` holds the notebook with a step-by-step user manual in English and Spanish (Markdown and PDF),
+and `configurator.html`, an offline page that shows the Hamiltonian, the lattice, the active sites and the
+colouring as you set them, and downloads the notebook or a `.py` script ready to run
+(`python notebooks/build_configurator.py` rebuilds it).
 `notebooks/spin_simulation.ipynb` is a self-contained notebook for users who do not program: upload it to
 Kaggle or Colab (or open it in Jupyter), edit its single parameters cell and press *Run all*. That cell sets
 the model (Ising, XY, Heisenberg), the states (one parameter set each: exchange per shell, DMI, cubic and
@@ -37,6 +40,28 @@ the Triton interpreter, and writes `magnetization.npy` (states, replicas, temper
 M^2, Cv, chi) and `run.json`, with plots of E, |M|, Cv and chi. It embeds the package modules with their
 sha256; `python notebooks/build_simulation_notebook.py` regenerates it, and `python notebooks/build_manuals.py`
 rebuilds the manuals and copies the notebook into `ready_for_run/`.
+
+## Connecting an agent (MCP)
+
+`python -m Spin_Colour_Kernel.mcp` is a Model Context Protocol server (stdio, standard library only) through
+which an AI agent prepares, checks, writes, launches and reads runs. Register it in your agent, for example
+`claude mcp add sck -- python -m Spin_Colour_Kernel.mcp`. Its tools:
+
+| Tool | What it does |
+|---|---|
+| `describe` | The Hamiltonian, models, crystals, coordinate systems, state parameters, units and every default |
+| `check` | Validates a configuration without running it: errors, active and surface sites, colouring per state, temperatures, run size |
+| `write` | Writes the run as a ready-to-run `.ipynb` or `.py`, the same file the configurator page downloads |
+| `backends` | Which of local, Kaggle, Modal, RunPod and Colab this machine can use, and what to install or configure otherwise |
+| `run` | Without `confirm: true`, returns a plan (GPU, cost drivers, time limit, where results land); with it, submits |
+| `status`, `results`, `cancel` | Follow a job, fetch and summarize its results (temperatures, \|M\| and energy per site per state, `summary.png`), stop it |
+
+Backends use the user's own access and are detected by presence only; no credential value is ever read or
+returned. Kaggle needs the `kaggle` CLI and its token, Modal the `modal` CLI and its token, RunPod the
+`RUNPOD_API_KEY` environment variable (the pod installs this package from GitHub at the release tag, then
+serves the results behind a per-job token until `results` downloads them and terminates the pod). Colab has no
+submission API here: `run` writes the notebook and points to Google's Colab MCP server for opening it. Jobs live
+in `./sck_jobs` (or `SCK_JOBS_DIR`).
 
 ## Installation
 
@@ -90,8 +115,9 @@ print(A.energy(S) / s.n_active)           # energy per site of each replica
 | `src/Spin_Colour_Kernel/run.py` | Command-line runner: `python -m Spin_Colour_Kernel.run --exp E1,E3 --out DIR` |
 | `tests/` | CPU test suite (Triton interpreter) |
 | `examples/` | Quick start with expected output |
+| `src/Spin_Colour_Kernel/mcp.py`, `agent.py`, `jobs.py`, `runfile.py` | The MCP server for agents: describe, check, write, and launch / follow / fetch runs per backend |
 | `src/Spin_Colour_Kernel/simulate.py` | General runs behind the simulation notebook: active-site shapes, Hamiltonian per state, temperature ladder, outputs |
-| `ready_for_run/` | The simulation notebook and its user manuals (English, Spanish; Markdown and PDF) |
+| `ready_for_run/` | The simulation notebook, the run configurator page and the user manuals (English, Spanish; Markdown and PDF) |
 | `notebooks/` | `spin_simulation.ipynb` (any supported Hamiltonian, ready to run) and the nanodisk application notebook |
 | `remote/` | Scripts that ran the paper's experiments on Modal (H100, A100) and Kaggle (T4), and that fold run outputs into `results-product/` |
 | `results-product/Results/` | Tables, figures, significance tests and discussion of the paper's runs |
