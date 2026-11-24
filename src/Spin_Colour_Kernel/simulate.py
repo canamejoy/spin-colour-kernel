@@ -39,11 +39,22 @@ import time
 from pathlib import Path
 
 import numpy as np
-import torch
 
 from . import crystals as cr
-from .sampler import Sampler
 from .system import System
+
+try:                                  # preparing and checking a run needs numpy only; running it needs torch
+    import torch
+
+    from .sampler import Sampler
+except ImportError as _e:             # pragma: no cover - exercised without torch installed
+    torch = Sampler = None
+    _NO_TORCH = _e
+
+
+def _need_torch() -> None:
+    if torch is None:
+        raise ImportError(f"running a simulation needs PyTorch and Triton (pip install torch triton): {_NO_TORCH}")
 
 KB_MEV = 0.086173404          # meV / K
 MODELS = {"ising": 1, "xy": 2, "heisenberg": 3}
@@ -316,6 +327,7 @@ def simulate_state(s: System, replicas: int, temps, n_therm: int, n_meas: int, e
     graph (as in `anneal`), so a temperature costs a few graph replays instead of one host launch per
     colour per sweep; `graphs=False` turns that off (packed Ising never uses it).
     """
+    _need_torch()
     A = Sampler(s, int(replicas), device, seed)
     S = A.init_spins(seed=seed)
     mask = s.site_mask()
@@ -463,6 +475,7 @@ def run(cfg: dict, state_indices, out, device="cpu", log=print, replicas=None, p
     run on different devices never repeat one another. Writes state_XXX_pYY.npz and the block's slice of
     configurations.npy.
     """
+    _need_torch()
     out = Path(out)
     r0, r1 = (0, int(cfg["replicas"])) if replicas is None else (int(replicas[0]), int(replicas[1]))
     if not 0 <= r0 < r1 <= int(cfg["replicas"]):
