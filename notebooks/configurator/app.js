@@ -830,7 +830,12 @@
         if (depth < zmin) zmin = depth;
         if (depth > zmax) zmax = depth;
       }
-      const visible = (i) => this.D === 2 || cellZ[3 * i + 2] < this.layer;
+      // a bond is drawn only between two sites projected in this frame: the others hold stale positions
+      if (!this.drawn || this.drawn.length !== n) this.drawn = new Uint8Array(n);
+      const drawn = this.drawn;
+      drawn.fill(0);
+      for (const i of vis) drawn[i] = 1;
+      const visible = (i) => drawn[i] === 1;
       // far to near, by a counting sort on depth (exact enough: a bucket is a small fraction of a ball)
       const NB = 4096, span = zmax - zmin || 1, count = new Int32Array(NB + 1);
       const bucket = (i) => NB - 1 - Math.min(NB - 1, Math.floor(((Z[i] - zmin) / span) * NB));
