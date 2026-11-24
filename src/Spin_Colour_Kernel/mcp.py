@@ -83,7 +83,7 @@ def register(name, fn, description, schema, read_only=False):
 
 def _tool_list():
     return [{"name": k, "description": d, "inputSchema": s,
-             "annotations": {"readOnlyHint": ro, "openWorldHint": k in ("run", "status", "results")}}
+             "annotations": {"readOnlyHint": ro, "openWorldHint": k in ("run", "status", "results", "cancel")}}
             for k, (_, d, s, ro) in TOOLS.items()]
 
 
@@ -154,4 +154,7 @@ def serve(stdin=None, stdout=None) -> None:
 
 
 if __name__ == "__main__":
-    serve()
+    # Serve from the package module, not this __main__ copy, so the tools that jobs registers (into
+    # Spin_Colour_Kernel.mcp) are the ones listed and called.
+    from Spin_Colour_Kernel import mcp as _package_mcp
+    _package_mcp.serve()
