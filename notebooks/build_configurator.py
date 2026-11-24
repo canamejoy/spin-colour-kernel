@@ -22,6 +22,7 @@ from build_nanodisk_notebook import ROOT, commit  # noqa: E402
 
 HERE = Path(__file__).resolve().parent / "configurator"
 OUT = ROOT / "ready_for_run" / "configurator.html"
+TEMPLATE_OUT = ROOT / "src" / "Spin_Colour_Kernel" / "data" / "run_template.json"   # read by runfile.py and the MCP server
 MARKER = "#<<PARAMETERS>>"
 PARAMS_CELL = 2
 
@@ -75,6 +76,13 @@ def build() -> str:
     return page
 
 
+def template_json() -> str:
+    return json.dumps(template(), ensure_ascii=False, indent=1) + "\n"
+
+
 if __name__ == "__main__":
+    TEMPLATE_OUT.parent.mkdir(exist_ok=True)
+    TEMPLATE_OUT.write_text(template_json())
+    print("wrote", TEMPLATE_OUT)
     OUT.write_text(build())
     print("wrote", OUT, f"{OUT.stat().st_size / 1e6:.2f} MB")

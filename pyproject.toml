@@ -36,6 +36,9 @@ Repository = "https://github.com/canamejoy/spin-colour-kernel"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+Spin_Colour_Kernel = ["data/*.json"]
+
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]

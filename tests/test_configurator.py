@@ -218,3 +218,20 @@ def test_a_two_parameter_sweep_makes_every_combination_on_top_of_the_base_state(
                                            "disk D=1 J₂=0.1", "disk D=1 J₂=0.2"]
     assert states[3]["D"] == 0.5 and states[3]["J"] == {"1": 1.0, "2": 0.2} and states[3]["K1"] == 0.177
     assert "at most 1000" in got[1]["error"] and "only once" in got[2]["error"]
+
+
+def test_the_package_writes_the_same_files_as_the_page():
+    from Spin_Colour_Kernel import runfile
+    sys.path.insert(0, str(ROOT / "notebooks"))
+    import build_configurator as bc
+    assert runfile.TEMPLATE_PATH.read_text() == bc.template_json()      # the shipped template is current
+    for cfg in (bc.DEFAULTS, FULL):
+        full = runfile.config(cfg)
+        nb, script = js([{"op": "files", "tpl": str(runfile.TEMPLATE_PATH), "cfg": full}])[0]
+        assert runfile.notebook(full) == nb and runfile.script(full) == script
+
+
+def test_the_package_refuses_an_unknown_setting():
+    from Spin_Colour_Kernel import runfile
+    with pytest.raises(ValueError, match="unknown setting 'boxx'"):
+        runfile.config({"boxx": [4, 4]})
