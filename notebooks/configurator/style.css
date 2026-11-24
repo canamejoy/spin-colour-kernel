@@ -157,7 +157,7 @@ input::placeholder { color: var(--faint); }
 .mono { font-family: var(--mono); font-size: 13px; }
 .mid { width: 150px; } .short { width: 64px; display: inline-block; }
 .unit { display: flex; align-items: center; gap: 6px; color: var(--mute); white-space: nowrap; }
-.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; align-items: end; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .axes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .axis { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; font-size: 13px; color: var(--mute); }
 .axis .check { font-size: 12.5px; }
