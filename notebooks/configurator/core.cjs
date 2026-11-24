@@ -158,8 +158,20 @@
     return null;
   }
 
+  // Every bond of the box, tested explicitly. The colouring is linear, so a bond's test depends on each
+  // coordinate only through its residue modulo M = lcm(m) and on whether the bond leaves the box along that
+  // axis; the first and last reach + M cells of every axis hold every such case, and checking them alone gives
+  // the same answer as checking the whole box.
   function verifyOnBox(col, crystal, box, periodic) {
-    for (const c of product(box.map((L) => range(0, L))))
+    const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+    const M = col.m.reduce((a, b) => (a * b) / gcd(a, b), 1);
+    let reach = 0;
+    for (const bd of crystal.bonds) for (const d of bd.delta) reach = Math.max(reach, Math.abs(d));
+    const axis = (L) => {
+      const k = Math.min(L, reach + M);
+      return [...new Set([...range(0, k), ...range(Math.max(0, L - k), L)])];
+    };
+    for (const c of product(box.map(axis)))
       for (const bd of crystal.bonds) {
         const c2 = [];
         let inside = true;
@@ -435,6 +447,38 @@
   }
 
   /* Everything the preview shows for one configuration: lattice, active and surface sites, colouring, ladder. */
+  let geometryCache = null;
+  function geometry(crystal, box, cfg) {
+    const geo = { errors: [], warnings: [] };
+    const lat = lattice(crystal, box);
+    geo.lattice = lat;
+    let mask;
+    try { mask = activeMask(lat, cfg.coords, cfg.shape); } catch (e) { geo.errors.push({ field: "shape", msg: e.message }); return geo; }
+    geo.mask = mask;
+    geo.nActive = mask.reduce((s, v) => s + v, 0);
+
+    let periodic = (cfg.periodic || []).slice(0, crystal.D).map(Boolean);
+    while (periodic.length < crystal.D) periodic.push(false);
+    let col = search(crystal, box, periodic);
+    if (col && !verifyOnBox(col, crystal, box, periodic)) col = null;
+    if (!col && periodic.some(Boolean)) {
+      geo.warnings.push({ field: "periodic", msg: `no admissible colouring fits the periodic box [${box.join(", ")}]: the run uses open borders` });
+      periodic = periodic.map(() => false);
+      col = search(crystal, box, periodic);
+    }
+    geo.periodicUsed = periodic;
+    if (!col) { geo.errors.push({ field: "crystal", msg: "no linear colouring found within 32 colours" }); return geo; }
+    geo.colouring = col;
+    geo.nColours = nColours(col);
+    const colour = new Int32Array(lat.n);
+    for (let i = 0; i < lat.n; i++)
+      colour[i] = colourOf(col, [lat.cell[3 * i], lat.cell[3 * i + 1], lat.cell[3 * i + 2]].slice(0, crystal.D), lat.alpha[i]);
+    geo.colour = colour;
+    geo.surface = surfaceMask(crystal, box, periodic, lat, mask);
+    geo.nSurface = geo.surface.reduce((s, v) => s + v, 0);
+    return geo;
+  }
+
   function analyse(cfg) {
     const res = { errors: [], warnings: [] };
     const model = String(cfg.model || "").toLowerCase();
@@ -461,32 +505,15 @@
     if (!crystal || res.errors.some((e) => e.field === "box")) return res;
 
     res.crystal = crystal;
-    const lat = lattice(crystal, box);
-    res.lattice = lat;
-    let mask;
-    try { mask = activeMask(lat, cfg.coords, cfg.shape); } catch (e) { res.errors.push({ field: "shape", msg: e.message }); return res; }
-    res.mask = mask;
-    res.nActive = mask.reduce((s, v) => s + v, 0);
-
-    let periodic = (cfg.periodic || []).slice(0, crystal.D).map(Boolean);
-    while (periodic.length < crystal.D) periodic.push(false);
-    let col = search(crystal, box, periodic);
-    if (col && !verifyOnBox(col, crystal, box, periodic)) col = null;
-    if (!col && periodic.some(Boolean)) {
-      res.warnings.push({ field: "periodic", msg: `no admissible colouring fits the periodic box [${box.join(", ")}]: the run uses open borders` });
-      periodic = periodic.map(() => false);
-      col = search(crystal, box, periodic);
-    }
-    res.periodicUsed = periodic;
-    if (!col) { res.errors.push({ field: "crystal", msg: "no linear colouring found within 32 colours" }); return res; }
-    res.colouring = col;
-    res.nColours = nColours(col);
-    const colour = new Int32Array(lat.n);
-    for (let i = 0; i < lat.n; i++)
-      colour[i] = colourOf(col, [lat.cell[3 * i], lat.cell[3 * i + 1], lat.cell[3 * i + 2]].slice(0, crystal.D), lat.alpha[i]);
-    res.colour = colour;
-    res.surface = surfaceMask(crystal, box, periodic, lat, mask);
-    res.nSurface = res.surface.reduce((s, v) => s + v, 0);
+    // the geometry depends only on these; editing a temperature or a coupling reuses it
+    const key = JSON.stringify([crystal.name, crystal.shells, box, cfg.periodic, cfg.coords || "", cfg.shape || ""]);
+    if (!geometryCache || geometryCache.key !== key) geometryCache = { key, geo: geometry(crystal, box, cfg) };
+    const geo = geometryCache.geo;
+    for (const k of ["lattice", "mask", "nActive", "periodicUsed", "colouring", "nColours", "colour", "surface", "nSurface"])
+      if (geo[k] !== undefined) res[k] = geo[k];
+    res.errors.push(...geo.errors);
+    res.warnings.push(...geo.warnings);
+    if (geo.errors.length) return res;
     if (res.temperatures) {
       const ce = Math.max(1, Math.floor(Number(cfg.config_every) || 1));
       const nSaved = res.temperatures.filter((_, t) => t % ce === 0).length;

@@ -39,6 +39,7 @@ const out = req.map((q) => {
                temperatures: r.temperatures, colouring: r.colouring && [r.colouring.m, r.colouring.K, r.colouring.o] };
     }
     if (q.op === "params") return SCK.writeParams(q.template, q.cfg);
+    if (q.op === "verify") return SCK.verifyOnBox({ m: q.m, K: q.K, o: q.o }, SCK.makeCrystal(q.crystal, q.shells), q.box, q.periodic);
     if (q.op === "series") return SCK.series(q.a, q.b, q.s);
     if (q.op === "sweep") return SCK.sweepStates(q.base, q.rows, q.prefix, q.limit);
     if (q.op === "files") { const t = JSON.parse(require("fs").readFileSync(q.tpl, "utf8")); return [SCK.notebookFor(t, q.cfg), SCK.scriptFor(t, q.cfg)]; }
@@ -245,3 +246,26 @@ def test_the_package_refuses_an_unknown_setting():
     from Spin_Colour_Kernel import runfile
     with pytest.raises(ValueError, match="unknown setting 'boxx'"):
         runfile.config({"boxx": [4, 4]})
+
+
+def test_the_reduced_box_check_agrees_with_the_package_on_every_bond_of_the_box():
+    # random linear colourings, admissible or not, on boxes larger than the reduced window
+    import random
+    from Spin_Colour_Kernel import crystals as cr
+    from Spin_Colour_Kernel.colouring import Colouring, verify_on_box
+    rng = random.Random(5)
+    reqs, want = [], []
+    for _ in range(160):
+        name = rng.choice(["square", "triangular", "honeycomb", "kagome", "sc", "bcc", "fcc"])
+        shells = rng.choice([(1,), (1, 2)])
+        c = cr.make(name, shells)
+        m = rng.choice([(2,), (3,), (4,), (2, 2), (2, 4), (6,)])
+        K = tuple(tuple(rng.randrange(mr) for _ in range(c.D)) for mr in m)
+        o = tuple(tuple(rng.randrange(mr) for mr in m) for _ in range(c.b))
+        box = tuple(rng.randint(1, 13) for _ in range(c.D))
+        per = tuple(rng.random() < 0.5 for _ in range(c.D))
+        want.append(verify_on_box(Colouring(m, K, o), c, box, per))
+        reqs.append({"op": "verify", "m": m, "K": K, "o": o, "crystal": name, "shells": shells, "box": box,
+                     "periodic": per})
+    got = js(reqs)
+    assert got == want and 0 < sum(want) < len(want)

@@ -266,6 +266,7 @@
   }
 
   function renderHamiltonian() {
+    view.dirty = true;                                  // the field arrow follows the state shown
     const pick = $("state-pick");
     const sweep = cfg.mode === "sweep";
     const label = (s, i) => esc(s.name || `state-${i + 1}`);
@@ -658,6 +659,48 @@
       this.canvas.height = Math.max(1, Math.round(r.height * this.dpr));
       this.dirty = true;
     },
+    /* The sites worth drawing: displayed (active, or cut away with ghosts on), under the layer cut, and, in 3D,
+       in the outer cells of the model. A cell more than SHELL cells away from any cell that is not completely
+       displayed is hidden behind the ones in front of it, whatever the viewing direction. */
+    visibleSites(culled) {
+      const r = this.res, key = `${this.layer}|${ui.ghost}|${culled}`;
+      if (this.vis && this.visKey === key && this.visRes === r) return this.vis;
+      const [b, L3, L2, L1] = r.lattice.dims, nc = L1 * L2 * L3, cellZ = r.lattice.cell;
+      const shown = (i) => (this.D === 2 || cellZ[3 * i + 2] < this.layer) && (r.mask[i] || ui.ghost);
+      let depth = null;
+      if (this.D === 3 && culled) {
+        const SHELL = b > 1 ? 0 : 1;
+        depth = new Int16Array(nc).fill(-1);
+        const full = new Uint8Array(nc).fill(1);
+        for (let i = 0; i < r.lattice.n; i++) if (!shown(i)) full[i % nc] = 0;
+        let front = [];
+        for (let z = 0; z < L3; z++) for (let y = 0; y < L2; y++) for (let x = 0; x < L1; x++) {
+          const c = (z * L2 + y) * L1 + x;
+          // a cell on the box border or next to a cell that is not full can be seen
+          let open = !full[c] || x === 0 || y === 0 || z === 0 || x === L1 - 1 || y === L2 - 1 || z === L3 - 1;
+          for (let dz = -1; dz <= 1 && !open; dz++) for (let dy = -1; dy <= 1 && !open; dy++) for (let dx = -1; dx <= 1 && !open; dx++)
+            if (!full[((z + dz) * L2 + y + dy) * L1 + x + dx]) open = true;
+          if (open) { depth[c] = 0; front.push(c); }
+        }
+        for (let d = 1; d <= SHELL && front.length; d++) {
+          const next = [];
+          for (const c of front) {
+            const x = c % L1, y = ((c - x) / L1) % L2, z = (c - x - y * L1) / (L1 * L2);
+            for (let dz = -1; dz <= 1; dz++) for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+              const X = x + dx, Y = y + dy, Z = z + dz;
+              if (X < 0 || Y < 0 || Z < 0 || X >= L1 || Y >= L2 || Z >= L3) continue;
+              const k = (Z * L2 + Y) * L1 + X;
+              if (depth[k] < 0) { depth[k] = d; next.push(k); }
+            }
+          }
+          front = next;
+        }
+      }
+      const out = [];
+      for (let i = 0; i < r.lattice.n; i++) if (shown(i) && (!depth || depth[i % nc] >= 0)) out.push(i);
+      this.vis = Int32Array.from(out); this.visKey = key; this.visRes = r;
+      return this.vis;
+    },
     syncLayers() {
       const L3 = this.res ? this.res.lattice.dims[1] : 1;
       $("layers-out").textContent = L3 > 1 ? `1–${this.layer} of ${L3}` : "";
@@ -674,7 +717,7 @@
       const sameBox = this.res && this.res.lattice.n === r.lattice.n && this.D === r.crystal.D && this.res.nActive === r.nActive;
       const firstLoad = !this.res;
       this.res = r;
-      const tooMany = r.lattice.n > 150000;
+      const tooMany = r.lattice.n > 400000;
       msg.hidden = !tooMany;
       if (tooMany) msg.textContent = `${fmt(r.lattice.n)} sites are too many to draw here. The counts, colouring and files are still exact.`;
       this.D = r.crystal.D;
@@ -760,7 +803,12 @@
       const ctx = this.ctx, r = this.res;
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      if (!r || r.lattice.n > 150000) return;
+      if (!r || r.lattice.n > 400000) return;
+      // while the view moves, only the outer cells are drawn; once it rests, everything is drawn again
+      const now = performance.now(), moving = now - (this.lastDraw || 0) < 250;
+      this.lastDraw = now;
+      clearTimeout(this.restTimer);
+      if (moving) this.restTimer = setTimeout(() => { this.lastDraw = 0; this.dirty = true; }, 260);
       const css = getComputedStyle(document.documentElement);
       const ghostCol = css.getPropertyValue("--ghost").trim(), stickCol = css.getPropertyValue("--stick").trim();
       ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
@@ -768,19 +816,33 @@
       const cy = Math.cos(this.yaw), sy = Math.sin(this.yaw), cp = Math.cos(this.pitch), sp = Math.sin(this.pitch);
       const scale = (Math.min(this.w, this.h) * 0.46 / this.extent) * this.zoom;
       const ox = this.w / 2 + this.panX, oy = this.h / 2 + this.panY;
-      const X = new Float32Array(n), Y = new Float32Array(n), Z = new Float32Array(n);
-      for (let i = 0; i < n; i++) {
+      if (!this.X || this.X.length !== n) { this.X = new Float32Array(n); this.Y = new Float32Array(n); this.Z = new Float32Array(n); }
+      const X = this.X, Y = this.Y, Z = this.Z;
+      const vis = this.visibleSites(moving && this.D === 3);
+      let zmin = Infinity, zmax = -Infinity;
+      for (const i of vis) {
         const x = P[3 * i], y = P[3 * i + 1], z = P[3 * i + 2];
         // yaw about z, then pitch about the screen x axis; z of the lattice points up on screen
         const x1 = x * cy - y * sy, y1 = x * sy + y * cy;
         const depth = y1 * cp + z * sp;          // larger = farther
         const up = z * cp - y1 * sp;
         X[i] = ox + x1 * scale; Y[i] = oy - up * scale; Z[i] = depth;
+        if (depth < zmin) zmin = depth;
+        if (depth > zmax) zmax = depth;
       }
-      const visible = (i) => this.D === 2 || cellZ[3 * i + 2] < this.layer;
-      const idx = [];
-      for (let i = 0; i < n; i++) if (visible(i) && (r.mask[i] || ui.ghost)) idx.push(i);
-      idx.sort((a, b) => Z[b] - Z[a]);
+      // a bond is drawn only between two sites projected in this frame: the others hold stale positions
+      if (!this.drawn || this.drawn.length !== n) this.drawn = new Uint8Array(n);
+      const drawn = this.drawn;
+      drawn.fill(0);
+      for (const i of vis) drawn[i] = 1;
+      const visible = (i) => drawn[i] === 1;
+      // far to near, by a counting sort on depth (exact enough: a bucket is a small fraction of a ball)
+      const NB = 4096, span = zmax - zmin || 1, count = new Int32Array(NB + 1);
+      const bucket = (i) => NB - 1 - Math.min(NB - 1, Math.floor(((Z[i] - zmin) / span) * NB));
+      for (const i of vis) count[bucket(i) + 1]++;
+      for (let k = 0; k < NB; k++) count[k + 1] += count[k];
+      const idx = new Int32Array(vis.length);
+      for (const i of vis) idx[count[bucket(i)]++] = i;
       const rad = this.radius * scale;
       if (ui.bonds && this.bondPairs && rad > 2.5) {
         ctx.strokeStyle = stickCol; ctx.lineWidth = Math.max(1, rad * 0.28); ctx.lineCap = "round";
@@ -807,6 +869,50 @@
           ctx.drawImage(this.sprite(s, 1), X[i] - rad, Y[i] - rad, 2 * rad, 2 * rad);
         }
       }
+      this.drawField(ctx, { cy, sy, cp, sp, scale, ox, oy }, css);
+    },
+    /* The field of the state shown: an arrow outside the model, pointing at it along H. Ising spins have no
+       direction in space, so there is no arrow for them. */
+    fieldDirection() {
+      if (cfg.mode === "sweep" || cfg.model === "ising") return null;
+      const st = cfg.states[ui.shown] || cfg.states[0];
+      if (!st) return null;
+      const num = (k) => { const v = Number(SCK.getParam(st, k)); return Number.isFinite(v) ? v : 0; };
+      const H = num("H");
+      if (!H) return null;
+      const t = num("H_theta") * Math.PI / 180, f = num("H_phi") * Math.PI / 180;
+      const h = cfg.model === "xy" ? [Math.cos(f), Math.sin(f), 0] : [Math.sin(t) * Math.cos(f), Math.sin(t) * Math.sin(f), Math.cos(t)];
+      return H < 0 ? h.map((x) => -x) : h;
+    },
+    /* A fixed dial in the lower left corner: the field's direction as seen from the camera. The arrow shortens as
+       the field turns towards or away from the viewer; along the line of sight it becomes ⊙ (towards) or ⊗ (away). */
+    drawField(ctx, c, css) {
+      const h = this.fieldDirection();
+      if (!h) return;
+      const x1 = h[0] * c.cy - h[1] * c.sy, y1 = h[0] * c.sy + h[1] * c.cy;
+      const u = [x1, -(h[2] * c.cp - y1 * c.sp)], depth = y1 * c.cp + h[2] * c.sp;   // screen direction, depth
+      const R = 30, cx = 18 + R, cy = this.h - 44 - R, len = Math.hypot(u[0], u[1]);
+      const col = css.getPropertyValue("--field").trim() || "#14171a";
+      ctx.save();
+      ctx.strokeStyle = css.getPropertyValue("--line-strong").trim(); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI); ctx.stroke();
+      ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = 2.5; ctx.lineCap = "round";
+      ctx.font = "italic 600 15px Georgia, 'Times New Roman', serif"; ctx.textAlign = "left"; ctx.textBaseline = "middle";
+      ctx.fillText("H", cx + R + 6, cy - R + 6);
+      if (len < 0.2) {
+        if (depth < 0) { ctx.beginPath(); ctx.arc(cx, cy, 4, 0, 2 * Math.PI); ctx.fill(); }      // towards the viewer
+        else { const k = 7; ctx.beginPath(); ctx.moveTo(cx - k, cy - k); ctx.lineTo(cx + k, cy + k); ctx.moveTo(cx + k, cy - k); ctx.lineTo(cx - k, cy + k); ctx.stroke(); }
+        ctx.beginPath(); ctx.arc(cx, cy, 11, 0, 2 * Math.PI); ctx.stroke();
+      } else {
+        const L = (R - 4) * len, ux = u[0] / len, uy = u[1] / len, head = 10;
+        const tx = cx - ux * L, ty = cy - uy * L, hx = cx + ux * L, hy = cy + uy * L;
+        ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(hx - ux * head * 0.6, hy - uy * head * 0.6); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(hx, hy);
+        ctx.lineTo(hx - ux * head - uy * head * 0.55, hy - uy * head + ux * head * 0.55);
+        ctx.lineTo(hx - ux * head + uy * head * 0.55, hy - uy * head - ux * head * 0.55);
+        ctx.closePath(); ctx.fill();
+      }
+      ctx.restore();
     },
   };
 
