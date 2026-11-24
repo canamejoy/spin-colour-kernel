@@ -284,7 +284,7 @@
       pick.onclick = (e) => { const b = e.target.closest("button"); if (b) { ui.shown = +b.dataset.i; cfg.states.length > 3 ? renderStates() : markShown(); renderHamiltonian(); save(); } };
     }
     const st = sweep ? cfg.sweep.base : (cfg.states[ui.shown] || cfg.states[0]);
-    if (!st) { $("ham-math").innerHTML = ""; $("ham-terms").innerHTML = ""; return; }
+    if (!st) { $("ham-math").innerHTML = ""; $("ham-values").innerHTML = ""; $("ham-terms").innerHTML = ""; return; }
     // in a sweep, a swept parameter is written as its symbol and its values are listed below
     const rows = sweep ? cfg.sweep.rows : [];
     const swept = (k) => rows.some((r) => r.p === k);
@@ -304,26 +304,30 @@
     const value = (k, sym) => (swept(k) ? `${sym} ∈ ${range(k)}` : `${sym} = ${fmtNum(n(k))}`);
     const dot = m === "ising" ? `${spin("i", m)}${spin("j", m)}` : `${spin("i", m)}${mo("·")}${spin("j", m)}`;
     const shellName = ["nearest", "next-nearest", "third", "fourth"];
-    for (const s of [1, 2, 3, 4]) {
-      const k = `J${s}`;
-      if (!on(k)) continue;
+    const shells = [1, 2, 3, 4].filter((s) => on(`J${s}`));
+    for (const s of shells) {
       // H = − J Σ S·S: a positive J gives a leading minus
-      terms.push(coef(k, sub(mi("J"), `<mn>${s}</mn>`), -1, `${sum(pair(s))}${dot}`));
-      notes.push([value(k, `J${"₁₂₃₄"[s - 1]}`), `exchange with ${shellName[s - 1]} neighbours, each pair once; J > 0 ferromagnetic`]);
+      terms.push(coef(`J${s}`, sub(mi("J"), `<mn>${s}</mn>`), -1, `${sum(pair(s))}${dot}`));
+    }
+    if (shells.length) {
+      // one line for every exchange term: the shells differ only in their neighbours
+      const who = shells.length === 1 ? `${shellName[shells[0] - 1]} neighbours`
+        : `${shells.map((s) => shellName[s - 1]).join(", ").replace(/, ([^,]*)$/, " and $1")} neighbours, by shell`;
+      notes.push([shells.map((s) => value(`J${s}`, `J${"₁₂₃₄"[s - 1]}`)).join(", "), `exchange with ${who}; each pair once, J > 0 ferromagnetic`, shells.map((s) => `J${"₁₂₃₄"[s - 1]}`).join(" ")]);
     }
     if (heis && on("D")) {
       terms.push(coef("D", mi("D"), -1, `${sum(`${pair(1)}${mo("∥")}`)}${sup(spin("i", m), mi("T"))}${sub(mi("A"), `<mrow><mi>i</mi><mi>j</mi></mrow>`)}${spin("j", m)}`));
-      notes.push([value("D", "D"), "bulk-type (Bloch) DMI on in-plane nearest-neighbour bonds: A_lm = Σ_k r̂_k ε_klm, the DM vector along the bond"]);
+      notes.push([value("D", "D"), "bulk-type (Bloch) DMI on in-plane nearest-neighbour bonds: A_lm = Σ_k r̂_k ε_klm, the DM vector along the bond", "D"]);
     }
     const ksSet = SCK.getParam(st, "Ks") !== undefined && SCK.getParam(st, "Ks") !== "";
     if (heis && (on("K1") || on("Ks"))) {
       const sq = (a, b) => `${sup(sub(mi("s"), mi(a)), "<mn>2</mn>")}${sup(sub(mi("s"), mi(b)), "<mn>2</mn>")}`;
       terms.push(`${terms.length ? mo("+") : ""}${sum(mi("i"))}${sub(mi("K"), `<mrow><mn>1</mn><mo>,</mo><mi>i</mi></mrow>`)}${mo("(")}${sq("x", "y")}${mo("+")}${sq("x", "z")}${mo("+")}${sq("y", "z")}${mo(")")}`);
-      notes.push([`${value("K1", "K₁")}, ${swept("Ks") || ksSet ? value("Ks", "Kₛ") : "Kₛ = K₁"}`, "cubic anisotropy: K₁ on bulk sites, Kₛ on surface sites (fewer active nearest neighbours than the bulk)"]);
+      notes.push([`${value("K1", "K₁")}, ${swept("Ks") || ksSet ? value("Ks", "Kₛ") : "Kₛ = K₁"}`, "cubic anisotropy: K₁ on bulk sites, Kₛ on surface sites (fewer active nearest neighbours than the bulk)", "K₁ Kₛ"]);
     }
     if (heis && on("K2")) {
       terms.push(coef("K2", sub(mi("K"), "<mn>2</mn>"), 1, `${sum(mi("i"))}${sup(`<mrow>${mo("(")}${sub(mi("s"), mi("x"))}${sub(mi("s"), mi("y"))}${sub(mi("s"), mi("z"))}${mo(")")}</mrow>`, "<mn>2</mn>")}`));
-      notes.push([value("K2", "K₂"), "second-order cubic anisotropy"]);
+      notes.push([value("K2", "K₂"), "second-order cubic anisotropy", "K₂"]);
     }
     if (on("H")) {
       const angleSwept = swept("H_theta") || swept("H_phi");
@@ -335,13 +339,15 @@
       const dir = m === "ising" ? "along +1" : angleSwept
         ? `along ĥ(θ, φ), ${heis ? value("H_theta", "θ") + "°, " : ""}${value("H_phi", "φ")}°`
         : `along (${h.map((x) => (Math.round(x * 1000) / 1000)).join(", ")})${heis ? ` (θ = ${fmtNum(n("H_theta"))}°, φ = ${fmtNum(n("H_phi"))}°)` : ` (φ = ${fmtNum(n("H_phi"))}°)`}`;
-      notes.push([value("H", "H"), `Zeeman field ${dir}`]);
+      notes.push([value("H", "H"), `Zeeman field ${dir}`, "H"]);
     }
     const parts = terms.length ? terms : [mn(0)];
     $("ham-math").innerHTML = parts.map((t, k) => `<math displaystyle="true">${k ? "" : `${mi("H")}${mo("=")}`}<mrow>${t}</mrow></math>`).join("");
     const unit = cfg.units === "meV" ? "Energies in meV, temperatures in kelvin." : "Energies in units of J, k_B = 1.";
-    $("ham-terms").innerHTML = notes.map(([a, b]) => `<dt>${esc(a)}</dt><dd>${esc(b)}</dd>`).join("") +
-      `<dt>${esc({ ising: "s = ±1", xy: "|S| = 1, 2D", heisenberg: "|S| = 1, 3D" }[m] || "")}</dt><dd>${esc(unit)}</dd>`;
+    // the values stay in sight on one line; what each term means folds away
+    notes.push([{ ising: "s = ±1", xy: "|S| = 1, 2D", heisenberg: "|S| = 1, 3D" }[m] || "", `${{ ising: "Ising spins, s = ±1", xy: "unit spins in the plane", heisenberg: "unit spins in 3D" }[m] || ""}. ${unit}`, m === "ising" ? "s" : "S"]);
+    $("ham-values").innerHTML = notes.map(([a]) => `<span>${esc(a)}</span>`).join("");
+    $("ham-terms").innerHTML = notes.map(([, b, c]) => `<dt>${esc(c)}</dt><dd>${esc(b)}</dd>`).join("");
   }
 
   // ------------------------------------------------------------------ parameter sweep (its own tab)
