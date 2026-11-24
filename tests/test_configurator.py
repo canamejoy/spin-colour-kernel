@@ -188,10 +188,20 @@ def test_the_default_form_changes_only_the_parameters_cell_and_keeps_its_values(
     assert script.count("sha256 mismatch") == len(b.MODULES) and "summary.png" in script
 
 
+def _same_build(shipped: str, fresh: str) -> bool:
+    """Equal up to the commit hash they carry, which changes with every commit after the build."""
+    sys.path.insert(0, str(ROOT / "notebooks"))
+    import build_configurator as bc
+    now = bc.commit()
+    old = json.loads(shipped)["commit"] if shipped.lstrip().startswith("{") else \
+        shipped.split('"commit": "')[1].split('"')[0]
+    return shipped.replace(old, now) == fresh
+
+
 def test_the_ready_for_run_page_is_the_current_build():
     sys.path.insert(0, str(ROOT / "notebooks"))
     import build_configurator as bc
-    assert (ROOT / "ready_for_run" / "configurator.html").read_text() == bc.build()
+    assert _same_build((ROOT / "ready_for_run" / "configurator.html").read_text(), bc.build())
 
 
 def test_nothing_covers_the_model_canvas_when_the_message_is_hidden():
@@ -224,7 +234,7 @@ def test_the_package_writes_the_same_files_as_the_page():
     from Spin_Colour_Kernel import runfile
     sys.path.insert(0, str(ROOT / "notebooks"))
     import build_configurator as bc
-    assert runfile.TEMPLATE_PATH.read_text() == bc.template_json()      # the shipped template is current
+    assert _same_build(runfile.TEMPLATE_PATH.read_text(), bc.template_json())   # the shipped template is current
     for cfg in (bc.DEFAULTS, FULL):
         full = runfile.config(cfg)
         nb, script = js([{"op": "files", "tpl": str(runfile.TEMPLATE_PATH), "cfg": full}])[0]
