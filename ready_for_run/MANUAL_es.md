@@ -20,7 +20,8 @@ nada ni conexión a internet. En una sola pantalla usted:
    disco, esfera, anillo, película delgada);
 3. mira el **modelo**: arrastre para rotarlo, use la rueda para acercar, pulse un **botón de vista** (arriba a la
    derecha) para una vista estándar (TP superior, FR frontal, RT derecha, BT inferior, BK posterior, LT izquierda, teclas
-   1 a 6, o una de las ocho isométricas, desde arriba o desde abajo), o el botón de casa (tecla 7) para volver, y cambie entre **Colouring** (las
+   1 a 6, o una de las ocho isométricas, desde arriba o desde abajo), o el botón de casa (tecla 7) para volver; si el estado mostrado tiene campo, el dial de la esquina inferior
+   izquierda muestra su dirección vista desde la cámara (⊙ hacia usted, ⊗ alejándose), y cambie entre **Colouring** (las
    clases de sitios que se actualizan juntas), **Active sites** (sitios activos) y **Surface** (superficie,
    donde se aplica Kₛ); el control **Layers** muestra el interior de una caja 3D;
 4. lee la **bandeja de piezas** (parts tray): cuántos sitios tiene cada color, cuántos son activos y de

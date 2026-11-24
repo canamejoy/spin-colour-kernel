@@ -20,7 +20,8 @@ installation and no internet. On one screen you:
    disc, sphere, ring, thin film);
 3. look at the **model**: drag to rotate it, scroll to zoom, press a **view button** (top right) for a standard view
    (TP top, FR front, RT right, BT bottom, BK back, LT left, keys 1 to 6, or one of the eight isometric views, from
-   above or below), or the house button (key 7) to go back, and switch between **Colouring** (the classes
+   above or below), or the house button (key 7) to go back; when the state shown has a field, the dial in the lower left corner
+   shows its direction as seen from the camera (⊙ towards you, ⊗ away from you), and switch between **Colouring** (the classes
    of sites that update together), **Active sites** and **Surface** (where Kₛ applies); the **Layers**
    slider shows the inside of a 3D box;
 4. read the **parts tray**: how many sites each colour holds, how many are active and on the surface, and
