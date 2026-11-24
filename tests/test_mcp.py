@@ -59,3 +59,57 @@ def test_unknown_methods_and_tools_get_json_rpc_errors():
     assert mcp.handle({"jsonrpc": "2.0", "id": 5, "method": "nope"})["error"]["code"] == -32601
     r = mcp.handle({"jsonrpc": "2.0", "id": 6, "method": "tools/call", "params": {"name": "nope"}})
     assert r["error"]["code"] == -32602
+
+
+BLOCK_TORCH = r"""
+import builtins, sys
+real = builtins.__import__
+def imp(name, *a, **k):
+    if name.split('.')[0] in ('torch', 'triton'):
+        raise ImportError('No module named ' + name)
+    return real(name, *a, **k)
+builtins.__import__ = imp
+sys.argv = ['mcp']
+import runpy
+runpy.run_module('Spin_Colour_Kernel.mcp', run_name='__main__')
+"""
+
+
+def test_describe_check_and_write_need_numpy_only(tmp_path):
+    src = str(Path(mcp.__file__).resolve().parents[1])
+    env = {**os.environ, "PYTHONPATH": src}
+    cfg = {"crystal": "square", "box": [6, 6], "periodic": [True, True], "model": "xy",
+           "states": [{"name": "a", "J": {"1": 1.0}, "H": 0.1}]}
+    lines = "\n".join(json.dumps(m) for m in (INIT, _call(2, "check", config=cfg),
+                                              _call(3, "write", config=cfg, path="run.ipynb"))) + "\n"
+    r = subprocess.run([sys.executable, "-c", BLOCK_TORCH], input=lines, capture_output=True, text=True,
+                       timeout=120, cwd=tmp_path, env=env)
+    out = [json.loads(l) for l in r.stdout.splitlines()]
+    assert out[1]["result"]["structuredContent"]["ok"], r.stderr
+    assert not out[2]["result"].get("isError") and (tmp_path / "run.ipynb").exists()
+
+
+def test_the_launcher_in_a_clone_starts_the_server_without_installing_anything(tmp_path):
+    root = Path(mcp.__file__).resolve().parents[2]
+    env = {k: v for k, v in os.environ.items() if k != "PYTHONPATH"}
+    lines = "\n".join(json.dumps(m) for m in (INIT, {"jsonrpc": "2.0", "id": 2, "method": "tools/list"})) + "\n"
+    r = subprocess.run([sys.executable, "-I", str(root / "sck_mcp.py")], input=lines, capture_output=True,
+                       text=True, timeout=120, cwd=tmp_path, env=env)
+    out = [json.loads(l) for l in r.stdout.splitlines()]
+    assert {"describe", "check", "write", "run"} <= {t["name"] for t in out[1]["result"]["tools"]}, r.stderr
+
+
+def test_without_numpy_the_launcher_says_how_to_install_it(tmp_path):
+    root = Path(mcp.__file__).resolve().parents[2]
+    block = ("import builtins, runpy\nreal = builtins.__import__\n"
+             "def imp(name, *a, **k):\n"
+             "    if name.split('.')[0] == 'numpy':\n        raise ImportError('No module named numpy')\n"
+             "    return real(name, *a, **k)\n"
+             f"builtins.__import__ = imp\nrunpy.run_path({str(root / 'sck_mcp.py')!r}, run_name='__main__')\n")
+    lines = "\n".join(json.dumps(m) for m in (INIT, {"jsonrpc": "2.0", "id": 2, "method": "tools/list"},
+                                              _call(3, "check"))) + "\n"
+    r = subprocess.run([sys.executable, "-c", block], input=lines, capture_output=True, text=True, timeout=60,
+                       cwd=tmp_path)
+    out = [json.loads(l) for l in r.stdout.splitlines()]
+    assert [t["name"] for t in out[1]["result"]["tools"]] == ["setup"]
+    assert out[2]["result"]["isError"] and f'"{sys.executable}" -m pip install numpy' in out[2]["result"]["content"][0]["text"]

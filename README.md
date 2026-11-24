@@ -43,6 +43,10 @@ rebuilds the manuals and copies the notebook into `ready_for_run/`.
 
 ## Connecting an agent (MCP)
 
+**From a clone, with no installation:** open the repository in Claude Code and approve the `sck` server it
+declares in `.mcp.json` (it runs `python3 sck_mcp.py`; describing, checking and writing runs needs only numpy,
+and if numpy is missing the server says how to install it). `AGENTS.md` tells any agent how to use the tools.
+
 `python -m Spin_Colour_Kernel.mcp` is a Model Context Protocol server (stdio, standard library only) through
 which an AI agent prepares, checks, writes, launches and reads runs. Register it in your agent, for example
 `claude mcp add sck -- python -m Spin_Colour_Kernel.mcp`. Its tools:
