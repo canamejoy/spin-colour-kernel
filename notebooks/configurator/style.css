@@ -91,10 +91,21 @@ button, input, select { font: inherit; color: inherit; }
 .ham-head select { width: auto; max-width: 260px; }
 
 /* axis gizmo, top right of the model */
-.gizmo { position: absolute; top: 10px; right: 10px; width: 104px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.gizmo { position: absolute; top: 10px; right: 10px; width: 140px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .gizmo canvas { width: 104px; height: 104px; display: block; }
 .gizmo-home { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid var(--line-strong); background: var(--card); border-radius: 6px; cursor: pointer; color: var(--ink); }
 .gizmo-home:hover { background: var(--bench); }
+.views { display: flex; flex-direction: column; align-items: stretch; gap: 4px; width: 140px; padding: 6px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); }
+.views .gizmo-home { align-self: center; }
+.vgrid { display: grid; gap: 3px; }
+.vgrid.three { grid-template-columns: repeat(3, 1fr); }
+.vgrid.four { grid-template-columns: repeat(2, 1fr); }
+.vgrid button { min-height: 22px; padding: 0 2px; font: 600 10.5px/1 var(--sans, inherit); color: var(--ink); background: var(--card); border: 1px solid var(--line-strong); border-radius: 4px; cursor: pointer; }
+.vgrid button:hover { background: var(--bench); }
+.vgrid button:focus-visible, .gizmo-home:focus-visible { outline: 2px solid var(--focus, var(--action)); outline-offset: 1px; }
+.isos { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.iso { display: flex; flex-direction: column; gap: 2px; }
+.vcap { font-size: 10px; line-height: 1.2; color: var(--mute); text-align: center; margin-top: 2px; }
 .gizmo-home svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
 /* the two tabs: States (one by one, with the model) and Parameter sweep (no model) */

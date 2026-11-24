@@ -19,7 +19,8 @@ installation and no internet. On one screen you:
 2. choose the crystal, the box, the borders and, if you want, a shape of active sites (or press an example:
    disc, sphere, ring, thin film);
 3. look at the **model**: drag to rotate it, scroll to zoom, press a ball of the **axis gizmo** (top right) to look
-   along that axis, or its house button to go back, and switch between **Colouring** (the classes
+   along that axis, a flat button below it for a standard view (Top, Front, Right, Bottom, Back, Left, or one of the
+   eight isometric views, from above or below; keys 1 to 6 for the first six), or the house button (key 7) to go back, and switch between **Colouring** (the classes
    of sites that update together), **Active sites** and **Surface** (where Kₛ applies); the **Layers**
    slider shows the inside of a 3D box;
 4. read the **parts tray**: how many sites each colour holds, how many are active and on the surface, and

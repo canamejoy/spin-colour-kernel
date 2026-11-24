@@ -575,6 +575,8 @@
   const clampPitch = (p) => Math.max(-Math.PI / 2, Math.min(Math.PI / 2, p));
   // the axis gizmo: its centre and radius in CSS pixels, and its six balls (x red, y green, z blue)
   const G_C = 52, G_R = 34;
+  // keys 1 to 6: top, front, right, bottom, back, left (the order of the flat view buttons)
+  const FACES = [[0, 0, 1], [0, -1, 0], [1, 0, 0], [0, 0, -1], [0, 1, 0], [-1, 0, 0]];
   const AXES = [["x", [1, 0, 0], "#d7263d"], ["y", [0, 1, 0], "#1e9e5a"], ["z", [0, 0, 1], "#1b5bd6"]]
     .flatMap(([l, n, c]) => [{ l: l.toUpperCase(), n, c, pos: true }, { l: "-" + l.toUpperCase(), n: n.map((x) => -x), c, pos: false }]);
 
@@ -608,6 +610,8 @@
         else if (k === "+" || k === "=") this.zoom = Math.min(12, this.zoom * 1.15);
         else if (k === "-") this.zoom = Math.max(0.2, this.zoom / 1.15);
         else if (k === "0") this.reset();
+        else if (this.D === 3 && k >= "1" && k <= "6") this.lookFrom(FACES[+k - 1]);
+        else if (this.D === 3 && k === "7") this.animateTo(HOME[0], HOME[1]);
         else return;
         e.preventDefault(); this.dirty = true;
       });
@@ -618,6 +622,10 @@
       giz.addEventListener("pointerleave", () => { this.gizmoHover = null; this.dirty = true; });
       giz.addEventListener("click", (e) => { const a = this.gizmoHit(...local(e)); if (a) this.lookFrom(a.n); });
       $("gizmo-home").addEventListener("click", () => { this.animateTo(HOME[0], HOME[1]); });
+      for (const b of $("views").querySelectorAll("button[data-n]")) {
+        const n = b.dataset.n.split(",").map(Number), m = Math.hypot(...n);
+        b.addEventListener("click", () => this.lookFrom(n.map((v) => v / m)));
+      }
       $("layers").addEventListener("input", (e) => { this.layer = +e.target.value; this.syncLayers(); this.dirty = true; });
       const loop = (now) => { this.step(now); if (this.dirty) { this.dirty = false; this.draw(); this.drawGizmo(); } requestAnimationFrame(loop); };
       requestAnimationFrame(loop);

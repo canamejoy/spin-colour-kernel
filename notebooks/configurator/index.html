@@ -182,12 +182,37 @@
         </div>
       </div>
       <div class="viewer" id="viewer">
-        <canvas id="model-canvas" tabindex="0" aria-label="Lattice model. Drag or use the arrow keys to rotate, scroll or plus and minus to zoom, 0 to reset."></canvas>
+        <canvas id="model-canvas" tabindex="0" aria-label="Lattice model. Drag or use the arrow keys to rotate, scroll or plus and minus to zoom, 1 to 6 for the standard views, 7 for the home view, 0 to reset."></canvas>
         <div class="gizmo" id="gizmo">
           <canvas id="gizmo-canvas" width="104" height="104" aria-label="Axis gizmo: press an axis ball to look along it"></canvas>
-          <button type="button" class="gizmo-home" id="gizmo-home" title="Home view" aria-label="Home view">
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 9.5 10 4l6.5 5.5M5.5 8v8h9V8" /></svg>
-          </button>
+          <div class="views" id="views" role="group" aria-label="Standard views">
+            <button type="button" class="gizmo-home" id="gizmo-home" title="Home view (7)" aria-label="Home view">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 9.5 10 4l6.5 5.5M5.5 8v8h9V8" /></svg>
+            </button>
+            <div class="vgrid three">
+              <button type="button" data-n="0,0,1" title="Top (1)">Top</button>
+              <button type="button" data-n="0,-1,0" title="Front (2)">Front</button>
+              <button type="button" data-n="1,0,0" title="Right (3)">Right</button>
+              <button type="button" data-n="0,0,-1" title="Bottom (4)">Bottom</button>
+              <button type="button" data-n="0,1,0" title="Back (5)">Back</button>
+              <button type="button" data-n="-1,0,0" title="Left (6)">Left</button>
+            </div>
+            <span class="vcap">Isometric</span>
+            <div class="isos">
+            <div class="iso"><span class="vcap">above</span><div class="vgrid four">
+              <button type="button" data-n="-1,1,1" title="Isometric from above, north-west" aria-label="Isometric from above, north-west">NW</button>
+              <button type="button" data-n="1,1,1" title="Isometric from above, north-east" aria-label="Isometric from above, north-east">NE</button>
+              <button type="button" data-n="-1,-1,1" title="Isometric from above, south-west" aria-label="Isometric from above, south-west">SW</button>
+              <button type="button" data-n="1,-1,1" title="Isometric from above, south-east" aria-label="Isometric from above, south-east">SE</button>
+            </div></div>
+            <div class="iso"><span class="vcap">below</span><div class="vgrid four">
+              <button type="button" data-n="-1,1,-1" title="Isometric from below, north-west" aria-label="Isometric from below, north-west">NW</button>
+              <button type="button" data-n="1,1,-1" title="Isometric from below, north-east" aria-label="Isometric from below, north-east">NE</button>
+              <button type="button" data-n="-1,-1,-1" title="Isometric from below, south-west" aria-label="Isometric from below, south-west">SW</button>
+              <button type="button" data-n="1,-1,-1" title="Isometric from below, south-east" aria-label="Isometric from below, south-east">SE</button>
+            </div></div>
+            </div>
+          </div>
         </div>
         <p class="hint" id="hint"></p>
         <div class="legend" id="legend"></div>
