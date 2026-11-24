@@ -668,8 +668,11 @@
       const [b, L3, L2, L1] = r.lattice.dims, nc = L1 * L2 * L3, cellZ = r.lattice.cell;
       const shown = (i) => (this.D === 2 || cellZ[3 * i + 2] < this.layer) && (r.mask[i] || ui.ghost);
       let depth = null;
-      if (this.D === 3 && culled) {
-        const SHELL = b > 1 ? 0 : 1;
+      let nShown = 0;
+      for (let i = 0; i < r.lattice.n; i++) if (shown(i)) nShown++;
+      // small models are drawn whole even while moving: through the gaps between balls the inner layers show
+      if (this.D === 3 && culled && nShown > 30000) {
+        const SHELL = b > 1 ? 1 : 3;
         depth = new Int16Array(nc).fill(-1);
         const full = new Uint8Array(nc).fill(1);
         for (let i = 0; i < r.lattice.n; i++) if (!shown(i)) full[i % nc] = 0;
