@@ -476,6 +476,10 @@
     }
     const t = res.temperatures;
     $("t-help").textContent = t ? `${t.length} temperatures, from ${t[0]} down to ${t[t.length - 1]}${cfg.units === "meV" ? " K" : ""}.` : "";
+    const th = Math.floor(Number(cfg.thermalization)), me = Math.floor(Number(cfg.measurement)), ev = Math.floor(Number(cfg.measure_every));
+    $("sweep-help").textContent = th >= 1 && me >= 1 && ev >= 1
+      ? `At each temperature: ${fmt(th)} sweeps to reach equilibrium (not measured), then ${fmt(me)} sweeps reading E and M every ${fmt(ev)}: ${fmt(Math.floor(me / ev))} samples per temperature and replica. A sweep updates every site once; spaced samples are less correlated.`
+      : "Sweeps at each temperature: the thermalizing ones are discarded, then E and M are read every few measuring sweeps.";
     renderTray();
     renderDownload();
     view.load(res);

@@ -102,9 +102,9 @@
         <div class="grid3">
           <label class="col">Thermalize <input id="thermalization" inputmode="numeric"></label>
           <label class="col">Measure <input id="measurement" inputmode="numeric"></label>
-          <label class="col">Every <input id="measure_every" inputmode="numeric"></label>
+          <label class="col">Sample every <input id="measure_every" inputmode="numeric" aria-describedby="sweep-help"></label>
         </div>
-        <p class="help">Sweeps at each temperature: first to thermalize, then to measure, reading E and M every few sweeps.</p>
+        <p class="help" id="sweep-help">Sweeps at each temperature: the thermalizing ones are discarded, then E and M are read every few measuring sweeps.</p>
         <div class="grid3">
           <label class="col">Replicas <input id="replicas" inputmode="numeric"></label>
           <label class="col">Seed <input id="seed" inputmode="numeric"></label>
