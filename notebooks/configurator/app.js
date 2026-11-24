@@ -573,15 +573,11 @@
   // ------------------------------------------------------------------ the model view (canvas, painter's algorithm)
   const HOME = [-0.6, -0.5];                 // yaw, pitch of the home view: front, right and top in sight
   const clampPitch = (p) => Math.max(-Math.PI / 2, Math.min(Math.PI / 2, p));
-  // the axis gizmo: its centre and radius in CSS pixels, and its six balls (x red, y green, z blue)
-  const G_C = 52, G_R = 34;
   // keys 1 to 6: top, front, right, bottom, back, left (the order of the flat view buttons)
   const FACES = [[0, 0, 1], [0, -1, 0], [1, 0, 0], [0, 0, -1], [0, 1, 0], [-1, 0, 0]];
-  const AXES = [["x", [1, 0, 0], "#d7263d"], ["y", [0, 1, 0], "#1e9e5a"], ["z", [0, 0, 1], "#1b5bd6"]]
-    .flatMap(([l, n, c]) => [{ l: l.toUpperCase(), n, c, pos: true }, { l: "-" + l.toUpperCase(), n: n.map((x) => -x), c, pos: false }]);
 
   const view = {
-    canvas: null, ctx: null, w: 0, h: 0, dpr: 1, dirty: true, yaw: -0.6, pitch: -0.5, zoom: 1, tween: null, gizmoHover: null, panX: 0, panY: 0,
+    canvas: null, ctx: null, w: 0, h: 0, dpr: 1, dirty: true, yaw: -0.6, pitch: -0.5, zoom: 1, tween: null, panX: 0, panY: 0,
     sprites: {}, res: null, D: 3, layer: 1, radius: 0.3, extent: 1, order: null, bondPairs: null,
 
     init() {
@@ -616,18 +612,13 @@
         e.preventDefault(); this.dirty = true;
       });
       $("reset-view").addEventListener("click", () => this.reset());
-      const giz = $("gizmo-canvas");
-      const local = (e) => { const r = giz.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
-      giz.addEventListener("pointermove", (e) => { this.gizmoHover = this.gizmoHit(...local(e)); giz.style.cursor = this.gizmoHover ? "pointer" : "default"; this.dirty = true; });
-      giz.addEventListener("pointerleave", () => { this.gizmoHover = null; this.dirty = true; });
-      giz.addEventListener("click", (e) => { const a = this.gizmoHit(...local(e)); if (a) this.lookFrom(a.n); });
       $("gizmo-home").addEventListener("click", () => { this.animateTo(HOME[0], HOME[1]); });
       for (const b of $("views").querySelectorAll("button[data-n]")) {
         const n = b.dataset.n.split(",").map(Number), m = Math.hypot(...n);
         b.addEventListener("click", () => this.lookFrom(n.map((v) => v / m)));
       }
       $("layers").addEventListener("input", (e) => { this.layer = +e.target.value; this.syncLayers(); this.dirty = true; });
-      const loop = (now) => { this.step(now); if (this.dirty) { this.dirty = false; this.draw(); this.drawGizmo(); } requestAnimationFrame(loop); };
+      const loop = (now) => { this.step(now); if (this.dirty) { this.dirty = false; this.draw(); } requestAnimationFrame(loop); };
       requestAnimationFrame(loop);
     },
     reset() { this.tween = null; this.yaw = this.D === 3 ? HOME[0] : 0; this.pitch = this.D === 3 ? HOME[1] : -Math.PI / 2; this.zoom = 1; this.panX = this.panY = 0; this.dirty = true; },
@@ -652,45 +643,6 @@
       this.yaw = tw.y0 + tw.dy * e; this.pitch = tw.p0 + tw.dp * e;
       if (u >= 1) this.tween = null;
       this.dirty = true;
-    },
-    project(v, s, c) {
-      const cy = Math.cos(this.yaw), sy = Math.sin(this.yaw), cp = Math.cos(this.pitch), sp = Math.sin(this.pitch);
-      const x1 = v[0] * cy - v[1] * sy, y1 = v[0] * sy + v[1] * cy;
-      return [c + x1 * s, c - (v[2] * cp - y1 * sp) * s, y1 * cp + v[2] * sp];
-    },
-    /* The axis gizmo: a ball at the end of each of ±x, ±y, ±z; the nearest ball under the pointer, front first. */
-    gizmoHit(px, py) {
-      let best = null;
-      for (const a of AXES) {
-        const q = this.project(a.n, G_R, G_C);
-        const r = a.pos ? 9 : 7;
-        if (Math.hypot(q[0] - px, q[1] - py) <= r + 2 && (!best || q[2] < best.d)) best = { a, d: q[2] };
-      }
-      return best && best.a;
-    },
-    drawGizmo() {
-      const cv = $("gizmo-canvas");
-      if (!cv || $("gizmo").hidden) return;
-      const dpr = this.dpr;
-      if (cv.width !== 104 * dpr) { cv.width = cv.height = 104 * dpr; }
-      const g = cv.getContext("2d");
-      g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      g.clearRect(0, 0, 104, 104);
-      const css = getComputedStyle(document.documentElement);
-      const card = css.getPropertyValue("--card").trim(), line = css.getPropertyValue("--line-strong").trim(), focus = css.getPropertyValue("--focus").trim();
-      g.fillStyle = card; g.globalAlpha = 0.85;
-      g.beginPath(); g.arc(G_C, G_C, G_R + 12, 0, 2 * Math.PI); g.fill();
-      g.globalAlpha = 1; g.strokeStyle = line; g.lineWidth = 1; g.stroke();
-      const items = AXES.map((a) => ({ a, q: this.project(a.n, G_R, G_C) })).sort((u, v) => v.q[2] - u.q[2]);
-      for (const { a, q } of items) {
-        if (a.pos) { g.strokeStyle = a.c; g.lineWidth = 2; g.beginPath(); g.moveTo(G_C, G_C); g.lineTo(q[0], q[1]); g.stroke(); }
-        const r = a.pos ? 9 : 7;
-        g.beginPath(); g.arc(q[0], q[1], r, 0, 2 * Math.PI);
-        g.fillStyle = a.c; g.globalAlpha = a.pos ? 1 : 0.35; g.fill(); g.globalAlpha = 1;
-        if (!a.pos) { g.strokeStyle = a.c; g.lineWidth = 1.2; g.stroke(); }
-        if (this.gizmoHover === a) { g.strokeStyle = focus; g.lineWidth = 2; g.beginPath(); g.arc(q[0], q[1], r + 2.5, 0, 2 * Math.PI); g.stroke(); }
-        if (a.pos) { g.fillStyle = "#fff"; g.font = "700 10px system-ui, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(a.l, q[0], q[1] + 0.5); }
-      }
     },
     resize() {
       const r = $("viewer").getBoundingClientRect();

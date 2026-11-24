@@ -18,10 +18,9 @@ nada ni conexión a internet. En una sola pantalla usted:
    ejemplo D), desde, hasta y el paso; cada combinación se vuelve un estado, listado en una tabla, hasta 1 000;
 2. elige el cristal, la caja, los bordes y, si quiere, una forma de sitios activos (o pulsa un ejemplo:
    disco, esfera, anillo, película delgada);
-3. mira el **modelo**: arrastre para rotarlo, use la rueda para acercar, pulse una esfera del **indicador de ejes**
-   (arriba a la derecha) para mirar a lo largo de ese eje, un botón plano debajo para una vista estándar (Top, Front, Right, Bottom, Back, Left,
-   o una de las ocho isométricas, desde arriba o desde abajo; teclas 1 a 6 para las seis primeras), o el botón de casa
-   (tecla 7) para volver, y cambie entre **Colouring** (las
+3. mira el **modelo**: arrastre para rotarlo, use la rueda para acercar, pulse un **botón de vista** (arriba a la
+   derecha) para una vista estándar (TP superior, FR frontal, RT derecha, BT inferior, BK posterior, LT izquierda, teclas
+   1 a 6, o una de las ocho isométricas, desde arriba o desde abajo), o el botón de casa (tecla 7) para volver, y cambie entre **Colouring** (las
    clases de sitios que se actualizan juntas), **Active sites** (sitios activos) y **Surface** (superficie,
    donde se aplica Kₛ); el control **Layers** muestra el interior de una caja 3D;
 4. lee la **bandeja de piezas** (parts tray): cuántos sitios tiene cada color, cuántos son activos y de
