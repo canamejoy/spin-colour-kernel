@@ -275,3 +275,112 @@ def test_modal_submits_detached_with_a_bounded_timeout(env, monkeypatch):
 def test_unknown_jobs_and_options_are_tool_errors(env):
     assert _call("status", job="../etc")["isError"]
     assert _call("run", config=CFG, backend="modal", options={"gpus": 2})["isError"]
+
+
+@pytest.mark.parametrize("confirm", ["false", "true", 1, "yes"])
+def test_only_a_real_true_confirms_a_launch(env, confirm):
+    tmp, calls = env
+    out = _call("run", config=CFG, backend="runpod", confirm=confirm)["structuredContent"]
+    assert out["submitted"] is False and calls == [] and not (tmp / "jobs").exists()
+
+
+def test_the_runpod_plan_says_the_pod_bills_until_it_is_terminated(env):
+    plan = _call("run", config=CFG, backend="runpod")["structuredContent"]["plan"]
+    assert "until results or cancel terminates it" in plan["billing"]
+    assert "keeps billing" in plan["time_limit"]
+    r = _call("run", config=CFG, backend="runpod", options={"serve_hours": 1})
+    assert r["isError"] and "unknown option 'serve_hours'" in r["content"][0]["text"]
+
+
+def test_the_pod_program_never_exits_after_the_run(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    cfg = dict(CFG, output_dir="out")
+    monkeypatch.setenv("SCK_CONFIG", base64.b64encode(json.dumps(cfg).encode()).decode())
+    monkeypatch.setenv("SCK_TOKEN", "t" * 32)
+
+    class Server:
+        def serve_forever(self):
+            pass
+    monkeypatch.setattr(jobs, "make_server", lambda *a, **k: Server())
+    monkeypatch.setattr(subprocess, "run", lambda *a, **k: subprocess.CompletedProcess(a, 0))
+
+    class StillServing(Exception):
+        pass
+    sleeps = []
+
+    def sleep(s):
+        sleeps.append(s)
+        if len(sleeps) == 3:
+            raise StillServing
+    monkeypatch.setattr(jobs.time, "sleep", sleep)
+    with pytest.raises(StillServing):                 # it would have kept sleeping: RunPod never restarts it
+        jobs._pod_main()
+    assert (tmp_path / "out" / "DONE").read_text() == "0"
+
+
+def _fake_pod_job(tmp):
+    job = "runpod-20261123-101500-a1b2c3"
+    d = tmp / "jobs" / job
+    d.mkdir(parents=True)
+    rec = dict(id=job, backend="runpod", pod="pod123", proxy="https://pod123-8000.proxy.runpod.net",
+               token="t" * 32, state="finished", output_dir="simulation_output", options={"max_hours": 1})
+    (d / "job.json").write_text(json.dumps(rec))
+    return job, d
+
+
+def test_a_failed_download_says_the_pod_is_still_billing_and_does_not_terminate_it(env, monkeypatch):
+    tmp, _ = env
+    job, _ = _fake_pod_job(tmp)
+    sent = []
+
+    class Resp:
+        def __init__(self, body):
+            self.body = body
+
+        def read(self):
+            return self.body
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+    def fake(req, timeout=None):
+        url = req if isinstance(req, str) else req.full_url
+        sent.append("GET" if isinstance(req, str) else req.get_method())
+        if "api.runpod.io" in url:
+            return Resp(json.dumps({"id": "pod123", "status": "RUNNING"}).encode())
+        if url.endswith("/DONE"):
+            return Resp(b"0")
+        raise urllib.error.URLError("proxy 502")              # the file listing and downloads fail
+    monkeypatch.setattr(urllib.request, "urlopen", fake)
+    r = _call("results", job=job)
+    assert r["isError"] and "still running and billing" in r["content"][0]["text"]
+    assert "DELETE" not in sent
+
+
+def test_an_exited_pod_is_reported_as_exited(env, monkeypatch):
+    tmp, _ = env
+    job, _ = _fake_pod_job(tmp)
+
+    class Resp:
+        def read(self):
+            return json.dumps({"id": "pod123", "status": "EXITED", "cost": 0.4}).encode()
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+    monkeypatch.setattr(urllib.request, "urlopen", lambda req, timeout=None: Resp())
+    st = _call("status", job=job)["structuredContent"]
+    assert st["job"]["state"] == "pod exited" and st["pod_status"] == "EXITED"
+
+
+def test_a_cancelled_local_job_stays_cancelled(env):
+    tmp, _ = env
+    job, d, _ = _fake_local_job(tmp, None)
+    rec = json.loads((d / "job.json").read_text())
+    (d / "job.json").write_text(json.dumps(dict(rec, state="cancelled")))
+    assert _call("status", job=job)["structuredContent"]["job"]["state"] == "cancelled"

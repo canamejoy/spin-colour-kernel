@@ -53,7 +53,7 @@ DEFAULTS = {
     "local": dict(max_hours=12.0),
     "kaggle": dict(accelerator="NvidiaTeslaT4", max_hours=9.0),
     "modal": dict(gpu="L4", max_hours=2.0),
-    "runpod": dict(gpu="NVIDIA L4", image=RUNPOD_IMAGE, ref="v1.4.7", max_hours=2.0, serve_hours=6.0),
+    "runpod": dict(gpu="NVIDIA L4", image=RUNPOD_IMAGE, ref="v1.4.7", max_hours=2.0),
     "colab": {},
 }
 _PROCS: dict[str, subprocess.Popen] = {}           # children started by this server (polled to avoid zombies)
@@ -212,7 +212,6 @@ def _options(backend, given) -> dict:
     if "max_hours" in opts:
         opts["max_hours"] = _hours(opts["max_hours"], 24.0 if backend == "modal" else None)
     if backend == "runpod":
-        opts["serve_hours"] = _hours(opts["serve_hours"])
         if not re.fullmatch(r"[A-Za-z0-9._/-]{1,100}", str(opts["ref"])):
             raise ToolError("ref must be a git tag, branch or commit")
     return opts
@@ -225,8 +224,9 @@ def _plan(backend, r, opts, user_cfg, results) -> dict:
     limit = {"local": f"the run is stopped after {opts.get('max_hours')} h",
              "kaggle": f"Kaggle stops the session after {opts.get('max_hours')} h (and at its weekly GPU quota)",
              "modal": f"the Modal function timeout is {opts.get('max_hours')} h, then it is stopped",
-             "runpod": f"the run is stopped after {opts.get('max_hours')} h; the pod then serves the results for "
-                       f"up to {opts.get('serve_hours')} h and exits; results terminates it",
+             "runpod": f"the run is stopped after {opts.get('max_hours')} h, but the pod keeps billing at its GPU "
+                       "rate until it is terminated: call results (downloads, then terminates) or cancel as soon as "
+                       "status says finished",
              "colab": "Colab's own session limits"}[backend]
     plan = dict(backend=backend, gpu=gpu,
                 cost_drivers=dict(chains=b["chains"], spin_updates=b["spin_updates"],
@@ -234,6 +234,8 @@ def _plan(backend, r, opts, user_cfg, results) -> dict:
                 time_limit=limit, results_will_land=results, options=opts, warnings=r.get("warnings", []))
     if backend == "runpod":
         plan["cost_per_hour"] = "set by RunPod for the GPU type; status reports the pod's cost per hour once created"
+        plan["billing"] = ("the pod bills from creation until results or cancel terminates it, also after the run "
+                           "ends; the run itself is capped at max_hours")
     if backend in REMOTE or backend == "local":
         plan["next_call"] = {"tool": "run", "arguments": {"config": user_cfg, "backend": backend, "confirm": True,
                                                           "options": opts}}
@@ -259,7 +261,7 @@ def _run(args):
     where = {"local": f"{jobs_dir()}/<job>/{outdir}", "colab": "wherever the user saves them in Colab",
              "modal": f"Modal Volume {MODAL_VOLUME}:/<job>/{outdir}, downloaded by results to {jobs_dir()}/<job>/results"
              }.get(backend, f"{jobs_dir()}/<job>/results (downloaded by results)")
-    if backend != "colab" and not args.get("confirm"):
+    if backend != "colab" and args.get("confirm") is not True:   # only a real true submits
         return {"submitted": False, "plan": _plan(backend, r, opts, user_cfg, where)}
     avail = detect()[backend]
     if not avail["available"]:
@@ -400,7 +402,7 @@ def runpod_body(rec, cfg, token) -> dict:
     return {"name": f"sck-{rec['id']}", "image": str(o["image"]), "gpu": {"id": str(o["gpu"]), "count": 1},
             "disk": disk, "ports": ["8000/http"],
             "env": {"SCK_CONFIG": base64.b64encode(json.dumps(cfg).encode()).decode(), "SCK_TOKEN": token,
-                    "SCK_MAX_HOURS": str(o["max_hours"]), "SCK_SERVE_HOURS": str(o["serve_hours"])},
+                    "SCK_MAX_HOURS": str(o["max_hours"])},
             "cmd": ["bash", "-lc", boot]}
 
 
@@ -416,6 +418,8 @@ def _submit_runpod(rec, d, cfg):
 # ── status / results / cancel ────────────────────────────────────────────────────────────────────
 
 def _local_state(rec, d, marker: Path) -> str:
+    if rec.get("state") == "cancelled":
+        return "cancelled"
     p = _PROCS.get(rec["id"])
     if p is not None:
         p.poll()
@@ -476,6 +480,8 @@ def _status_of(rec, d) -> dict:
                 rec["state"] = "finished" if code == "0" else f"failed (exit {code})"
             except (urllib.error.URLError, OSError):
                 rec["state"] = "running"
+        elif out["pod_status"] == "EXITED":
+            rec["state"] = "pod exited"
         else:
             rec["state"] = "starting"
     _save(rec, d)
@@ -501,19 +507,27 @@ def _fetch(rec, d, keep):
         if r.returncode != 0:
             raise ToolError(f"modal volume get failed: {(r.stderr or r.stdout)[-1000:]}")
     elif b == "runpod":
-        names = json.loads(_http_get(_rp_url(rec, ""), timeout=90).decode())["files"]
-        for name in names:
-            dest = (res / name).resolve()
-            if res.resolve() not in dest.parents:
-                continue
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            with urllib.request.urlopen(_rp_url(rec, urllib.request.quote(name)), timeout=95) as resp, \
-                    open(dest, "wb") as f:
-                shutil.copyfileobj(resp, f, 1 << 20)
+        try:
+            _fetch_runpod(rec, res)
+        except (urllib.error.URLError, OSError, ValueError, KeyError) as e:
+            raise ToolError(f"downloading from pod {rec['pod']} failed ({e}); the pod is still running and billing: "
+                            "call results again, or cancel to terminate it") from None
         if not keep:
             _runpod("DELETE", f"/pods/{rec['pod']}")
             rec["pod_terminated"] = True
     rec["state"] = "fetched"
+
+
+def _fetch_runpod(rec, res):
+    names = json.loads(_http_get(_rp_url(rec, ""), timeout=90).decode())["files"]
+    for name in names:
+        dest = (res / name).resolve()
+        if res.resolve() not in dest.parents:
+            continue
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        with urllib.request.urlopen(_rp_url(rec, urllib.request.quote(name)), timeout=95) as resp, \
+                open(dest, "wb") as f:
+            shutil.copyfileobj(resp, f, 1 << 20)
 
 
 def summarize(folder: Path) -> dict:
@@ -636,7 +650,8 @@ def make_server(root, token: str, port: int = 8000, host: str = "0.0.0.0") -> Th
 
 def _pod_main() -> int:
     """On the pod: write the run from SCK_CONFIG, serve its output folder behind SCK_TOKEN, run it with a time
-    limit, mark DONE with the exit code, keep serving for SCK_SERVE_HOURS and exit."""
+    limit, mark DONE with the exit code and keep serving until the pod is terminated. It never exits on its own:
+    RunPod would restart the container and run the whole simulation again."""
     cfg = json.loads(base64.b64decode(os.environ["SCK_CONFIG"]))
     token = os.environ.pop("SCK_TOKEN")
     out = Path(cfg.get("output_dir") or "simulation_output").resolve()
@@ -652,9 +667,8 @@ def _pod_main() -> int:
         except subprocess.TimeoutExpired:
             rc = "timeout"
     (out / "DONE").write_text(str(rc))
-    time.sleep(float(os.environ.get("SCK_SERVE_HOURS", "6")) * 3600)
-    srv.shutdown()
-    return 0
+    while True:                                       # results or cancel terminates the pod
+        time.sleep(3600)
 
 
 # ── registration ─────────────────────────────────────────────────────────────────────────────────
@@ -671,8 +685,8 @@ mcp.register("run", _run, "Launch a run (checked first). Without confirm: true i
                  "confirm": {"type": "boolean", "default": False},
                  "options": {"type": "object", "description": "local: max_hours. kaggle: accelerator, max_hours. "
                              "modal: gpu (default L4), max_hours (default 2, the function timeout). runpod: gpu "
-                             "(default 'NVIDIA L4'), image, ref (package git ref, default v1.4.7), max_hours, "
-                             "serve_hours."}}}, False)
+                             "(default 'NVIDIA L4'), image, ref (package git ref, default v1.4.7), max_hours. A runpod pod "
+                             "bills until results or cancel terminates it."}}}, False)
 mcp.register("status", _status, "The state of a job: running, finished, failed; the log tail; for runpod the pod "
              "status and its cost per hour.", {"type": "object", "required": ["job"], "properties": {"job": JOB}},
              False)

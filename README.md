@@ -59,7 +59,8 @@ which an AI agent prepares, checks, writes, launches and reads runs. Register it
 Backends use the user's own access and are detected by presence only; no credential value is ever read or
 returned. Kaggle needs the `kaggle` CLI and its token, Modal the `modal` CLI and its token, RunPod the
 `RUNPOD_API_KEY` environment variable (the pod installs this package from GitHub at the release tag, then
-serves the results behind a per-job token until `results` downloads them and terminates the pod). Colab has no
+serves the results behind a per-job token until `results` downloads them and terminates the pod; the pod
+bills at its GPU rate from creation until `results` or `cancel` terminates it). Colab has no
 submission API here: `run` writes the notebook and points to Google's Colab MCP server for opening it. Jobs live
 in `./sck_jobs` (or `SCK_JOBS_DIR`).
 
