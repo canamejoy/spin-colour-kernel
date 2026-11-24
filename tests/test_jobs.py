@@ -384,3 +384,16 @@ def test_a_cancelled_local_job_stays_cancelled(env):
     rec = json.loads((d / "job.json").read_text())
     (d / "job.json").write_text(json.dumps(dict(rec, state="cancelled")))
     assert _call("status", job=job)["structuredContent"]["job"]["state"] == "cancelled"
+
+
+@pytest.mark.parametrize("stdout,state", [("0✓ Finished downloading files to local!\n", "finished"),
+                                          ("3\n✓ Finished downloading files to local!", "failed (exit 3)")])
+def test_modal_status_reads_the_exit_code_past_the_cli_progress_line(env, monkeypatch, stdout, state):
+    tmp, _ = env
+    job = "modal-20261123-222258-38636e"
+    d = tmp / "jobs" / job
+    d.mkdir(parents=True)
+    (d / "job.json").write_text(json.dumps(dict(id=job, backend="modal", state="submitted", pid=2 ** 22 + 9,
+                                                output_dir="simulation_output", options={"gpu": "L4"})))
+    monkeypatch.setattr(subprocess, "run", lambda *a, **k: subprocess.CompletedProcess(a, 0, stdout, ""))
+    assert _call("status", job=job)["structuredContent"]["job"]["state"] == state

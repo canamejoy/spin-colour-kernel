@@ -458,7 +458,9 @@ def _status_of(rec, d) -> dict:
         out["kaggle"] = text[-500:]
     elif b == "modal":
         r = _sh(["modal", "volume", "get", MODAL_VOLUME, f"{rec['id']}/EXIT", "-"], timeout=120)
-        code = r.stdout.strip() if r.returncode == 0 else ""
+        # the CLI appends its own progress line ("✓ Finished downloading files to local!") to the file's text
+        m = re.match(r"\s*(-?\d+)", r.stdout or "") if r.returncode == 0 else None
+        code = m.group(1) if m else ""
         if code:
             rec["state"] = "finished" if code == "0" else f"failed (exit {code})"
         else:
