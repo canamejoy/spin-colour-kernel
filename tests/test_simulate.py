@@ -152,3 +152,24 @@ def test_the_graph_safe_observer_matches_the_sampler_energy_and_magnetization():
         E, Mv = SIM._Observer(A)(S)
         assert np.allclose(E.numpy(), A.energy(S).numpy(), atol=1e-9)
         assert np.allclose(Mv.numpy(), (A.magnetization(S).sum(dim=1) / s.n_active).numpy(), atol=1e-12)
+
+
+@pytest.mark.parametrize("shape", ["().__class__.__bases__[0].__subclasses__()", "__import__('os').system('true')",
+                                   "(lambda: 1)()", "x.real <= 2", "'a' < 'b'", "open('f')", "abs(x, key=1) < 2"])
+def test_a_shape_that_is_not_a_condition_on_the_coordinates_is_refused_before_it_runs(shape):
+    with pytest.raises(ValueError):
+        SIM.active_sites("sc", [4, 4, 4], "cartesian", shape)
+
+
+def test_a_shape_with_and_or_not_is_refused_with_the_operators_to_use():
+    with pytest.raises(ValueError, match=r"use & \(and\), \| \(or\), ~ \(not\)"):
+        SIM.active_sites("sc", [4, 4, 4], "cartesian", "(x < 1) and (y < 1)")
+
+
+@pytest.mark.parametrize("coords,shape", [("cylindrical", "(rho <= 3) & (abs(z) <= 1)"), ("spherical", "r <= 2.5"),
+                                          ("cartesian", "~((abs(x) < 1) | (abs(y) < 1)) ^ (z > 0)"),
+                                          ("cylindrical", "(rho <= 3) & (rho >= 1.5)"),
+                                          ("spherical", "(cos(theta) > 0) & (r ** 2 <= 2 * pi)")])
+def test_a_condition_on_the_coordinates_still_selects_sites(coords, shape):
+    pos, mask = SIM.active_sites("sc", [6, 6, 6], coords, shape)
+    assert 0 < mask.sum() < mask.size

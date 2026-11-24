@@ -33,6 +33,7 @@ notebook gives every GPU an equal block of the replicas of every state):
 from __future__ import annotations
 
 import argparse
+import ast
 import json
 import time
 from pathlib import Path
@@ -51,6 +52,33 @@ COORDS = {"cartesian": ("x", "y", "z"), "spherical": ("r", "theta", "phi"),
 _MATH = {k: getattr(np, k) for k in ("sqrt", "sin", "cos", "tan", "arctan2", "arccos", "abs", "exp",
                                      "log", "minimum", "maximum", "pi", "mod", "floor", "ceil")}
 _MATH["abs"] = np.abs
+
+
+# what a shape may contain: numbers, the coordinate names, the functions of _MATH and these operators
+_SHAPE_NODES = (ast.Expression, ast.BinOp, ast.UnaryOp, ast.Compare, ast.Call, ast.Name, ast.Load, ast.Constant,
+                ast.Add, ast.Sub, ast.Mult, ast.Div, ast.FloorDiv, ast.Mod, ast.Pow, ast.BitAnd, ast.BitOr,
+                ast.BitXor, ast.Invert, ast.USub, ast.UAdd, ast.Lt, ast.LtE, ast.Gt, ast.GtE, ast.Eq, ast.NotEq)
+
+
+def _check_shape(shape: str, names) -> None:
+    """Refuse anything in a shape but arithmetic, comparisons, & | ^ ~ and the functions of _MATH."""
+    try:
+        tree = ast.parse(shape, mode="eval")
+    except SyntaxError as e:
+        raise ValueError(f"the shape {shape!r} is not a valid condition: {e.msg}") from None
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.BoolOp, ast.Not)):
+            raise ValueError("use & (and), | (or), ~ (not) in a shape, with parentheses around each comparison")
+        if not isinstance(node, _SHAPE_NODES):
+            raise ValueError(f"the shape {shape!r} may hold only numbers, coordinates, operators and "
+                             f"{', '.join(k for k in _MATH if k != 'pi')}; found {type(node).__name__}")
+        if isinstance(node, ast.Constant) and not isinstance(node.value, (int, float)):
+            raise ValueError(f"the shape {shape!r} may hold only numbers as constants")
+        if isinstance(node, ast.Call) and not (isinstance(node.func, ast.Name) and node.func.id in _MATH
+                                               and not node.keywords):
+            raise ValueError(f"the shape {shape!r} calls something other than {', '.join(k for k in _MATH if k != 'pi')}")
+        if isinstance(node, ast.Name) and node.id not in _MATH and node.id not in names:
+            raise ValueError(f"name {node.id!r} is not defined; the coordinates are {', '.join(names)}")
 
 
 # ------------------------------------------------------------------ geometry
@@ -94,8 +122,9 @@ def active_sites(crystal, box, coords: str = "", shape: str = ""):
     names = {"cartesian": dict(x=x, y=y, z=z),
              "spherical": dict(r=r, theta=np.arccos(np.divide(z, r, out=np.ones_like(z), where=r > 0)), phi=phi),
              "cylindrical": dict(rho=rho, phi=phi, z=z)}[coords]
+    _check_shape(shape, names)
     try:
-        mask = eval(shape, {"__builtins__": {}}, {**_MATH, **names})   # the user's own notebook cell
+        mask = eval(shape, {"__builtins__": {}}, {**_MATH, **names})   # checked by _check_shape above
     except NameError as e:
         raise ValueError(f"{e}; {coords} coordinates are {', '.join(COORDS[coords])}") from None
     mask = np.broadcast_to(np.asarray(mask, bool), pos.shape[:-1]).copy()
