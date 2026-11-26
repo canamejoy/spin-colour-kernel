@@ -58,3 +58,11 @@ def test_run_on_the_cpu_returns_results_and_a_figure(tmp_path):
     assert "2 state(s), 2 temperatures" in out["repr"]
     reloaded = _py("import sck; print(sck.load('out').names)", tmp_path)
     assert reloaded.stdout.strip() == "['a', 'b']", reloaded.stderr
+
+
+def test_the_generator_keeps_floating_point_fusion_on_unless_the_user_chose(tmp_path):
+    r = _py("import os; import Spin_Colour_Kernel.generator; print(os.environ['TRITON_DEFAULT_FP_FUSION'])", tmp_path)
+    assert r.stdout.strip() == "1", r.stderr
+    r = _py("import os; import Spin_Colour_Kernel.generator; print(os.environ['TRITON_DEFAULT_FP_FUSION'])", tmp_path,
+            TRITON_DEFAULT_FP_FUSION="0")
+    assert r.stdout.strip() == "0", r.stderr

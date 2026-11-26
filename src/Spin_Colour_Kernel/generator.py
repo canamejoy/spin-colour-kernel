@@ -34,6 +34,10 @@ import numpy as np
 
 from .system import System
 
+# Triton 3.9 warns that its default for floating-point fusion (FMA) becomes off in 3.10. The kernels were
+# validated with fusion on, the default of every Triton release so far; keep it unless the user set it.
+os.environ.setdefault("TRITON_DEFAULT_FP_FUSION", "1")
+
 CACHE = Path(os.environ.get("SCK_CACHE", Path.home() / ".cache" / "spin_colour_kernel"))
 
 
