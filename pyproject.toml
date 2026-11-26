@@ -1,13 +1,14 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "spin-colour-kernel"
-version = "1.4.7"
+version = "1.5.0"
 description = "Exact replica-batched multi-colour Metropolis kernels for classical O(n) spin models on crystals with a basis, generated for GPUs"
 readme = "README.md"
-license = {text = "MIT"}
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.10"
 authors = [
   {name = "Carlos Andrés Canamejoy-Alegría"},
@@ -18,13 +19,20 @@ authors = [
 ]
 # GPU runs of the paper: Python 3.11, torch 2.5.1 (CUDA 12.4), triton 3.1.0 on T4, A100 and H100.
 # CPU test suite: also passes with torch 2.15 (CPU) and triton 3.9 through the Triton interpreter.
-dependencies = ["numpy>=1.24", "scipy>=1.10", "torch>=2.5", "triton>=3.1"]
+# torch ships with Colab and Kaggle; triton wheels exist for Linux only, so other systems can still
+# install the package to describe, check and write runs (and run them on Linux or a remote GPU).
+dependencies = ["numpy>=1.24", "scipy>=1.10", "matplotlib>=3.5", "torch>=2.5", "triton>=3.1; platform_system == \"Linux\""]
 classifiers = [
-  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
   "Topic :: Scientific/Engineering :: Physics",
   "Environment :: GPU :: NVIDIA CUDA",
+  "Intended Audience :: Science/Research",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
 ]
+keywords = ["Monte Carlo", "Metropolis", "spin models", "Ising", "Heisenberg", "GPU", "Triton"]
 
 [project.optional-dependencies]
 baseline = ["jax[cuda12]==0.4.35"]      # the XLA baseline of experiment E5
@@ -32,6 +40,10 @@ dev = ["pytest"]
 
 [project.urls]
 Repository = "https://github.com/canamejoy/spin-colour-kernel"
+Issues = "https://github.com/canamejoy/spin-colour-kernel/issues"
+
+[project.scripts]
+sck-mcp = "Spin_Colour_Kernel.mcp:serve"
 
 [tool.setuptools.packages.find]
 where = ["src"]
