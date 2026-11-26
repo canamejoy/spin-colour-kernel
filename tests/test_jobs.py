@@ -135,7 +135,7 @@ def test_runpod_request_uses_v2_fields_and_never_carries_the_key(env, monkeypatc
     assert body["gpu"] == {"id": "NVIDIA L4", "count": 1} and body["ports"] == ["8000/http"]
     assert SECRET not in req.data.decode()
     assert json.loads(base64.b64decode(body["env"]["SCK_CONFIG"]))["model"] == "ising"
-    assert "git+https://github.com/canamejoy/spin-colour-kernel@v1.5.0" in body["cmd"][-1]
+    assert "git+https://github.com/canamejoy/spin-colour-kernel@v1.5.1" in body["cmd"][-1]
     job = r["structuredContent"]["job"]
     assert job["pod"] == "pod123" and "token" not in job
     assert SECRET not in _everything_written(tmp / "jobs") and SECRET not in json.dumps(r)
