@@ -53,7 +53,7 @@ DEFAULTS = {
     "local": dict(max_hours=12.0),
     "kaggle": dict(accelerator="NvidiaTeslaT4", max_hours=9.0),
     "modal": dict(gpu="L4", max_hours=2.0),
-    "runpod": dict(gpu="NVIDIA L4", image=RUNPOD_IMAGE, ref="v1.4.7", max_hours=2.0),
+    "runpod": dict(gpu="NVIDIA L4", image=RUNPOD_IMAGE, ref="v1.5.0", max_hours=2.0),
     "colab": {},
 }
 _PROCS: dict[str, subprocess.Popen] = {}           # children started by this server (polled to avoid zombies)
@@ -687,7 +687,7 @@ mcp.register("run", _run, "Launch a run (checked first). Without confirm: true i
                  "confirm": {"type": "boolean", "default": False},
                  "options": {"type": "object", "description": "local: max_hours. kaggle: accelerator, max_hours. "
                              "modal: gpu (default L4), max_hours (default 2, the function timeout). runpod: gpu "
-                             "(default 'NVIDIA L4'), image, ref (package git ref, default v1.4.7), max_hours. A runpod pod "
+                             "(default 'NVIDIA L4'), image, ref (package git ref, default v1.5.0), max_hours. A runpod pod "
                              "bills until results or cancel terminates it."}}}, False)
 mcp.register("status", _status, "The state of a job: running, finished, failed; the log tail; for runpod the pod "
              "status and its cost per hour.", {"type": "object", "required": ["job"], "properties": {"job": JOB}},

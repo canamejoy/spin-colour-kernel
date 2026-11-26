@@ -8,6 +8,7 @@ Help them through the SCK MCP server, which this repository declares in `.mcp.js
 - Claude Code asks once whether to use the `sck` server from `.mcp.json`; approve it. The server runs
   `python3 sck_mcp.py` from the repository root (set `SCK_PYTHON` if the interpreter has another name, e.g. `python`
   on Windows).
+- With `pip install spin-colour-kernel` the same server is the `sck-mcp` command, and Python code can call `import sck` (`sck.check`, `sck.write`, `sck.run`).
 - Describing, checking and writing a run needs only `numpy` (`pip install numpy`). Running it on this machine also
   needs `torch` (`pip install torch matplotlib`).
 - Another agent: register `python3 /path/to/the/clone/sck_mcp.py` as a stdio MCP server. Without MCP, the same

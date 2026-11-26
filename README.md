@@ -71,6 +71,30 @@ in `./sck_jobs` (or `SCK_JOBS_DIR`).
 ## Installation
 
 ```bash
+pip install spin-colour-kernel
+```
+
+On Colab and Kaggle torch and triton are already there, so this adds only the package. Then, in a notebook:
+
+```python
+import sck                                    # the short name of Spin_Colour_Kernel
+
+sck.check(crystal="sc", box=[16, 16, 16])     # sites, colouring and run size, without running
+res = sck.run(crystal="sc", box=[16, 16, 16],
+              states=[dict(name="ferromagnet", J={1: 1.0})],
+              T_max=2.0, T_min=0.5, T_step=0.1, replicas=32)
+res.plot()                                    # E, |M|, Cv and chi against T
+```
+
+`sck.describe()` lists every setting and its default; `sck.run` uses every NVIDIA GPU it finds (one process
+per GPU) or the CPU through the Triton interpreter, and writes the same output folder as the notebook;
+`sck.load(folder)` reads a finished run again; `sck.write("run.ipynb", ...)` writes the ready-to-run
+notebook. triton is installed on Linux only: elsewhere the package describes, checks and writes runs, and
+`sck-mcp` starts the MCP server for agents.
+
+From the repository, for development:
+
+```bash
 git clone https://github.com/canamejoy/spin-colour-kernel
 cd spin-colour-kernel
 pip install -e ".[dev]"
@@ -120,6 +144,7 @@ print(A.energy(S) / s.n_active)           # energy per site of each replica
 | `src/Spin_Colour_Kernel/run.py` | Command-line runner: `python -m Spin_Colour_Kernel.run --exp E1,E3 --out DIR` |
 | `tests/` | CPU test suite (Triton interpreter) |
 | `examples/` | Quick start with expected output |
+| `src/Spin_Colour_Kernel/api.py`, `src/sck/` | The Python interface: `sck.run`, `check`, `describe`, `write`, `load` |
 | `src/Spin_Colour_Kernel/mcp.py`, `agent.py`, `jobs.py`, `runfile.py` | The MCP server for agents: describe, check, write, and launch / follow / fetch runs per backend |
 | `src/Spin_Colour_Kernel/simulate.py` | General runs behind the simulation notebook: active-site shapes, Hamiltonian per state, temperature ladder, outputs |
 | `ready_for_run/` | The simulation notebook, the run configurator page and the user manuals (English, Spanish; Markdown and PDF) |
