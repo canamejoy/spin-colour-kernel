@@ -43,6 +43,68 @@ parámetros, escribe el cuadernillo o el script y, si usted lo pide y tiene acce
 Kaggle, Modal o RunPod y lee los resultados. Primero le muestra un plan y solo lanza una ejecución remota cuando
 usted la confirma.
 
+## Usarlo como librería de Python
+
+Si programa en Python, puede saltarse el cuadernillo: instale el paquete y describa la simulación en unas pocas
+líneas. En Kaggle y Colab escriba en una celda `%pip install spin-colour-kernel` (torch y triton ya vienen
+instalados); en su propio computador Linux con GPU NVIDIA, `pip install spin-colour-kernel`.
+
+**Cómo se elige el hamiltoniano.** Lo deciden dos parámetros. `model` fija el tipo de espín (`"ising"`, `"xy"` o
+`"heisenberg"`, sección 3.1). `states` es una lista con un `dict` por conjunto de parámetros, con las mismas claves
+de la sección 3.3: `J={capa: valor}`, `D`, `K1`, `Ks`, `K2`, `H`, `H_theta` y `H_phi`. Un parámetro que no
+escriba vale cero, y `Ks` toma el valor de `K1`. Cada parámetro de la celda 1 tiene el mismo nombre en minúsculas
+(`crystal`, `box`, `periodic`, `coords`, `shape`, `units`, `T_max`, `T_min`, `T_step`, `thermalization`,
+`measurement`, `measure_every`, `replicas`, `config_every`, `seed`). Los que no escriba toman el valor por defecto
+del cuadernillo.
+
+```
+import sck
+
+config = dict(
+    model="heisenberg", units="meV",
+    crystal="sc", box=[39, 39, 5], periodic=[False, False, False],
+    coords="cylindrical", shape="rho <= 18.5",
+    states=[dict(name="nanodisk", J={1: 1.0}, D=0.88, K1=0.177, Ks=0.139, K2=0.034,
+                 H=0.483, H_theta=0.0)],
+    T_max=20.0, T_min=0.1, T_step=0.1,
+    thermalization=10_000, measurement=10_000, replicas=50,
+)
+print(sck.check(config))          # errores, sitios, coloreo y tamaño, sin simular
+res = sck.run(config, output_dir="nanodisk_output")
+res.plot("curves.png")            # E, |M|, Cv y chi contra T
+```
+
+| Llamada | Qué hace |
+|---|---|
+| `sck.describe()` | los modelos, cristales, coordenadas, los parámetros de un estado y cada valor por defecto |
+| `sck.check(config)` | revisa los parámetros sin simular e informa qué está mal |
+| `sck.run(config, output_dir=...)` | simula en cada GPU NVIDIA que encuentre, o en la CPU (lento); devuelve los resultados |
+| `sck.load(carpeta)` | vuelve a leer una simulación terminada |
+| `sck.write("run.ipynb", config)` | escribe este cuadernillo (o un script `.py`) con la celda 1 ya llena |
+
+Los resultados `res` traen `res.temperatures`, `res.energy_per_site`, `res.magnetization_per_site`,
+`res.specific_heat` y `res.susceptibility`, cada uno con forma [estado, temperatura]. `res.table()` da los mismos
+números como filas. `res.configurations()` abre los espines guardados sin cargarlos en memoria, con forma
+[estado, réplica, temperatura guardada, sitio, 3]. La carpeta de salida tiene los archivos de la sección 5.
+
+**Dibujar una capa.** Para dibujar sz de la capa del medio de una película o un disco a una temperatura:
+
+```
+import numpy as np, matplotlib.pyplot as plt
+sites = np.load(res.output_dir / "sites.npy")             # x, y, z de cada sitio activo
+z = np.round(sites[:, 2], 6); layers = np.unique(z)
+middle = z == layers[len(layers) // 2]
+k = -1                                                    # la última temperatura guardada (la más fría)
+sz = res.configurations()[0, 0, k][middle, 2]             # estado 0, réplica 0
+x, y = sites[middle, 0], sites[middle, 1]                 # un píxel por sitio (cúbica simple: una rejilla cuadrada de paso 1)
+ix, iy = np.round(x - x.min()).astype(int), np.round(y - y.min()).astype(int)
+img = np.full((iy.max() + 1, ix.max() + 1), np.nan); img[iy, ix] = sz
+plt.imshow(img, origin="lower", cmap="RdBu_r", vmin=-1, vmax=1, interpolation="nearest")
+```
+
+`examples/library_nanodisk.ipynb`, en el repositorio, simula este nanodisco de principio a fin y dibuja su capa
+del medio a doce temperaturas.
+
 ## 1. Qué hace el cuadernillo
 
 Simula espines (pequeños imanes) ubicados en los sitios de un cristal. Para cada temperatura, de

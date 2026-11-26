@@ -42,6 +42,67 @@ settings, writes the notebook or the script, and, if you ask and have access, la
 Kaggle, Modal or RunPod and reads the results back. It shows you a plan first and launches a remote run only
 when you confirm it.
 
+## Using it as a Python library
+
+If you write Python, you can skip the notebook: install the package and describe the run in a few lines. On
+Kaggle and Colab write in a cell `%pip install spin-colour-kernel` (torch and triton are already there); on
+your own Linux computer with an NVIDIA GPU, `pip install spin-colour-kernel`.
+
+**Choosing the Hamiltonian.** Two settings decide it. `model` fixes the kind of spin (`"ising"`, `"xy"` or
+`"heisenberg"`, section 3.1). `states` is a list with one `dict` per parameter set, using the same keys
+as section 3.3: `J={shell: value}`, `D`, `K1`, `Ks`, `K2`, `H`, `H_theta` and `H_phi`. A parameter you leave
+out is zero, and `Ks` defaults to `K1`. Every setting of cell 1 has the same name in lower case (`crystal`,
+`box`, `periodic`, `coords`, `shape`, `units`, `T_max`, `T_min`, `T_step`, `thermalization`, `measurement`,
+`measure_every`, `replicas`, `config_every`, `seed`). Any setting you leave out takes the notebook's default.
+
+```
+import sck
+
+config = dict(
+    model="heisenberg", units="meV",
+    crystal="sc", box=[39, 39, 5], periodic=[False, False, False],
+    coords="cylindrical", shape="rho <= 18.5",
+    states=[dict(name="nanodisk", J={1: 1.0}, D=0.88, K1=0.177, Ks=0.139, K2=0.034,
+                 H=0.483, H_theta=0.0)],
+    T_max=20.0, T_min=0.1, T_step=0.1,
+    thermalization=10_000, measurement=10_000, replicas=50,
+)
+print(sck.check(config))          # errors, sites, colouring and run size, without running
+res = sck.run(config, output_dir="nanodisk_output")
+res.plot("curves.png")            # E, |M|, Cv and chi against T
+```
+
+| Call | What it does |
+|---|---|
+| `sck.describe()` | the models, crystals, coordinates, the parameters of a state and every default |
+| `sck.check(config)` | checks the settings without running and reports what is wrong |
+| `sck.run(config, output_dir=...)` | runs on every NVIDIA GPU it finds, or on the CPU (slow); returns the results |
+| `sck.load(folder)` | reads a finished run again |
+| `sck.write("run.ipynb", config)` | writes this notebook (or a `.py` script) with cell 1 filled in |
+
+The results `res` hold `res.temperatures`, `res.energy_per_site`, `res.magnetization_per_site`,
+`res.specific_heat` and `res.susceptibility`, each with the shape [state, temperature]. `res.table()` gives the
+same numbers as rows. `res.configurations()` opens the saved spins without loading them, with the shape [state,
+replica, saved temperature, site, 3]. The output folder holds the files of section 5.
+
+**Drawing one layer.** To draw sz of the middle layer of a film or disc at one temperature:
+
+```
+import numpy as np, matplotlib.pyplot as plt
+sites = np.load(res.output_dir / "sites.npy")             # x, y, z of every active site
+z = np.round(sites[:, 2], 6); layers = np.unique(z)
+middle = z == layers[len(layers) // 2]
+k = -1                                                    # the last saved temperature (the coldest)
+sz = res.configurations()[0, 0, k][middle, 2]             # state 0, replica 0
+x, y = sites[middle, 0], sites[middle, 1]                 # one pixel per site (simple cubic: a square grid of spacing 1)
+ix, iy = np.round(x - x.min()).astype(int), np.round(y - y.min()).astype(int)
+img = np.full((iy.max() + 1, ix.max() + 1), np.nan); img[iy, ix] = sz
+plt.imshow(img, origin="lower", cmap="RdBu_r", vmin=-1, vmax=1, interpolation="nearest")
+```
+
+`examples/library_nanodisk.ipynb` in the repository runs this nanodisk from start to end and draws its middle
+layer at twelve temperatures.
+
 ## 1. What the notebook does
 
 It simulates spins (tiny magnets) sitting on the sites of a crystal. For every temperature, from hot to

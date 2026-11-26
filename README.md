@@ -86,6 +86,14 @@ res = sck.run(crystal="sc", box=[16, 16, 16],
 res.plot()                                    # E, |M|, Cv and chi against T
 ```
 
+The Hamiltonian is chosen by `model` (`"ising"`, `"xy"` or `"heisenberg"`) and `states`, one dict per
+parameter set: `J={shell: value}` (shells 1 to 4), `D` (bulk DMI), `K1`, `Ks`, `K2` (cubic, surface and
+second-order anisotropy) and `H`, `H_theta`, `H_phi` (field and its direction in degrees). A parameter left
+out is zero and `Ks` defaults to `K1`; D and the anisotropies apply to Heisenberg only. The other settings
+(`crystal`, `box`, `periodic`, `coords`, `shape`, `units`, the temperature ladder, sweeps and replicas) are the
+notebook's parameters in lower case. `examples/library_nanodisk.ipynb` runs a production nanodisk this way and
+draws sz of its middle layer while it cools; the manuals in `ready_for_run/` explain every setting.
+
 `sck.describe()` lists every setting and its default; `sck.run` uses every NVIDIA GPU it finds (one process
 per GPU) or the CPU through the Triton interpreter, and writes the same output folder as the notebook;
 `sck.load(folder)` reads a finished run again; `sck.write("run.ipynb", ...)` writes the ready-to-run
@@ -143,7 +151,7 @@ print(A.energy(S) / s.n_active)           # energy per site of each replica
 | `src/Spin_Colour_Kernel/vampire_pair.py`, `boris_pair.py`, `cudametro_pair.py` | Paired comparisons with VAMPIRE, BORIS and CUDA-METRO (fetched and built at run time at pinned commits, not vendored) |
 | `src/Spin_Colour_Kernel/run.py` | Command-line runner: `python -m Spin_Colour_Kernel.run --exp E1,E3 --out DIR` |
 | `tests/` | CPU test suite (Triton interpreter) |
-| `examples/` | Quick start with expected output |
+| `examples/` | Quick start with expected output; `library_nanodisk.ipynb`, the pip library on a production nanodisk |
 | `src/Spin_Colour_Kernel/api.py`, `src/sck/` | The Python interface: `sck.run`, `check`, `describe`, `write`, `load` |
 | `src/Spin_Colour_Kernel/mcp.py`, `agent.py`, `jobs.py`, `runfile.py` | The MCP server for agents: describe, check, write, and launch / follow / fetch runs per backend |
 | `src/Spin_Colour_Kernel/simulate.py` | General runs behind the simulation notebook: active-site shapes, Hamiltonian per state, temperature ladder, outputs |
